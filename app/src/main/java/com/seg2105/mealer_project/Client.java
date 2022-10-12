@@ -1,4 +1,6 @@
-public class Client extends person{
+package com.seg2105.mealer_project;
+
+public class Client extends Person{
 
     //instance variables
     private String address;
@@ -62,7 +64,7 @@ public class Client extends person{
     public static void viewPreviousPurchases(String[] previousPurchases){
         int counter = 1;
         for (int i = 0; i < previousPurchases.length-1; i++){
-            system.out.println(counter + "." + previousPurchases[i]);
+            System.out.println(counter + "." + previousPurchases[i]);
             counter++;
         }
     }
