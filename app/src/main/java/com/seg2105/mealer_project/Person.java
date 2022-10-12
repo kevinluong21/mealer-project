@@ -19,7 +19,7 @@ public abstract class Person {
         return false;
     }
 
-    public boolean checkEmailAddress(String emailAddress) {
+    public boolean checkEmailAddress(String emailAddress) { //rework
         if (!emailAddress.isEmpty()) { //check if String is empty
 
             String[] splitEmailAddress = emailAddress.split("@"); //split email address to check domain
