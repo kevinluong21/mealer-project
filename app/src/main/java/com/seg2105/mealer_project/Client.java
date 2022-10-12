@@ -64,7 +64,7 @@ public class Client extends Person{
     public static void viewPreviousPurchases(String[] previousPurchases){
         int counter = 1;
         for (int i = 0; i < previousPurchases.length-1; i++){
-            system.out.println(counter + "." + previousPurchases[i]);
+            System.out.println(counter + "." + previousPurchases[i]);
             counter++;
         }
     }
