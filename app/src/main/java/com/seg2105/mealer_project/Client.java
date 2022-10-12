@@ -1,4 +1,6 @@
-public class Client extends person{
+package com.seg2105.mealer_project;
+
+public class Client extends Person{
 
     //instance variables
     private String address;
