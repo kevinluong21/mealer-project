@@ -1,13 +1,13 @@
 package com.seg2105.mealer_project;
 
 public abstract class Person {
-    private String firstName;
-    private String lastName;
-    private String emailAddress;
-    private String accountPassword;
-//    private String address;
-    private String profilePhoto; //source of the photo
-    private String accountStatus; //online, offline
+    protected String firstName;
+    protected String lastName;
+    protected String emailAddress;
+    protected String accountPassword;
+//    protected String address;
+    protected String profilePhoto; //source of the photo
+    protected String accountStatus; //online, offline
 
 //    public boolean checkName(String name) {
 //        name = name.trim();
@@ -21,12 +21,7 @@ public abstract class Person {
 //
 //    public boolean checkEmailAddress(String emailAddress) { //rework
 //        if (!emailAddress.isEmpty()) { //check if String is empty
-//
-//            String[] splitEmailAddress = emailAddress.split("@"); //split email address to check domain
-//            String email = splitEmailAddress[0];
-//            String domain = splitEmailAddress[1];
-//
-//            if (domain.contains(".com")) { //check if domain contains @ and .com
+//            if (emailAddress.endsWith(".com") && emailAddress.contains("@")) { //check if domain contains @ and .com
 //                return true;
 //            }
 //        }
