@@ -16,7 +16,6 @@ public class Cook extends Person{
     private LinkedList <Meal> offeredMeals;
     private Queue <MealRequest> purchaseRequest;
 
-
     public Cook (String firstName, String lastName, String emailAddress, String accountPassword, String description, String address, String voidCheque){
 
         this.firstName = firstName;
@@ -29,6 +28,30 @@ public class Cook extends Person{
 
         this.soldMeals = 0;
         this.customerRating = 0;
+    }
+
+    public static void addMeal(){
+
+    }
+
+    public static void rejectRequest(){
+
+    }
+
+    public static void acceptRequest(){
+
+    }
+
+    public static void deleteMeal(){
+
+    }
+
+    public static void offerMeal(){
+
+    }
+
+    public static void removeMealOffer(){
+
     }
 
 
