@@ -5,13 +5,6 @@ public class Administrator extends Person{
     Object [] dismissedComplaints;
     Object [] acceptedComplaints;
 
-    private String firstName;
-    private String lastName;
-    private String emailAddress;
-    private String accountPassword;
-
-
-
     public Administrator (String firstName, String lastName, String emailAddress, String accountPassword){
 
         this.firstName = firstName;

@@ -2,11 +2,14 @@ package com.seg2105.mealer_project;
 
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +17,15 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class ClientRegister extends Fragment {
+
+
+
+
+    Button backClient;
+    //ConstraintLayout clientConsLayout;
+
+
+    //MOST OF THE THINGS BELOW WAS GENERATE BY DEFAULT WHEN I CREATED FRAGMENT - UNSURE WHAT WE HAVE TO KEEP
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -53,12 +65,30 @@ public class ClientRegister extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        //backButton=View.findViewById
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_client_register2, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_client_register, container, false);
+        backClient = rootView.findViewById(R.id.backClient);
+
+        return rootView;
     }
-}
+
+
+    }
+
+    /*@Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        //initialize your view here for use view.findViewById("your view id")
+        clientConsLayout = view.findViewById(R.id.clientConstraintLayout);
+    }*/
