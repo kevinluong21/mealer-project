@@ -1,10 +1,16 @@
 package com.seg2105.mealer_project;
 
-public class Client extends Person{
+import java.io.Serializable;
+
+public class Client extends Person implements Serializable {
 
     //instance variables
     private String address;
     private String creditCardInfo;
+
+    public Client() { //empty constructor is needed for database!
+
+    }
 
     /*
      * @return String[]

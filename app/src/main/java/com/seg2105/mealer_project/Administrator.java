@@ -1,12 +1,16 @@
 package com.seg2105.mealer_project;
 
-public class Administrator extends Person{
+import java.io.Serializable;
+
+public class Administrator extends Person implements Serializable {
     Object [] inbox; //Complaints
     Object [] dismissedComplaints;
     Object [] acceptedComplaints;
 
-    public Administrator (String firstName, String lastName, String emailAddress, String accountPassword){
+    public Administrator() { //empty constructor is needed for database!
 
+    }
+    public Administrator (String firstName, String lastName, String emailAddress, String accountPassword){
         this.firstName = firstName;
         this. lastName = lastName;
         this.emailAddress = emailAddress;

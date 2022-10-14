@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:onClick="login"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -19,31 +20,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <EditText
-            android:id="@+id/username"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter your username"
-            android:inputType="textPersonName"
-            android:textSize="34sp" />
-
         <TextView
             android:id="@+id/TextView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Username"
+            android:text="Email Address"
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/editTextEmailAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter your password"
+            android:hint="Enter your email"
             android:inputType="textPersonName"
             android:textSize="34sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
         <TextView
             android:id="@+id/textView2"
@@ -52,6 +48,26 @@
             android:layout_gravity="center"
             android:text="Password"
             android:textSize="20sp" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter your password"
+            android:inputType="textPersonName"
+            android:textSize="34sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/textErrorMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#FF0000" />
 
 
     </LinearLayout>
@@ -71,10 +87,11 @@
             android:layout_weight="1"></Space>
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/buttonLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:width="120dp"
+            android:onClick="login"
             android:text="Log in" />
 
         <Space
@@ -83,12 +100,12 @@
             android:layout_weight="1"></Space>
 
         <Button
-            android:id="@+id/registerButton"
+            android:id="@+id/buttonRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:width="120dp"
-            android:text="Register"
             android:onClick="registerFormCall"
+            android:text="Register"
 
             />
 

@@ -73,7 +73,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/newUserPassword"
+            android:id="@+id/editTextClientPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -82,7 +82,7 @@
             android:textSize="24sp" />
 
         <Button
-            android:id="@+id/newUserRegister"
+            android:id="@+id/buttonClientRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register" />

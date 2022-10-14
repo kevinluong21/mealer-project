@@ -1,9 +1,10 @@
 package com.seg2105.mealer_project;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Cook extends Person{
+public class Cook extends Person implements Serializable {
 
     private String description;
     private String address;
@@ -16,8 +17,11 @@ public class Cook extends Person{
     private LinkedList <Meal> offeredMeals;
     private Queue <MealRequest> purchaseRequest;
 
-    public Cook (String firstName, String lastName, String emailAddress, String accountPassword, String description, String address, String voidCheque){
+    public Cook() { //empty constructor is needed for database!
 
+    }
+
+    public Cook (String firstName, String lastName, String emailAddress, String accountPassword, String description, String address, String voidCheque){
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
