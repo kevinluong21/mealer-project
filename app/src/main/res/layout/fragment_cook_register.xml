@@ -28,7 +28,7 @@
             android:textSize="20sp" />
 
         <EditText
-            android:id="@+id/firstName"
+            android:id="@+id/editTextFirstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -37,7 +37,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/lastName"
+            android:id="@+id/editTextLastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -46,7 +46,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/emailAddress"
+            android:id="@+id/editTextClientEmailAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -55,7 +55,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/deliveryAddress"
+            android:id="@+id/editTextClientAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -64,7 +64,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/creditCardInfo"
+            android:id="@+id/editTextCreditCard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"

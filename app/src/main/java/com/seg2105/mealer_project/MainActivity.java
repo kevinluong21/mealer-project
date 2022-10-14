@@ -27,15 +27,15 @@ public class MainActivity extends AppCompatActivity {
     Button buttonRegister; //button for registration
     Button buttonLogin; //button for login
     TextView textErrorMessage; //display text for error messages
-    DatabaseReference users; //refers to the Firebase database. used to read and write to database.
-    Person currentUser; //stores the current user logged in
+    protected DatabaseReference users; //refers to the Firebase database. used to read and write to database.
+    protected Person currentUser; //stores the current user logged in
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        editTextEmailAddress = (EditText) findViewById(R.id.editTextEmailAddress);
+        editTextEmailAddress = (EditText) findViewById(R.id.editTextClientEmailAddress);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         buttonRegister = (Button) findViewById(R.id.buttonRegister);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);

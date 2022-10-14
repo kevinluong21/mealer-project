@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -17,8 +19,6 @@ import android.widget.Button;
  * create an instance of this fragment.
  */
 public class ClientRegister extends Fragment {
-
-
 
 
     Button backClient;
