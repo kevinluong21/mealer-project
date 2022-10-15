@@ -27,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
     Button buttonRegister; //button for registration
     Button buttonLogin; //button for login
     TextView textErrorMessage; //display text for error messages
-    protected DatabaseReference users; //refers to the Firebase database. used to read and write to database.
-    protected Person currentUser; //stores the current user logged in
+    protected static DatabaseReference users; //refers to the Firebase database. used to read and write to database.
+    protected static Person currentUser; //stores the current user logged in
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,30 +51,60 @@ public class MainActivity extends AppCompatActivity {
         //buttonRegister.setOnClickListener(this);
     }
 
+    protected static DatabaseReference getUsers() { //method used across fragments
+        return users;
+    }
+
+    protected static Person getCurrentUser() { //method used across fragments
+        return currentUser;
+    }
+
+    protected static void setCurrentUser(Person newUser) { //method used across fragments
+        currentUser = newUser;
+    }
+
     public void login(View v) { //still need to validate input
         String emailAddress = editTextEmailAddress.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
+        textErrorMessage.setText("");
+
         if (!TextUtils.isEmpty(emailAddress) && !TextUtils.isEmpty(password)) { //check if username and password are NOT empty
-            checkClient(emailAddress, password);
-            if (currentUser != null) { //match found so currentUser stores the user from the database
-                if (!currentUser.accountPassword.equals(password)) { //check that the passwords match
-                    textErrorMessage.setText("Incorrect password");
+            checkUser(emailAddress, new MyCallback<Person>() {
+                @Override
+                public void onCallback(Person value) {
+                    currentUser = value;
+                    if (currentUser != null) { //match found so currentUser stores the user from the database
+                        if (!currentUser.accountPassword.equals(password)) { //check that the passwords match
+                            textErrorMessage.setText("Incorrect password");
+                        }
+                        else { //correct username and password
+                            Toast.makeText(MainActivity.this, "Signed in as " + currentUser.firstName, Toast.LENGTH_LONG).show(); //display Toast of successful log in
+                        }
+                    }
+                    else { //user is not found in database
+                        textErrorMessage.setText("An account with this email does not exist");
+                    }
                 }
-                else { //correct username and password
-                    Toast.makeText(this, "Signed in as " + currentUser.firstName, Toast.LENGTH_LONG).show(); //display Toast of successful log in
-                }
-            }
-            else { //user is not found in database
-                textErrorMessage.setText("An account with this email does not exist");
-            }
+            });
+//            if (currentUser != null) { //match found so currentUser stores the user from the database
+//                if (!currentUser.accountPassword.equals(password)) { //check that the passwords match
+//                    textErrorMessage.setText("Incorrect password");
+//                }
+//                else { //correct username and password
+//                    Toast.makeText(MainActivity.this, "Signed in as " + currentUser.firstName, Toast.LENGTH_LONG).show(); //display Toast of successful log in
+//                }
+//            }
+//            else { //user is not found in database
+//                textErrorMessage.setText("An account with this email does not exist");
+//            }
         }
         else { //username and password text fields are empty
             textErrorMessage.setText("Email address and password cannot be empty");
         }
-
     }
-    protected void checkClient(String emailAddress, String password) { //check for user in database by searching using the email and stores the match in the currentUser object
+
+    protected static void checkUser(String emailAddress, MyCallback<Person> myCallback) { //check for user in database by searching using the email and stores the match in the currentUser object
         DatabaseReference users = FirebaseDatabase.getInstance().getReference("users");
         users.orderByKey().equalTo(emailAddress).addChildEventListener(new ChildEventListener() {
             @Override
@@ -85,15 +115,21 @@ public class MainActivity extends AppCompatActivity {
                 * each class because if a user exists but it is not of that class,
                 * it will return null and currentUser will then store null (which indicates
                 * that there was no user in the database in the login method). */
-
+                Person user;
                 if (snapshot.getValue(Administrator.class) != null) {
-                    currentUser = snapshot.getValue(Administrator.class);
+                    user = snapshot.getValue(Administrator.class);
+                    myCallback.onCallback(user);
                 }
                 else if (snapshot.getValue(Cook.class) != null) {
-                    currentUser = snapshot.getValue(Cook.class);
+                    user = snapshot.getValue(Cook.class);
+                    myCallback.onCallback(user);
                 }
                 else if (snapshot.getValue(Client.class) != null) {
-                    currentUser = snapshot.getValue(Client.class);
+                    user = snapshot.getValue(Client.class);
+                    myCallback.onCallback(user);
+                }
+                else {
+                    myCallback.onCallback(null);
                 }
             }
 

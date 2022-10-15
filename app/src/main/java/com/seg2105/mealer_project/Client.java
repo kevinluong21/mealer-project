@@ -12,6 +12,15 @@ public class Client extends Person implements Serializable {
 
     }
 
+    public Client(String firstName, String lastName, String emailAddress, String accountPassword, String address, String creditCardInfo) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.emailAddress = emailAddress;
+        this.accountPassword = accountPassword;
+        this.address = address;
+        this.creditCardInfo = creditCardInfo;
+    }
+
     /*
      * @return String[]
      * returns the results for meal type search

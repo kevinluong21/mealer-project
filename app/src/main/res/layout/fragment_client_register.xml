@@ -10,6 +10,7 @@
 
 
     android:focusable="true"
+    android:onClick="register"
     android:visibility="visible"
     tools:context=".ClientRegister">
 
@@ -102,6 +103,7 @@
             android:id="@+id/buttonClientRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="register"
             android:text="Register" />
     </LinearLayout>
 
