@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/clientRegForm"
+            android:id="@+id/textRegistrationForm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Client Registration Form"
@@ -58,7 +58,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextClientAddress"
+            android:id="@+id/editTextAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -76,7 +76,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextClientPassword"
+            android:id="@+id/editTextPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"

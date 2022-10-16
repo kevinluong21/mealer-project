@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/clientRegForm"
+            android:id="@+id/textRegistrationForm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cook Registration Form"
@@ -55,7 +55,7 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextClientAddress"
+            android:id="@+id/editTextAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -64,28 +64,55 @@
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextCreditCard"
+            android:id="@+id/editTextDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter description"
+            android:hint="Enter your description"
             android:inputType="textPersonName"
+            android:textColor="#668C96"
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextClientPassword"
+            android:id="@+id/editTextVoidCheque"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter a void cheque"
+            android:inputType="textPersonName"
+            android:textColor="#668C96"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editTextPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Enter your password"
-            android:inputType="textPersonName"
+            android:inputType="textPassword"
             android:textSize="24sp" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <TextView
+            android:id="@+id/textCookErrorMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#FF0000" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
         <Button
-            android:id="@+id/buttonClientRegister"
+            android:id="@+id/buttonCookRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Register" />
+
     </LinearLayout>
 
     <LinearLayout

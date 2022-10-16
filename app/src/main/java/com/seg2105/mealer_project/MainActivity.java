@@ -1,12 +1,10 @@
 package com.seg2105.mealer_project;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,7 +12,6 @@ import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,14 +36,14 @@ public class MainActivity extends AppCompatActivity {
 
         editTextEmailAddress = (EditText) findViewById(R.id.editTextEmailAddress);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        buttonRegister = (Button) findViewById(R.id.buttonRegister);
+        buttonRegister = (Button) findViewById(R.id.buttonClientRegister);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         textErrorMessage = (TextView) findViewById(R.id.textErrorMessage);
 
         users = FirebaseDatabase.getInstance().getReference("users"); //creates a list named "users" in the database
 
         //testing database and login
-        Administrator admin = new Administrator("Support", "Admin", "support", "123");
+        Administrator admin = new Administrator("Support", "Admin", "admin", "123");
         users.child("admin").setValue(admin);
 
         //buttonRegister=findViewById(R.id.buttonRegister);
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                         if (!currentUser.accountPassword.equals(password)) { //check that the passwords match
                             textErrorMessage.setText("Incorrect password");
                         } else { //correct username and password
-                            Toast.makeText(MainActivity.this, "Signed in as " + currentUser.firstName, Toast.LENGTH_LONG).show(); //display Toast of successful log in
+                            Toast.makeText(MainActivity.this, "Signed in as " + currentUser.firstName + " " + currentUser.lastName, Toast.LENGTH_LONG).show(); //display Toast of successful log in
                         }
                     } else { //user is not found in database (it is null)
                         textErrorMessage.setText("An account with this email does not exist");

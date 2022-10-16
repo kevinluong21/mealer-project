@@ -2,7 +2,6 @@ package com.seg2105.mealer_project;
 
 import android.os.Bundle;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,18 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import android.content.Intent;
-import android.os.Bundle;
 import android.widget.EditText;
 import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 
 /**
@@ -36,9 +29,9 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
     EditText editTextFirstName; //first name text field
     EditText editTextLastName; //last name text field
     EditText editTextEmailAddress; //email address text field
-    EditText editTextClientAddress; //address text field
+    EditText editTextAddress; //address text field
     EditText editTextCreditCard; //credit card text field
-    EditText editTextClientPassword; //password text field
+    EditText editTextPassword; //password text field
     TextView textClientErrorMessage; //error message text view
     Button buttonClientRegister; //register button
     DatabaseReference users = MainActivity.getUsers(); //get user database from MainActivity
@@ -100,9 +93,9 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
         editTextFirstName = (EditText) rootView.findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText) rootView.findViewById(R.id.editTextLastName);
         editTextEmailAddress = (EditText) rootView.findViewById(R.id.editTextEmailAddress);
-        editTextClientAddress = (EditText) rootView.findViewById(R.id.editTextClientAddress);
+        editTextAddress = (EditText) rootView.findViewById(R.id.editTextAddress);
         editTextCreditCard = (EditText) rootView.findViewById(R.id.editTextCreditCard);
-        editTextClientPassword = (EditText) rootView.findViewById(R.id.editTextClientPassword);
+        editTextPassword = (EditText) rootView.findViewById(R.id.editTextPassword);
         textClientErrorMessage = (TextView) rootView.findViewById(R.id.textClientErrorMessage);
         buttonClientRegister = (Button) rootView.findViewById(R.id.buttonClientRegister);
 
@@ -117,14 +110,14 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
     }
 
     public void register(View v) { //still need to validate inputs
-        String firstName = editTextFirstName.getText().toString().trim();
-        Character.toUpperCase(firstName.charAt(0)); //basic capitalization of first letter of first name (does not work for multiple first names)
-        String lastName = editTextFirstName.getText().toString().trim();
-        Character.toUpperCase(lastName.charAt(0)); //basic capitalization of first letter of last name
+        String firstNameRaw = editTextFirstName.getText().toString().trim(); //raw input from text field
+        String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name (does not work for multiple first names)
+        String lastNameRaw = editTextLastName.getText().toString().trim(); //raw input from text field
+        String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
         String emailAddress = editTextEmailAddress.getText().toString().trim();
-        String address = editTextClientAddress.getText().toString().trim();
+        String address = editTextAddress.getText().toString().trim();
         String creditCard = editTextCreditCard.getText().toString().trim();
-        String password = editTextClientPassword.getText().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
 
         textClientErrorMessage.setText("");
 
@@ -137,7 +130,7 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
                         Person newClient = new Client(firstName, lastName, emailAddress, password, address, creditCard);
                         users.child(emailAddress).setValue(newClient);
                         MainActivity.setCurrentUser(newClient);
-                        Toast.makeText(getActivity(), "Signed in as " + firstName, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
                     }
                     else { //account already exists with this email
                         textClientErrorMessage.setText("An account already exists with this email");

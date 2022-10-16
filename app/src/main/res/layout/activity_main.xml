@@ -98,7 +98,7 @@
             android:layout_weight="1"></Space>
 
         <Button
-            android:id="@+id/buttonRegister"
+            android:id="@+id/buttonClientRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:width="120dp"
