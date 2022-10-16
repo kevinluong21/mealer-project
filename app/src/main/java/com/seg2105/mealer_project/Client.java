@@ -21,6 +21,14 @@ public class Client extends Person implements Serializable {
         this.creditCardInfo = creditCardInfo;
     }
 
+    public String getAddress() { //getter methods required for database serialization
+        return address;
+    }
+
+    public String getCreditCardInfo() {
+        return this.creditCardInfo;
+    }
+
     /*
      * @return String[]
      * returns the results for meal type search

@@ -34,6 +34,18 @@ public class Cook extends Person implements Serializable {
         this.customerRating = 0;
     }
 
+    public String getAddress() { //getter methods required for database serialization
+        return this.address;
+    }
+
+    public String getDescription() {
+        return this.description;
+    }
+
+    public String getVoidCheque() {
+        return this.voidCheque;
+    }
+
     public static void addMeal(){
 
     }
