@@ -107,9 +107,9 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     }
 
     public void register(View v) { //still need to validate inputs
-        String firstNameRaw = editTextFirstName.getText().toString().trim(); //raw input from text field
-        String lastNameRaw = editTextLastName.getText().toString().trim(); //raw input from text field
-        String emailAddress = editTextEmailAddress.getText().toString().trim();
+        String firstNameRaw = editTextFirstName.getText().toString().trim().toLowerCase(); //raw input from text field
+        String lastNameRaw = editTextLastName.getText().toString().trim().toLowerCase(); //raw input from text field
+        String emailAddress = editTextEmailAddress.getText().toString().trim().toLowerCase();
         String address = editTextAddress.getText().toString().trim();
         String description = editTextDescription.getText().toString().trim();
         String voidCheque = editTextVoidCheque.getText().toString().trim();

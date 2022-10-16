@@ -110,9 +110,9 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
     }
 
     public void register(View v) { //still need to validate inputs
-        String firstNameRaw = editTextFirstName.getText().toString().trim(); //raw input from text field
-        String lastNameRaw = editTextLastName.getText().toString().trim(); //raw input from text field
-        String emailAddress = editTextEmailAddress.getText().toString().trim();
+        String firstNameRaw = editTextFirstName.getText().toString().trim().toLowerCase(); //raw input from text field
+        String lastNameRaw = editTextLastName.getText().toString().trim().toLowerCase(); //raw input from text field
+        String emailAddress = editTextEmailAddress.getText().toString().trim().toLowerCase();
         String address = editTextAddress.getText().toString().trim();
         String creditCard = editTextCreditCard.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
