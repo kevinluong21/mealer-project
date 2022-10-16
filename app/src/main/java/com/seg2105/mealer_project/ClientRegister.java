@@ -132,8 +132,8 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
         && !TextUtils.isEmpty(creditCard) && !TextUtils.isEmpty(password)) {
             MainActivity.checkUser(emailAddress, new MyCallback<Person>() {
                 @Override
-                public void onCallback(Person value) {
-                    if (currentUser == null) { //no account exists yet with this email
+                public void onCallback(Person user) {
+                    if (user == null) { //no account exists yet with this email
                         Person newClient = new Client(firstName, lastName, emailAddress, password, address, creditCard);
                         users.child(emailAddress).setValue(newClient);
                         MainActivity.setCurrentUser(newClient);

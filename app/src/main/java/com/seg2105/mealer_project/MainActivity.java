@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,91 +69,56 @@ public class MainActivity extends AppCompatActivity {
         String emailAddress = editTextEmailAddress.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
+        currentUser = null;
         textErrorMessage.setText("");
 
         if (!TextUtils.isEmpty(emailAddress) && !TextUtils.isEmpty(password)) { //check if username and password are NOT empty
-            checkUser(emailAddress, new MyCallback<Person>() {
+            checkUser(emailAddress, new MyCallback<Person>() { //the MyCallback interface is used to deal with the asynchronous searching of the database
+                //essentially, searching a database runs in the background so this interface ensures that we do not let it slip into the background
+                //so that a value can be returned when it is ready and not just 'null'
                 @Override
-                public void onCallback(Person value) {
-                    currentUser = value;
-                    if (currentUser != null) { //match found so currentUser stores the user from the database
+                public void onCallback(Person user) { //waits until the search is done and the user that was found is returned (as an argument)
+                    //if no user is found, return null
+                    if (user != null) { //match found
+                        currentUser = user;
                         if (!currentUser.accountPassword.equals(password)) { //check that the passwords match
                             textErrorMessage.setText("Incorrect password");
-                        }
-                        else { //correct username and password
+                        } else { //correct username and password
                             Toast.makeText(MainActivity.this, "Signed in as " + currentUser.firstName, Toast.LENGTH_LONG).show(); //display Toast of successful log in
                         }
-                    }
-                    else { //user is not found in database
+                    } else { //user is not found in database (it is null)
                         textErrorMessage.setText("An account with this email does not exist");
                     }
                 }
             });
-//            if (currentUser != null) { //match found so currentUser stores the user from the database
-//                if (!currentUser.accountPassword.equals(password)) { //check that the passwords match
-//                    textErrorMessage.setText("Incorrect password");
-//                }
-//                else { //correct username and password
-//                    Toast.makeText(MainActivity.this, "Signed in as " + currentUser.firstName, Toast.LENGTH_LONG).show(); //display Toast of successful log in
-//                }
-//            }
-//            else { //user is not found in database
-//                textErrorMessage.setText("An account with this email does not exist");
-//            }
-        }
-        else { //username and password text fields are empty
+        } else { //username and password text fields are empty
             textErrorMessage.setText("Email address and password cannot be empty");
         }
     }
 
     protected static void checkUser(String emailAddress, MyCallback<Person> myCallback) { //check for user in database by searching using the email and stores the match in the currentUser object
         DatabaseReference users = FirebaseDatabase.getInstance().getReference("users");
-        users.orderByKey().equalTo(emailAddress).addChildEventListener(new ChildEventListener() {
+        users.child(emailAddress).addListenerForSingleValueEvent(new ValueEventListener() { //reads the database for all children with the matching email address
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                /*the getValue method returns an object of the inputted class. however, if Person.class is
-                *inputted, an error will occur because Person is not an instantiable object. as a
-                * temporary workaround, we must test that the returns of getValue are not null for
-                * each class because if a user exists but it is not of that class,
-                * it will return null and currentUser will then store null (which indicates
-                * that there was no user in the database in the login method). */
-                Person user;
-                if (snapshot.getValue(Administrator.class) != null) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Person user; //temporary Person object
+                if (snapshot.getValue(Administrator.class) != null) { //checks if the user is an Administrator object
                     user = snapshot.getValue(Administrator.class);
-                    myCallback.onCallback(user);
-                }
-                else if (snapshot.getValue(Cook.class) != null) {
+                    myCallback.onCallback(user); //calls the onCallback method defined in the myCallback interface that was passed as an argument to this method
+                } else if (snapshot.getValue(Cook.class) != null) { //checks if the user is a Cook object
                     user = snapshot.getValue(Cook.class);
                     myCallback.onCallback(user);
-                }
-                else if (snapshot.getValue(Client.class) != null) {
+                } else if (snapshot.getValue(Client.class) != null) { //checks if the user is a Client object
                     user = snapshot.getValue(Client.class);
                     myCallback.onCallback(user);
                 }
-                else {
+                else { //user is not found so call the method with a null Person object (null means no user was found)
                     myCallback.onCallback(null);
                 }
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
+            public void onCancelled(@NonNull DatabaseError error) {}
         });
     }
 
