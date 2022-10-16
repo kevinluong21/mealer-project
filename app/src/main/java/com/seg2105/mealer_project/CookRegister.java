@@ -108,9 +108,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
     public void register(View v) { //still need to validate inputs
         String firstNameRaw = editTextFirstName.getText().toString().trim(); //raw input from text field
-        String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name (does not work for multiple first names)
         String lastNameRaw = editTextLastName.getText().toString().trim(); //raw input from text field
-        String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
         String emailAddress = editTextEmailAddress.getText().toString().trim();
         String address = editTextAddress.getText().toString().trim();
         String description = editTextDescription.getText().toString().trim();
@@ -119,13 +117,15 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
         textCookErrorMessage.setText("");
 
-        if (!TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName) && !TextUtils.isEmpty(emailAddress) && !TextUtils.isEmpty(address)
-                && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(password)) {
+        if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddress) && !TextUtils.isEmpty(address)
+                && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(voidCheque) && !TextUtils.isEmpty(password)) {
+            String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name (does not work for multiple first names)
+            String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
             MainActivity.checkUser(emailAddress, new MyCallback<Person>() {
                 @Override
                 public void onCallback(Person user) {
                     if (user == null) { //no account exists yet with this email
-                        Person newClient = new Cook(firstName, lastName, emailAddress, password, address, description, voidCheque);
+                        Person newClient = new Cook(firstName, lastName, emailAddress, password, description, address, voidCheque);
                         users.child(emailAddress).setValue(newClient);
                         MainActivity.setCurrentUser(newClient);
                         Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
