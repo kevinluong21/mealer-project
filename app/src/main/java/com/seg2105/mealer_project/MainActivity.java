@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,6 +63,11 @@ public class MainActivity extends AppCompatActivity {
         currentUser = newUser;
     }
 
+    protected static String emailAddressToKey(String emailAddress) { //converts email address to a key (firebase does not allow certain characters in an email to be a key)
+        emailAddress = emailAddress.replace(".", ",");
+        return emailAddress;
+    }
+
     public void login(View v) { //still need to validate input
         String emailAddress = editTextEmailAddress.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -78,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     //if no user is found, return null
                     if (user != null) { //match found
                         currentUser = user;
-                        if (!currentUser.accountPassword.equals(password)) { //check that the passwords match
+                        if (!currentUser.accountPassword.equals(password)) { //passwords do not match
                             textErrorMessage.setText("Incorrect password");
                         } else { //correct username and password
                             Toast.makeText(MainActivity.this, "Signed in as " + currentUser.firstName + " " + currentUser.lastName, Toast.LENGTH_LONG).show(); //display Toast of successful log in
@@ -94,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected static void checkUser(String emailAddress, MyCallback<Person> myCallback) { //check for user in database by searching using the email and stores the match in the currentUser object
+        emailAddress = emailAddressToKey(emailAddress); //it can be called outside, but this ensures that if it is forgotten, it does not throw an error
         DatabaseReference users = FirebaseDatabase.getInstance().getReference("users");
         users.child(emailAddress).addListenerForSingleValueEvent(new ValueEventListener() { //reads the database for all children with the matching email address
             @Override

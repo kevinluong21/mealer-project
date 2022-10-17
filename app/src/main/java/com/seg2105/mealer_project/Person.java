@@ -7,7 +7,7 @@ public abstract class Person implements Serializable {
     protected String lastName;
     protected String emailAddress; //acts as the primary key
     protected String accountPassword;
-//    protected String address;
+    //    protected String address;
     protected String profilePhoto; //source of the photo
     protected String accountStatus; //online, offline
 
@@ -25,6 +25,11 @@ public abstract class Person implements Serializable {
 
     public String getAccountPassword() {
         return this.accountPassword;
+    }
+
+    public String keyToEmailAddress(String key) {
+        String email = key.replace(',', '.');
+        return email;
     }
 
 

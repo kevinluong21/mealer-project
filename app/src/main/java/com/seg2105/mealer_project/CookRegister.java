@@ -109,7 +109,8 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     public void register(View v) { //still need to validate inputs
         String firstNameRaw = editTextFirstName.getText().toString().trim().toLowerCase(); //raw input from text field
         String lastNameRaw = editTextLastName.getText().toString().trim().toLowerCase(); //raw input from text field
-        String emailAddress = editTextEmailAddress.getText().toString().trim().toLowerCase();
+        String emailAddressRaw = editTextEmailAddress.getText().toString().trim().toLowerCase(); //raw input from text field
+        String emailAddress = MainActivity.emailAddressToKey(emailAddressRaw); //email address properly formatted to firebase key
         String address = editTextAddress.getText().toString().trim();
         String description = editTextDescription.getText().toString().trim();
         String voidCheque = editTextVoidCheque.getText().toString().trim();
@@ -117,9 +118,9 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
         textCookErrorMessage.setText("");
 
-        if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddress) && !TextUtils.isEmpty(address)
+        if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(address)
                 && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(voidCheque) && !TextUtils.isEmpty(password)) {
-            String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name (does not work for multiple first names)
+            String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
             String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
             MainActivity.checkUser(emailAddress, new MyCallback<Person>() {
                 @Override
