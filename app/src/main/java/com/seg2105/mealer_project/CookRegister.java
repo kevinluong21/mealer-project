@@ -103,10 +103,10 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) { //method to occur when register button is clicked
-        register(v);
+        registerCook(v);
     }
 
-    public void register(View v) { //still need to validate inputs
+    public void registerCook(View v) { //still need to validate inputs
         String firstNameRaw = editTextFirstName.getText().toString().trim().toLowerCase(); //raw input from text field
         String lastNameRaw = editTextLastName.getText().toString().trim().toLowerCase(); //raw input from text field
         String emailAddressRaw = editTextEmailAddress.getText().toString().trim().toLowerCase(); //raw input from text field
