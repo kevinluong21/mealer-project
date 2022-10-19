@@ -11,7 +11,7 @@ public abstract class Person implements Serializable {
     protected String profilePhoto; //source of the photo
     protected String accountStatus; //online, offline
 
-    public String getFirstName() { //getter methods required for database
+    public String getFirstName() { //getter methods required for database serialization (if it is not public, the variable will NOT be stored in the database)
         return this.firstName;
     }
 

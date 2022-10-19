@@ -67,7 +67,7 @@ public class MainActivity extends Activity {
         return emailAddress;
     }
 
-    protected static String keyToEmailAddress(String key) {
+    protected static String keyToEmailAddress(String key) { //converts key (email without dot) back to the normal email format for display
         String email = key.replace(',', '.');
         return email;
     }

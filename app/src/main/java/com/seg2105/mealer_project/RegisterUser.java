@@ -16,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+/*this class is used for the activity_register_user fragment (choosing the role to register)*/
+
 public class RegisterUser extends AppCompatActivity {
 
     Button callClientFragment;
