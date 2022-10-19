@@ -72,6 +72,14 @@ public class MainActivity extends Activity {
         return email;
     }
 
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonLogin:
+                login(v);
+                break;
+        }
+    }
+
     public void login(View v) { //still need to validate input
         String emailAddress = editTextEmailAddress.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -92,6 +100,10 @@ public class MainActivity extends Activity {
                             textErrorMessage.setText("Incorrect password");
                         } else { //correct username and password
                             Toast.makeText(MainActivity.this, "Signed in as " + currentUser.firstName + " " + currentUser.lastName, Toast.LENGTH_LONG).show(); //display Toast of successful log in
+                            //goes to the welcome page
+                            //CRASHES NOT SURE WHY
+                            Intent i = new Intent(MainActivity.this, ClientWelcome.class);
+                            startActivity(i);
                         }
                     } else { //user is not found in database (it is null)
                         textErrorMessage.setText("An account with this email does not exist");

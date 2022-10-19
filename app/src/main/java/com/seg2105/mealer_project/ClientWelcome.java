@@ -21,6 +21,7 @@ public class ClientWelcome extends Activity {
     }
 
     public void clientLogOff (View v) {
+        //CRASHES ONLY WHEN ASKED TO GO TO MAIN ACTIVITY
         Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
     }
