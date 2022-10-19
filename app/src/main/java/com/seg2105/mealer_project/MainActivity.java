@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
     Button buttonLogin; //button for login
     TextView textErrorMessage; //display text for error messages
     protected static DatabaseReference users; //refers to the Firebase database. used to read and write to database.
-    protected static Person currentUser; //stores the current user logged in
+    protected static Person currentUser; //stores the current user logged in (is accessible across all package classes)
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,11 @@ public class MainActivity extends Activity {
     protected static String emailAddressToKey(String emailAddress) { //converts email address to a key (firebase does not allow certain characters in an email to be a key)
         emailAddress = emailAddress.replace(".", ",");
         return emailAddress;
+    }
+
+    protected static String keyToEmailAddress(String key) {
+        String email = key.replace(',', '.');
+        return email;
     }
 
     public void login(View v) { //still need to validate input

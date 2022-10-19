@@ -27,11 +27,6 @@ public abstract class Person implements Serializable {
         return this.accountPassword;
     }
 
-    public String keyToEmailAddress(String key) {
-        String email = key.replace(',', '.');
-        return email;
-    }
-
 
 //    public boolean checkName(String name) {
 //        name = name.trim();
