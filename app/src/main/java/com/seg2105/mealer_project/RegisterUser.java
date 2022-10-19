@@ -64,32 +64,5 @@ public class RegisterUser extends AppCompatActivity {
 
     }
 
-    protected static boolean checkName(String name){
-        name = name.trim();
-        if (!name.isEmpty()) { //check if String is empty
-            if (name.matches("[a-zA-Z][a-zA-Z\\-]*")) { //check if all characters in String are alphabets
-                return true;
-            }
-        }
-        return false;
-    }
 
-    protected static boolean checkEmail(String emailAddress){
-        //checks for numeric values, letters, underscores, hyphen, dots (periods),
-        // period not allowed beginning, consecutive periods not allowed, max of 64 character address
-        if (!emailAddress.isEmpty()) { //check if String is empty
-            if (emailAddress.matches("^(?=.{1,64}@)[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)(\\.[A-Za-z]{2,})$")) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    protected static boolean checkPassword(String password){
-        //Password checked to be at least 8 characters
-        if (password.length() >= 8){
-            return true;
-        }
-        return false;
-    }
 }
