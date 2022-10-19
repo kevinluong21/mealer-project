@@ -120,6 +120,19 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
 
         textClientErrorMessage.setText("");
 
+        if (CookRegister.checkEmail(emailAddress) == false){
+            textClientErrorMessage.setText("Email Address contains invalid characters");
+        }
+        if(CookRegister.checkName(firstNameRaw) == false){
+            textClientErrorMessage.setText("First name contains invalid characters");
+        }
+        if(CookRegister.checkName(lastNameRaw) == false){
+            textClientErrorMessage.setText("Last name contain invalid characters");
+        }
+        if(CookRegister.checkPassword(password) == false){
+            textClientErrorMessage.setText("Password must be at least 8 characters");
+        }
+
         if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(address)
         && !TextUtils.isEmpty(creditCard) && !TextUtils.isEmpty(password)) {
             String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name

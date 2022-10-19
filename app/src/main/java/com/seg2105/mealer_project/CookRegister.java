@@ -119,6 +119,19 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
         textCookErrorMessage.setText("");
 
+        if (checkEmail(emailAddress) == false){
+            textCookErrorMessage.setText("Email Address contains invalid characters");
+        }
+        if(checkName(firstNameRaw) == false){
+            textCookErrorMessage.setText("First name contains invalid characters");
+        }
+        if(checkName(lastNameRaw) == false){
+            textCookErrorMessage.setText("Last name contain invalid characters");
+        }
+        if(checkPassword(password) == false){
+            textCookErrorMessage.setText("Password must be at least 8 characters");
+        }
+
         if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(address)
                 && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(voidCheque) && !TextUtils.isEmpty(password)) {
             String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
