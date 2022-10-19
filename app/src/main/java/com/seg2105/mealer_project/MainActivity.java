@@ -92,6 +92,8 @@ public class MainActivity extends Activity {
                 //essentially, searching a database runs in the background so this interface ensures that we do not let it slip into the background
                 //so that a value can be returned when it is ready and not just 'null'
                 @Override
+                //the idea of the MyCallback interface was taken from: https://stackoverflow.com/questions/47847694/how-to-return-datasnapshot-value-as-a-result-of-a-method/47853774
+                //the implementation for the interface was done ourselves
                 public void onCallback(Person user) { //waits until the search is done and the user that was found is returned (as an argument)
                     //if no user is found, return null
                     if (user != null) { //match found
