@@ -128,7 +128,7 @@ public class MainActivity extends Activity {
                 the role stored in the database (since getValue will return a database child as an object of the class
                 that is passed to it)
                 we chose to use an Administrator class because Person is an abstract class and
-                the role variable is present in the Cook and Client classes and is accessible as well.
+                the role variable is present in the Cook and Client classes of Administrator as well and is accessible.
                 */
                 if (snapshot.exists()) {
                     if (snapshot.getValue(Administrator.class).getRole().equals("Administrator")) {

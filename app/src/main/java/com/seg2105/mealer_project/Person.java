@@ -2,7 +2,7 @@ package com.seg2105.mealer_project;
 
 import java.io.Serializable;
 
-public class Person implements Serializable {
+public abstract class Person implements Serializable {
     protected String role;
     protected String firstName;
     protected String lastName;
