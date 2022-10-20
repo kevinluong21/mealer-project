@@ -32,10 +32,11 @@ import com.google.firebase.database.DatabaseReference;
  * create an instance of this fragment.
  */
 public class CookRegister extends Fragment implements View.OnClickListener {
-    //void cheque
+    //void cheque//start
     ImageView voidCheque;
     Button uploadImage;
     private static int RESULT_LOAD_IMAGE;
+    //end
 
     Button btnBackCookToRegistration;
     EditText editTextFirstName; //first name text field
@@ -85,13 +86,14 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //
+        //start
         setContentView(R.layout.fragment_cook_register);
         voidCheque = (ImageView) findViewById(R.id.voidCheque);
         uploadImage = (Button) findViewById(R.id.uploadImage);
 
         //on click listener
         uploadImage.setOnClickListener(this);
+        //end
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -134,13 +136,14 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        //image for void cheque
+        //image for void cheque//start
         switch(v.getId()){
             case R.id.uploadImage:
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENt_URI);
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 break;
         }
+        //end
         switch (v.getId()) {
             case R.id.buttonCookRegister:
                 registerCook(v);
@@ -148,7 +151,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         }
     }
 
-    //CHEQUE
+    //CHEQUE//start
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -159,6 +162,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
             imageToUpload.setImageURI(null);
         }
     }
+    //end
 
     public void registerCook(View v) { //still need to validate inputs
         String firstNameRaw = editTextFirstName.getText().toString().trim().toLowerCase(); //raw input from text field
