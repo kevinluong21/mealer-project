@@ -1,5 +1,6 @@
 package com.seg2105.mealer_project;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -13,6 +14,11 @@ import android.widget.EditText;
 import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.app.Activity;
+
+
+
 
 import com.google.firebase.database.DatabaseReference;
 
@@ -105,9 +111,14 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
     }
 
     @Override
-    public void onClick(View v) { //method to occur when register button is clicked
-        registerClient(v);
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonClientRegister:
+                registerClient(v);
+                break;
+        }
     }
+
 
     public void registerClient(View v) { //still need to validate inputs
         String firstNameRaw = editTextFirstName.getText().toString().trim().toLowerCase(); //raw input from text field
@@ -145,6 +156,9 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
                         users.child(emailAddress).setValue(newClient);
                         MainActivity.setCurrentUser(newClient);
                         Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
+                        //button navigation
+                        Intent intent = new Intent(getActivity(), ClientWelcome.class);
+                        startActivity(intent);
                     }
                     else { //account already exists with this email
                         textClientErrorMessage.setText("An account already exists with this email");
