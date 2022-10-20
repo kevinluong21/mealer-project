@@ -2,20 +2,20 @@ package com.seg2105.mealer_project;
 
 public class CreditCard {
 
-    protected int expiryDate;
-    protected int cardNumber;
-    protected int CVV;
+    protected String expiryDate;
+    protected String cardNumber;
+    protected String CVV;
 
-    public CreditCard(int expiryDate, int cardNumber, int CVV){
+    public CreditCard(String expiryDate, String cardNumber, String CVV){
 
         this.expiryDate = expiryDate;
         this.cardNumber = cardNumber;
         this.CVV = CVV;
     }
 
-    protected int getExpiryDate(){return this.expiryDate;}
+    protected String getExpiryDate(){return this.expiryDate;}
 
-    protected int getCardNumber(){return this.cardNumber;}
+    protected String getCardNumber(){return this.cardNumber;}
 
-    protected int getCVV(){return this.CVV;}
+    protected String getCVV(){return this.CVV;}
 }

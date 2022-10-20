@@ -8,7 +8,6 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,8 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     EditText editTextFirstName; //first name text field
     EditText editTextLastName; //last name text field
     EditText editTextEmailAddress; //email address text field
-    EditText editTextAddress; //address text field
+    EditText editTextAddressNumber; //address number text field
+    EditText editTextAddressStreet; //address street text field
     EditText editTextDescription; //credit card text field
     EditText editTextVoidCheque; //void cheque text field
     EditText editTextPassword; //password text field
@@ -116,7 +116,8 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         editTextFirstName = (EditText) rootView.findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText) rootView.findViewById(R.id.editTextLastName);
         editTextEmailAddress = (EditText) rootView.findViewById(R.id.editTextEmailAddress);
-        editTextAddress = (EditText) rootView.findViewById(R.id.editTextAddress);
+        editTextAddressNumber = (EditText) rootView.findViewById(R.id.editTextAddressNumber);
+        editTextAddressStreet = (EditText) rootView.findViewById(R.id.editTextAddressStreet);
         editTextDescription = (EditText) rootView.findViewById(R.id.editTextDescription);
         //editTextVoidCheque = (EditText) rootView.findViewById(R.id.editTextVoidCheque);
         editTextPassword = (EditText) rootView.findViewById(R.id.editTextPassword);
@@ -160,7 +161,8 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         String lastNameRaw = editTextLastName.getText().toString().trim().toLowerCase(); //raw input from text field
         String emailAddressRaw = editTextEmailAddress.getText().toString().trim().toLowerCase(); //raw input from text field
         String emailAddress = MainActivity.emailAddressToKey(emailAddressRaw); //email address properly formatted to firebase key
-        String address = editTextAddress.getText().toString().trim();
+        String addressNumber = editTextAddressNumber.getText().toString().trim();
+        String addressStreet = editTextAddressStreet.getText().toString().trim();
         String description = editTextDescription.getText().toString().trim();
         String voidCheque = editTextVoidCheque.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
@@ -180,14 +182,15 @@ public class CookRegister extends Fragment implements View.OnClickListener {
             textCookErrorMessage.setText("Password must be at least 8 characters");
         }
 
-        if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(address)
-                && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(voidCheque) && !TextUtils.isEmpty(password)) {
+        if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
+                && !TextUtils.isEmpty(addressStreet) &&!TextUtils.isEmpty(description) && !TextUtils.isEmpty(voidCheque) && !TextUtils.isEmpty(password)) {
             String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
             String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
             MainActivity.checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() {
                 @Override
                 public void onCallback(Administrator admin, Cook cook, Client client) {
                     if (admin == null && cook == null && client == null) { //no account exists yet with this email
+                        Address address = new Address(addressNumber, addressStreet);
                         Cook newCook = new Cook(firstName, lastName, emailAddress, password, description, address, voidCheque);
                         users.child(emailAddress).setValue(newCook);
                         Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();

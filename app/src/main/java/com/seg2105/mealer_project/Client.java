@@ -5,14 +5,14 @@ import java.io.Serializable;
 public class Client extends Person implements Serializable {
 
     //instance variables
-    private String address;
-    private String creditCardInfo;
+    private Address address;
+    private CreditCard creditCardInfo;
 
     public Client() { //empty constructor is needed for database!
 
     }
 
-    public Client(String firstName, String lastName, String emailAddress, String accountPassword, String address, String creditCardInfo) {
+    public Client(String firstName, String lastName, String emailAddress, String accountPassword, Address address, CreditCard creditCardInfo) {
         this.role = "Client";
         this.firstName = firstName;
         this.lastName = lastName;
@@ -22,11 +22,11 @@ public class Client extends Person implements Serializable {
         this.creditCardInfo = creditCardInfo;
     }
 
-    public String getAddress() { //getter methods required for database serialization
+    public Address getAddress() { //getter methods required for database serialization
         return address;
     }
 
-    public String getCreditCardInfo() {
+    public CreditCard getCreditCardInfo() {
         return this.creditCardInfo;
     }
 

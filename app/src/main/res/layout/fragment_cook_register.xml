@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#B2E6D6"
     android:clickable="true"
     android:focusable="true"
-    android:visibility="visible"
 
-    tools:context=".ClientRegister"
-    android:background = "@color/blue_pastel">
+    android:visibility="visible"
+    tools:context=".ClientRegister">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,14 +25,16 @@
             android:layout_height="wrap_content"
             android:text="Cook Registration Form"
 
-            android:textSize="20sp" />
+            android:textColor="#2E4A31"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextFirstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter your first name"
+            android:hint="First Name"
             android:inputType="textPersonName"
             android:textSize="24sp" />
 
@@ -41,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter your last name"
+            android:hint="Last Name"
             android:inputType="textPersonName"
             android:textSize="24sp" />
 
@@ -50,16 +52,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter your email address"
+            android:hint="Email Address"
             android:inputType="textPersonName"
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextAddress"
+            android:id="@+id/editTextAddressNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter your pick up address"
+            android:hint="Pick-Up Street Number"
+            android:inputType="textPersonName"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editTextAddressStreet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Pick-Up Street Name"
             android:inputType="textPersonName"
             android:textSize="24sp" />
 
@@ -68,7 +79,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter your description"
+            android:hint="Description (Meals/Info)"
             android:inputType="textPersonName"
             android:textColor="#668C96"
             android:textSize="24sp" />

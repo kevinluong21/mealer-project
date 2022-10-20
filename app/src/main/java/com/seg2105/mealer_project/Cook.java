@@ -7,7 +7,7 @@ import java.util.Queue;
 public class Cook extends Person implements Serializable {
 
     private String description;
-    private String address;
+    private Address address;
     private String voidCheque;
 
     private int soldMeals;
@@ -21,7 +21,7 @@ public class Cook extends Person implements Serializable {
 
     }
 
-    public Cook (String firstName, String lastName, String emailAddress, String accountPassword, String description, String address, String voidCheque){
+    public Cook (String firstName, String lastName, String emailAddress, String accountPassword, String description, Address address, String voidCheque){
         this.role = "Cook";
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,7 +35,7 @@ public class Cook extends Person implements Serializable {
         this.customerRating = 0;
     }
 
-    public String getAddress() { //getter methods required for database serialization
+    public Address getAddress() { //getter methods required for database serialization
         return this.address;
     }
 

@@ -5,7 +5,7 @@
     android:id="@+id/clientConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lilac"
+    android:background="#B2E6D6"
     android:clickable="true"
 
 
@@ -27,14 +27,16 @@
             android:layout_height="wrap_content"
             android:text="Client Registration Form"
 
-            android:textSize="20sp" />
+            android:textColor="#2E4A31"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextFirstName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter your first name"
+            android:hint="First Name"
             android:inputType="textPersonName"
             android:textSize="24sp" />
 
@@ -43,7 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter your last name"
+            android:hint="Last Name"
             android:inputType="textPersonName"
             android:textSize="24sp" />
 
@@ -52,25 +54,52 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter your email address"
+            android:hint="Email Address"
             android:inputType="textPersonName"
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextAddress"
+            android:id="@+id/editTextAddressNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter your delivery address"
+            android:hint="Your Street Number"
             android:inputType="textPersonName"
             android:textSize="24sp" />
 
         <EditText
-            android:id="@+id/editTextCreditCard"
+            android:id="@+id/editTextAddressStreet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Enter your credit card"
+            android:hint="Your Street Name"
+            android:inputType="textPersonName"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editTextCreditCardNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Credit Card Number"
+            android:inputType="textPersonName"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editTextCreditCardCVV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Credit Card CVV"
+            android:inputType="textPersonName"
+            android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/editTextCreditCardExpiryDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Card Expiry Date (xx/xx)"
             android:inputType="textPersonName"
             android:textSize="24sp" />
 

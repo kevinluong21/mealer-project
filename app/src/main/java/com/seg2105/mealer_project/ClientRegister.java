@@ -15,10 +15,6 @@ import android.text.TextUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.app.Activity;
-
-
-
 
 import com.google.firebase.database.DatabaseReference;
 
@@ -35,8 +31,11 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
     EditText editTextFirstName; //first name text field
     EditText editTextLastName; //last name text field
     EditText editTextEmailAddress; //email address text field
-    EditText editTextAddress; //address text field
-    EditText editTextCreditCard; //credit card text field
+    EditText editTextAddressNumber; //address number text field
+    EditText editTextAddressStreet; //address street text field
+    EditText editTextCreditCardNumber; //credit card number text field
+    EditText editTextCreditCardCVV; //credit card CVV text field
+    EditText editTextCreditCardExpiryDate; //credit card expiry date text field
     EditText editTextPassword; //password text field
     TextView textClientErrorMessage; //error message text view
     Button buttonClientRegister; //register button
@@ -108,8 +107,11 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
         editTextFirstName = (EditText) rootView.findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText) rootView.findViewById(R.id.editTextLastName);
         editTextEmailAddress = (EditText) rootView.findViewById(R.id.editTextEmailAddress);
-        editTextAddress = (EditText) rootView.findViewById(R.id.editTextAddress);
-        editTextCreditCard = (EditText) rootView.findViewById(R.id.editTextCreditCard);
+        editTextAddressNumber = (EditText) rootView.findViewById(R.id.editTextAddressNumber);
+        editTextAddressStreet = (EditText) rootView.findViewById(R.id.editTextAddressStreet);
+        editTextCreditCardNumber = (EditText) rootView.findViewById(R.id.editTextCreditCardNumber);
+        editTextCreditCardCVV = (EditText) rootView.findViewById(R.id.editTextCreditCardCVV);
+        editTextCreditCardExpiryDate = (EditText) rootView.findViewById(R.id.editTextCreditCardExpiryDate);
         editTextPassword = (EditText) rootView.findViewById(R.id.editTextPassword);
         textClientErrorMessage = (TextView) rootView.findViewById(R.id.textClientErrorMessage);
         buttonClientRegister = (Button) rootView.findViewById(R.id.buttonClientRegister);
@@ -134,8 +136,11 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
         String lastNameRaw = editTextLastName.getText().toString().trim().toLowerCase(); //raw input from text field
         String emailAddressRaw = editTextEmailAddress.getText().toString().trim().toLowerCase(); //raw input from text field
         String emailAddress = MainActivity.emailAddressToKey(emailAddressRaw); //email address properly formatted to a firebase key
-        String address = editTextAddress.getText().toString().trim();
-        String creditCard = editTextCreditCard.getText().toString().trim();
+        String addressNumber = editTextAddressNumber.getText().toString().trim();
+        String addressStreet = editTextAddressStreet.getText().toString().trim();
+        String creditCardNumber = editTextCreditCardNumber.getText().toString().trim();
+        String creditCardCVV = editTextCreditCardCVV.getText().toString().trim();
+        String creditCardExpiryDate = editTextCreditCardExpiryDate.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
         textClientErrorMessage.setText("");
@@ -153,15 +158,17 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
             textClientErrorMessage.setText("Password must be at least 8 characters");
         }
 
-        if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(address)
-        && !TextUtils.isEmpty(creditCard) && !TextUtils.isEmpty(password)) {
+        if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
+        && !TextUtils.isEmpty(addressNumber) && !TextUtils.isEmpty(creditCardNumber) && !TextUtils.isEmpty(creditCardCVV) && !TextUtils.isEmpty(creditCardExpiryDate) && !TextUtils.isEmpty(password)) {
             String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
             String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
             MainActivity.checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() {
                 @Override
                 public void onCallback(Administrator admin, Cook cook, Client client) {
                     if (admin == null && cook == null && client == null) { //no account exists yet with this email
-                        Client newClient = new Client(firstName, lastName, emailAddress, password, address, creditCard);
+                        Address address = new Address(addressNumber,addressStreet);
+                        CreditCard card = new CreditCard(creditCardExpiryDate, creditCardNumber, creditCardCVV);
+                        Client newClient = new Client(firstName, lastName, emailAddress, password, address, card);
                         users.child(emailAddress).setValue(newClient);
                         Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
                         //button navigation
