@@ -1,8 +1,11 @@
 package com.seg2105.mealer_project;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -10,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import android.widget.EditText;
 import android.text.TextUtils;
@@ -24,6 +28,10 @@ import com.google.firebase.database.DatabaseReference;
  * create an instance of this fragment.
  */
 public class CookRegister extends Fragment implements View.OnClickListener {
+    //void cheque
+    ImageView voidCheque;
+    Button uploadImage;
+    //private static final int RESULT_LOAD_IMAGE;
 
     Button btnBackCookToRegistration;
     EditText editTextFirstName; //first name text field
@@ -71,6 +79,14 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        /*
+        setContentView(R.layout.fragment_cook_register);
+        voidCheque = (ImageView) findViewById(R.id.voidCheque);
+        uploadImage = (Button) findViewById(R.id.uploadImage);*/
+
+        //on click listener
+        uploadImage.setOnClickListener(this);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -102,7 +118,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         editTextEmailAddress = (EditText) rootView.findViewById(R.id.editTextEmailAddress);
         editTextAddress = (EditText) rootView.findViewById(R.id.editTextAddress);
         editTextDescription = (EditText) rootView.findViewById(R.id.editTextDescription);
-        editTextVoidCheque = (EditText) rootView.findViewById(R.id.editTextVoidCheque);
+        //editTextVoidCheque = (EditText) rootView.findViewById(R.id.editTextVoidCheque);
         editTextPassword = (EditText) rootView.findViewById(R.id.editTextPassword);
         textCookErrorMessage = (TextView) rootView.findViewById(R.id.textCookErrorMessage);
         buttonCookRegister = (Button) rootView.findViewById(R.id.buttonCookRegister);
@@ -114,12 +130,30 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        //image for void cheque
+        switch(v.getId()){
+            case R.id.uploadImage:
+                //Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENt_URI);
+                //startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                break;
+        }
         switch (v.getId()) {
             case R.id.buttonCookRegister:
                 registerCook(v);
                 break;
         }
     }
+
+    //CHEQUE
+    /*
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null){
+            Uri selectedImage = data.getData();
+            imageToUpload.setImageURI(selectedImage);
+        }
+    }*/
 
     public void registerCook(View v) { //still need to validate inputs
         String firstNameRaw = editTextFirstName.getText().toString().trim().toLowerCase(); //raw input from text field
