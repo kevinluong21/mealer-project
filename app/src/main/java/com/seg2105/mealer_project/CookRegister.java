@@ -1,5 +1,6 @@
 package com.seg2105.mealer_project;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -103,8 +104,12 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) { //method to occur when register button is clicked
-        registerCook(v);
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.buttonCookRegister:
+                registerCook(v);
+                break;
+        }
     }
 
     public void registerCook(View v) { //still need to validate inputs
@@ -144,6 +149,9 @@ public class CookRegister extends Fragment implements View.OnClickListener {
                         users.child(emailAddress).setValue(newClient);
                         MainActivity.setCurrentUser(newClient);
                         Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
+                        //button navigation
+                        Intent intent = new Intent(getActivity(), ClientWelcome.class);
+                        startActivity(intent);
                     }
                     else { //account already exists with this email
                         textCookErrorMessage.setText("An account already exists with this email");
