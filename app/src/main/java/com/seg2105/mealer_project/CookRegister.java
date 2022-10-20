@@ -79,10 +79,11 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
+
+        //
         setContentView(R.layout.fragment_cook_register);
         voidCheque = (ImageView) findViewById(R.id.voidCheque);
-        uploadImage = (Button) findViewById(R.id.uploadImage);*/
+        uploadImage = (Button) findViewById(R.id.uploadImage);
 
         //on click listener
         uploadImage.setOnClickListener(this);
@@ -111,8 +112,6 @@ public class CookRegister extends Fragment implements View.OnClickListener {
             }
         });
 
-
-
         editTextFirstName = (EditText) rootView.findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText) rootView.findViewById(R.id.editTextLastName);
         editTextEmailAddress = (EditText) rootView.findViewById(R.id.editTextEmailAddress);
@@ -134,8 +133,8 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         //image for void cheque
         switch(v.getId()){
             case R.id.uploadImage:
-                //Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENt_URI);
-                //startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENt_URI);
+                startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE);
                 break;
         }
         switch (v.getId()) {
@@ -146,7 +145,6 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     }
 
     //CHEQUE
-    /*
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -154,7 +152,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
             Uri selectedImage = data.getData();
             imageToUpload.setImageURI(selectedImage);
         }
-    }*/
+    }
 
     public void registerCook(View v) { //still need to validate inputs
         String firstNameRaw = editTextFirstName.getText().toString().trim().toLowerCase(); //raw input from text field
