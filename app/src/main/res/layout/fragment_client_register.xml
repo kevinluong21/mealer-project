@@ -111,10 +111,9 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/backClient"
+            android:id="@+id/btnBackToRegistration"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="pressBack"
             android:text="Back" />
     </LinearLayout>
 

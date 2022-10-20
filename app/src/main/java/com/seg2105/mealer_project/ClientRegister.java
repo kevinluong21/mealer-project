@@ -31,7 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 public class ClientRegister extends Fragment implements View.OnClickListener { //implements OnClickListener for fragment button
 
 
-    Button backClient;
+    Button btnBackClientToRegistration;
     EditText editTextFirstName; //first name text field
     EditText editTextLastName; //last name text field
     EditText editTextEmailAddress; //email address text field
@@ -93,7 +93,17 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.fragment_client_register, container, false);
-        backClient = rootView.findViewById(R.id.backClient);
+        btnBackClientToRegistration = (Button) rootView.findViewById(R.id.btnBackToRegistration);
+
+        btnBackClientToRegistration.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (getActivity(), RegisterUser.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         editTextFirstName = (EditText) rootView.findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText) rootView.findViewById(R.id.editTextLastName);
