@@ -1,17 +1,22 @@
 package com.seg2105.mealer_project;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.content.Intent;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 
 import android.widget.EditText;
@@ -30,7 +35,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     //void cheque
     ImageView voidCheque;
     Button uploadImage;
-    //private static final int RESULT_LOAD_IMAGE;
+    private static int RESULT_LOAD_IMAGE;
 
     Button btnBackCookToRegistration;
     EditText editTextFirstName; //first name text field
@@ -95,7 +100,6 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -150,7 +154,9 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && data != null){
             Uri selectedImage = data.getData();
-            imageToUpload.setImageURI(selectedImage);
+            //set to null for now NOT SURE HOW TO CHANGE THIS
+            ImageView imageToUpload = null;
+            imageToUpload.setImageURI(null);
         }
     }
 
