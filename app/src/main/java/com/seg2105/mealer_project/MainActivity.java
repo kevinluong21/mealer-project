@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +28,7 @@ public class MainActivity extends Activity {
     Button buttonLogin; //button for login
     TextView textErrorMessage; //display text for error messages
     protected static DatabaseReference users; //refers to the Firebase database. used to read and write to database.
-    protected static Person currentUser; //stores the current user logged in (is accessible across all package classes)
+    protected static Person currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,14 +55,6 @@ public class MainActivity extends Activity {
         return users;
     }
 
-    protected static Person getCurrentUser() { //method used across fragments
-        return currentUser;
-    }
-
-    protected static void setCurrentUser(Person newUser) { //method used across fragments
-        currentUser = newUser;
-    }
-
     protected static String emailAddressToKey(String emailAddress) { //converts email address to a key (firebase does not allow certain characters in an email to be a key)
         emailAddress = emailAddress.replace(".", ",");
         return emailAddress;
@@ -84,20 +77,27 @@ public class MainActivity extends Activity {
         String emailAddress = editTextEmailAddress.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        currentUser = null;
         textErrorMessage.setText("");
 
         if (!TextUtils.isEmpty(emailAddress) && !TextUtils.isEmpty(password)) { //check if username and password are NOT empty
-            checkUser(emailAddress, new MyCallback<Person>() { //the MyCallback interface is used to deal with the asynchronous searching of the database
+            checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() { //the MyCallback interface is used to deal with the asynchronous searching of the database
                 //essentially, searching a database runs in the background so this interface ensures that we do not let it slip into the background
                 //so that a value can be returned when it is ready and not just 'null'
                 @Override
                 //the idea of the MyCallback interface was taken from: https://stackoverflow.com/questions/47847694/how-to-return-datasnapshot-value-as-a-result-of-a-method/47853774
                 //the implementation for the interface was done ourselves
-                public void onCallback(Person user) { //waits until the search is done and the user that was found is returned (as an argument)
-                    //if no user is found, return null
-                    if (user != null) { //match found
-                        currentUser = user;
+                public void onCallback(Administrator admin, Cook cook, Client client) { //waits until the search is done and the user that was found is returned (as an argument)
+                    /*checkUser returns null for the other 2 arguments and the other one returns the correct user*/
+                    if (admin != null || cook != null || client != null) { //match found as one of 3 classes
+                        if (admin != null) {
+                            currentUser = admin;
+                        }
+                        else if (cook != null) {
+                            currentUser = cook;
+                        }
+                        else {
+                            currentUser = client;
+                        }
                         if (!currentUser.accountPassword.equals(password)) { //passwords do not match
                             textErrorMessage.setText("Incorrect password");
                         } else { //correct username and password
@@ -107,7 +107,7 @@ public class MainActivity extends Activity {
                             Intent i = new Intent(MainActivity.this, ClientWelcome.class);
                             startActivity(i);
                         }
-                    } else { //user is not found in database (it is null)
+                    } else { //user is not found in database (it is not an admin, cook, or client)
                         textErrorMessage.setText("An account with this email does not exist");
                     }
                 }
@@ -117,25 +117,35 @@ public class MainActivity extends Activity {
         }
     }
 
-    protected static void checkUser(String emailAddress, MyCallback<Person> myCallback) { //check for user in database by searching using the email and stores the match in the currentUser object
+    protected static void checkUser(String emailAddress, MyCallback<Administrator, Cook, Client> myCallback) { //check for user in database by searching using the email and stores the match in the currentUser object
         emailAddress = emailAddressToKey(emailAddress); //it can be called outside, but this ensures that if it is forgotten, it does not throw an error
         DatabaseReference users = FirebaseDatabase.getInstance().getReference("users");
-        users.child(emailAddress).addListenerForSingleValueEvent(new ValueEventListener() { //reads the database for all children with the matching email address
+        DatabaseReference childRef = users.child(emailAddress);
+        childRef.addListenerForSingleValueEvent(new ValueEventListener() { //reads the database for all children with the matching email address
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Person user; //temporary Person object
-                if (snapshot.getValue(Administrator.class) != null) { //checks if the user is an Administrator object
-                    user = snapshot.getValue(Administrator.class);
-                    myCallback.onCallback(user); //calls the onCallback method defined in the myCallback interface that was passed as an argument to this method
-                } else if (snapshot.getValue(Cook.class) != null) { //checks if the user is a Cook object
-                    user = snapshot.getValue(Cook.class);
-                    myCallback.onCallback(user);
-                } else if (snapshot.getValue(Client.class) != null) { //checks if the user is a Client object
-                    user = snapshot.getValue(Client.class);
-                    myCallback.onCallback(user);
+                /*temporarily retrieves child as an Administrator object, checks the role, and then gets the value as
+                the role stored in the database (since getValue will return a database child as an object of the class
+                that is passed to it)
+                we chose to use an Administrator class because Person is an abstract class and
+                the role variable is present in the Cook and Client classes and is accessible as well.
+                */
+                if (snapshot.exists()) {
+                    if (snapshot.getValue(Administrator.class).getRole().equals("Administrator")) {
+                        Administrator admin = snapshot.getValue(Administrator.class);
+                        myCallback.onCallback(admin, null, null);
+                    }
+                    else if (snapshot.getValue(Administrator.class).getRole().equals("Cook")) {
+                        Cook cook = snapshot.getValue(Cook.class);
+                        myCallback.onCallback(null, cook, null);
+                    }
+                    else if (snapshot.getValue(Administrator.class).getRole().equals("Client")) {
+                        Client client = snapshot.getValue(Client.class);
+                        myCallback.onCallback(null, null, client);
+                    }
                 }
                 else { //user is not found so call the method with a null Person object (null means no user was found)
-                    myCallback.onCallback(null);
+                    myCallback.onCallback(null, null, null);
                 }
             }
 

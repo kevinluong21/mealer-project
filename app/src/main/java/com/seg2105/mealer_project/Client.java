@@ -13,6 +13,7 @@ public class Client extends Person implements Serializable {
     }
 
     public Client(String firstName, String lastName, String emailAddress, String accountPassword, String address, String creditCardInfo) {
+        this.role = "Client";
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;

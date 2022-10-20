@@ -36,7 +36,6 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     TextView textCookErrorMessage; //error message text view
     Button buttonCookRegister; //register button
     DatabaseReference users = MainActivity.getUsers(); //get user database from MainActivity
-    Person currentUser = MainActivity.getCurrentUser(); //get currentUser from MainActivity
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -124,7 +123,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
         textCookErrorMessage.setText("");
 
-        if (checkEmail(emailAddress) == false){
+        if (checkEmail(emailAddressRaw) == false){
             textCookErrorMessage.setText("Email Address contains invalid characters");
         }
         if(checkName(firstNameRaw) == false){
@@ -141,13 +140,12 @@ public class CookRegister extends Fragment implements View.OnClickListener {
                 && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(voidCheque) && !TextUtils.isEmpty(password)) {
             String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
             String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
-            MainActivity.checkUser(emailAddress, new MyCallback<Person>() {
+            MainActivity.checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() {
                 @Override
-                public void onCallback(Person user) {
-                    if (user == null) { //no account exists yet with this email
-                        Person newClient = new Cook(firstName, lastName, emailAddress, password, description, address, voidCheque);
-                        users.child(emailAddress).setValue(newClient);
-                        MainActivity.setCurrentUser(newClient);
+                public void onCallback(Administrator admin, Cook cook, Client client) {
+                    if (admin == null && cook == null && client == null) { //no account exists yet with this email
+                        Cook newCook = new Cook(firstName, lastName, emailAddress, password, description, address, voidCheque);
+                        users.child(emailAddress).setValue(newCook);
                         Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
                         //button navigation
                         Intent intent = new Intent(getActivity(), ClientWelcome.class);

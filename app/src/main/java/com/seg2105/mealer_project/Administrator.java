@@ -11,6 +11,7 @@ public class Administrator extends Person implements Serializable {
 
     }
     public Administrator (String firstName, String lastName, String emailAddress, String accountPassword){
+        this.role = "Administrator";
         this.firstName = firstName;
         this. lastName = lastName;
         this.emailAddress = emailAddress;

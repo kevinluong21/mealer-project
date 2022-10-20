@@ -22,6 +22,7 @@ public class Cook extends Person implements Serializable {
     }
 
     public Cook (String firstName, String lastName, String emailAddress, String accountPassword, String description, String address, String voidCheque){
+        this.role = "Cook";
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;

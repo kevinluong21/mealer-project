@@ -41,7 +41,6 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
     TextView textClientErrorMessage; //error message text view
     Button buttonClientRegister; //register button
     DatabaseReference users = MainActivity.getUsers(); //get user database from MainActivity
-    Person currentUser = MainActivity.getCurrentUser(); //get currentUser from MainActivity
     //ConstraintLayout clientConsLayout;
 
 
@@ -148,13 +147,12 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
         && !TextUtils.isEmpty(creditCard) && !TextUtils.isEmpty(password)) {
             String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
             String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
-            MainActivity.checkUser(emailAddress, new MyCallback<Person>() {
+            MainActivity.checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() {
                 @Override
-                public void onCallback(Person user) {
-                    if (user == null) { //no account exists yet with this email
-                        Person newClient = new Client(firstName, lastName, emailAddress, password, address, creditCard);
+                public void onCallback(Administrator admin, Cook cook, Client client) {
+                    if (admin == null && cook == null && client == null) { //no account exists yet with this email
+                        Client newClient = new Client(firstName, lastName, emailAddress, password, address, creditCard);
                         users.child(emailAddress).setValue(newClient);
-                        MainActivity.setCurrentUser(newClient);
                         Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
                         //button navigation
                         Intent intent = new Intent(getActivity(), ClientWelcome.class);
