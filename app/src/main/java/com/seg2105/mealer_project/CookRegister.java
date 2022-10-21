@@ -177,7 +177,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     protected static boolean checkName(String name){
         name = name.trim();
         if (!name.isEmpty()) { //check if String is empty
-            if (name.matches("[a-zA-Z][a-zA-Z\\-]*")) { //check if all characters in String are alphabets
+            if (name.matches("[a-zA-Z\\-]*")) { //check if all characters in String are alphabets
                 return true;
             }
         }
@@ -185,10 +185,8 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     }
 
     protected static boolean checkEmail(String emailAddress){
-        //checks for numeric values, letters, underscores, hyphen, dots (periods),
-        // period not allowed beginning, consecutive periods not allowed, max of 64 character address
         if (!emailAddress.isEmpty()) { //check if String is empty
-            if (emailAddress.matches("^(?=.{1,64}@)[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)(\\.[A-Za-z]{2,})$")) {
+            if (emailAddress.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
                 return true;
             }
         }
@@ -204,14 +202,14 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     }
 
     protected static boolean checkAddressNumber(String number){
-        if(number.matches("[0-9]")){
+        if(number.matches("[0-9]*")){
             return true;
         }
         return false;
     }
 
     protected static boolean checkStreet(String street){
-        if(street.matches("[a-zA-Z][a-zA-Z\\-][.]*")){
+        if(street.matches("[a-zA-Z][a-zA-Z-.]*")){
            return true;
         }
         return false;

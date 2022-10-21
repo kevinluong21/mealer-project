@@ -176,21 +176,21 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
 
 
     protected static boolean checkCVV(String CVV){
-        if(CVV.matches("[0-9]") && CVV.length() == 3){
+        if(CVV.matches("[0-9]*") && CVV.length() == 3){
             return true;
         }
         return false;
     }
 
     protected static boolean checkCCExp(String ccExp){
-        if(ccExp.matches("[0-9][/]") && ccExp.length() == 5){
+        if(ccExp.matches("(?:0[1-9]|1[0-2])/[0-9]{2}") && ccExp.length() == 5){
             return true;
         }
         return false;
     }
 
     protected static boolean checkCCNumber(String ccNum){
-        if(ccNum.matches("[0-9]") && ccNum.length() == 16) {
+        if(ccNum.matches("[0-9]*") && ccNum.length() == 16) {
             return true;
         }
         return false;
