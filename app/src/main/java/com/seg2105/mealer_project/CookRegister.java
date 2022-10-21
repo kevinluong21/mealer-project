@@ -177,43 +177,31 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
         textCookErrorMessage.setText("");
 
-        if (checkEmail(emailAddressRaw) == false){
-            textCookErrorMessage.setText("Email Address contains invalid characters");
-        }
-        if(checkName(firstNameRaw) == false){
-            textCookErrorMessage.setText("First name contains invalid characters");
-        }
-        if(checkName(lastNameRaw) == false){
-            textCookErrorMessage.setText("Last name contain invalid characters");
-        }
-        if(checkPassword(password) == false){
-            textCookErrorMessage.setText("Password must be at least 8 characters");
-        }
+        if(inputValidation(firstNameRaw,lastNameRaw,emailAddress,addressNumber,addressStreet,password) == true){
 
-        if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
-                && !TextUtils.isEmpty(addressStreet) &&!TextUtils.isEmpty(description) && !TextUtils.isEmpty(voidCheque) && !TextUtils.isEmpty(password)) {
-            String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
-            String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
-            MainActivity.checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() {
-                @Override
-                public void onCallback(Administrator admin, Cook cook, Client client) {
-                    if (admin == null && cook == null && client == null) { //no account exists yet with this email
-                        Address address = new Address(addressNumber, addressStreet);
-                        Cook newCook = new Cook(firstName, lastName, emailAddress, password, description, address, voidCheque);
-                        users.child(emailAddress).setValue(newCook);
-                        Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
-                        //button navigation
-                        Intent intent = new Intent(getActivity(), ClientWelcome.class);
-                        startActivity(intent);
+            if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
+                    && !TextUtils.isEmpty(addressStreet) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(voidCheque) && !TextUtils.isEmpty(password)) {
+                String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
+                String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
+                MainActivity.checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() {
+                    @Override
+                    public void onCallback(Administrator admin, Cook cook, Client client) {
+                        if (admin == null && cook == null && client == null) { //no account exists yet with this email
+                            Address address = new Address(addressNumber, addressStreet);
+                            Cook newCook = new Cook(firstName, lastName, emailAddress, password, description, address, voidCheque);
+                            users.child(emailAddress).setValue(newCook);
+                            Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
+                            //button navigation
+                            Intent intent = new Intent(getActivity(), ClientWelcome.class);
+                            startActivity(intent);
+                        } else { //account already exists with this email
+                            textCookErrorMessage.setText("An account already exists with this email");
+                        }
                     }
-                    else { //account already exists with this email
-                        textCookErrorMessage.setText("An account already exists with this email");
-                    }
-                }
-            });
-        }
-        else { //at least one text field is empty
-            textCookErrorMessage.setText("All fields must be filled");
+                });
+            } else { //at least one text field is empty
+                textCookErrorMessage.setText("All fields must be filled");
+            }
         }
     }
 
@@ -244,5 +232,60 @@ public class CookRegister extends Fragment implements View.OnClickListener {
             return true;
         }
         return false;
+    }
+
+    protected static boolean checkAddressNumber(String number){
+        if(number.matches("[0-9]")){
+            return true;
+        }
+        return false;
+    }
+
+    protected static boolean checkStreet(String street){
+        if(street.matches("[a-zA-Z][a-zA-Z\\-][.]*")){
+           return true;
+        }
+        return false;
+    }
+
+    protected boolean inputValidation(String firstName, String lastName, String email, String addrNum, String addrStreet, String password){
+        //used to validate all of the different expected strings
+        if(checkName(firstName) == false) {
+            textCookErrorMessage.setText("First name contains invalid characters");
+            return false;
+        }
+        else{
+            if(checkName(lastName) == false){
+                textCookErrorMessage.setText("Last name contains invalid characters");
+                return false;
+            }
+            else{
+                if (checkEmail(email) == false){
+                    textCookErrorMessage.setText("Email Address contains invalid characters");
+                    return false;
+                }
+                else{
+                    if(checkAddressNumber(addrNum) == false){
+                        textCookErrorMessage.setText("Address number must contain only numbers");
+                        return false;
+                    }
+                    else{
+                        if(checkStreet(addrStreet) == false){
+                            textCookErrorMessage.setText("Street name contains invalid characters");
+                            return false;
+                        }
+                        else{
+                            if(checkPassword(password) == false){
+                                textCookErrorMessage.setText("Password must be at least 8 characters");
+                                return false;
+                            }
+                            else{
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

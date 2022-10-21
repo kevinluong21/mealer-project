@@ -145,44 +145,113 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
 
         textClientErrorMessage.setText("");
 
-        if (CookRegister.checkEmail(emailAddress) == false){
-            textClientErrorMessage.setText("Email Address contains invalid characters");
-        }
-        if(CookRegister.checkName(firstNameRaw) == false){
-            textClientErrorMessage.setText("First name contains invalid characters");
-        }
-        if(CookRegister.checkName(lastNameRaw) == false){
-            textClientErrorMessage.setText("Last name contain invalid characters");
-        }
-        if(CookRegister.checkPassword(password) == false){
-            textClientErrorMessage.setText("Password must be at least 8 characters");
-        }
+        if (inputValidation(firstNameRaw,lastNameRaw,emailAddress,addressNumber,addressStreet,creditCardNumber,creditCardCVV,creditCardExpiryDate,password) == true) {
 
-        if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
-        && !TextUtils.isEmpty(addressNumber) && !TextUtils.isEmpty(creditCardNumber) && !TextUtils.isEmpty(creditCardCVV) && !TextUtils.isEmpty(creditCardExpiryDate) && !TextUtils.isEmpty(password)) {
-            String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
-            String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
-            MainActivity.checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() {
-                @Override
-                public void onCallback(Administrator admin, Cook cook, Client client) {
-                    if (admin == null && cook == null && client == null) { //no account exists yet with this email
-                        Address address = new Address(addressNumber,addressStreet);
-                        CreditCard card = new CreditCard(creditCardExpiryDate, creditCardNumber, creditCardCVV);
-                        Client newClient = new Client(firstName, lastName, emailAddress, password, address, card);
-                        users.child(emailAddress).setValue(newClient);
-                        Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
-                        //button navigation
-                        Intent intent = new Intent(getActivity(), ClientWelcome.class);
-                        startActivity(intent);
+            if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
+                    && !TextUtils.isEmpty(addressNumber) && !TextUtils.isEmpty(creditCardNumber) && !TextUtils.isEmpty(creditCardCVV) && !TextUtils.isEmpty(creditCardExpiryDate) && !TextUtils.isEmpty(password)) {
+                String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
+                String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
+                MainActivity.checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() {
+                    @Override
+                    public void onCallback(Administrator admin, Cook cook, Client client) {
+                        if (admin == null && cook == null && client == null) { //no account exists yet with this email
+                            Address address = new Address(addressNumber, addressStreet);
+                            CreditCard card = new CreditCard(creditCardExpiryDate, creditCardNumber, creditCardCVV);
+                            Client newClient = new Client(firstName, lastName, emailAddress, password, address, card);
+                            users.child(emailAddress).setValue(newClient);
+                            Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
+                            //button navigation
+                            Intent intent = new Intent(getActivity(), ClientWelcome.class);
+                            startActivity(intent);
+                        } else { //account already exists with this email
+                            textClientErrorMessage.setText("An account already exists with this email");
+                        }
                     }
-                    else { //account already exists with this email
-                        textClientErrorMessage.setText("An account already exists with this email");
+                });
+            } else { //at least one text field is empty
+                textClientErrorMessage.setText("All fields must be filled");
+            }
+        }
+    }
+
+
+    protected static boolean checkCVV(String CVV){
+        if(CVV.matches("[0-9]") && CVV.length() == 3){
+            return true;
+        }
+        return false;
+    }
+
+    protected static boolean checkCCExp(String ccExp){
+        if(ccExp.matches("[0-9][/]") && ccExp.length() == 5){
+            return true;
+        }
+        return false;
+    }
+
+    protected static boolean checkCCNumber(String ccNum){
+        if(ccNum.matches("[0-9]") && ccNum.length() == 16) {
+            return true;
+        }
+        return false;
+    }
+
+    protected boolean inputValidation(String firstName, String lastName, String email, String addrNum,
+                                      String addrStreet, String ccNum, String CVV, String ccExp, String password){
+        if(CookRegister.checkName(firstName) == false) {
+            textClientErrorMessage.setText("First name contains invalid characters");
+            return false;
+        }
+        else{
+            if(CookRegister.checkName(lastName) == false){
+                textClientErrorMessage.setText("Last name contains invalid characters");
+                return false;
+            }
+            else{
+                if (CookRegister.checkEmail(email) == false){
+                    textClientErrorMessage.setText("Email Address contains invalid characters");
+                    return false;
+                }
+                else{
+                    if(CookRegister.checkAddressNumber(addrNum) == false){
+                        textClientErrorMessage.setText("Address number must contain only numbers");
+                        return false;
+                    }
+                    else{
+                        if(CookRegister.checkStreet(addrStreet) == false){
+                            textClientErrorMessage.setText("Street name contains invalid characters");
+                            return false;
+                        }
+                        else{
+                            if(checkCCNumber(ccNum) == false){
+                                textClientErrorMessage.setText("Credit card must be only numbers and be 16 characters long");
+                                return false;
+                            }
+                            else{
+                                if(checkCVV(CVV) == false){
+                                    textClientErrorMessage.setText("CVV must be numbers and only 3 characters");
+                                    return false;
+                                }
+                                else{
+                                    if(checkCCExp(ccExp) == false){
+                                        textClientErrorMessage.setText("Expiry date must be in format xx/xx");
+                                        return false;
+                                    }
+                                    else{
+                                        if(CookRegister.checkPassword(password) == false){
+                                            textClientErrorMessage.setText("Password must be at least 8 characters long");
+                                            return false;
+                                        }
+                                        else{
+                                            return true;
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
-            });
-        }
-        else { //at least one text field is empty
-            textClientErrorMessage.setText("All fields must be filled");
+            }
         }
     }
 }
