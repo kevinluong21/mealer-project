@@ -14,8 +14,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteY="232dp">
+
+        <Button
+            android:id="@+id/btnBackToRegistration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="pressBack"
+            android:text="Back" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -72,6 +88,7 @@
             android:ems="10"
             android:hint="Pick-Up Street Name"
             android:inputType="textPersonName"
+            android:textColor="#668C96"
             android:textSize="24sp" />
 
         <EditText
@@ -83,6 +100,34 @@
             android:inputType="textPersonName"
             android:textColor="#668C96"
             android:textSize="24sp" />
+        <EditText
+            android:id="@+id/editTextVoidCheque"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Enter void cheque"
+            android:inputType="text"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btnSelectVoidCheque"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="Upload void cheque" />
+
+        <ImageView
+            android:id="@+id/imgViewCheque"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+
+            tools:src="@tools:sample/avatars" />
 
         <EditText
             android:id="@+id/editTextPassword"
@@ -93,25 +138,6 @@
             android:inputType="textPassword"
             android:textSize="24sp" />
 
-        <EditText
-            android:id="@+id/editTextVoidCheque"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter void cheque"
-            android:inputType="text"
-            android:textSize="24sp" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
-
-        <TextView
-            android:id="@+id/textCookErrorMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:textColor="#FF0000" />
 
         <Space
             android:layout_width="match_parent"
@@ -123,19 +149,14 @@
             android:layout_height="wrap_content"
             android:text="Register" />
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <Button
-            android:id="@+id/btnBackToRegistration"
-            android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/textCookErrorMessage"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="pressBack"
-            android:text="Back" />
+            android:textAlignment="center"
+            android:textColor="#FF0000"
+            android:textSize="20sp" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

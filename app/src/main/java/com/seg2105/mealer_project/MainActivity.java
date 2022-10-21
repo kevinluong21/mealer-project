@@ -5,7 +5,6 @@ import androidx.annotation.NonNull;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -104,7 +103,7 @@ public class MainActivity extends Activity {
                             Toast.makeText(MainActivity.this, "Signed in as " + currentUser.firstName + " " + currentUser.lastName, Toast.LENGTH_LONG).show(); //display Toast of successful log in
                             //goes to the welcome page
                             //CRASHES NOT SURE WHY
-                            Intent i = new Intent(MainActivity.this, ClientWelcome.class);
+                            Intent i = new Intent(MainActivity.this, UserWelcome.class);
                             startActivity(i);
                         }
                     } else { //user is not found in database (it is not an admin, cook, or client)

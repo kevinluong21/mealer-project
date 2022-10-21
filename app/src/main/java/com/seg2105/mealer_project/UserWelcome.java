@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.TextView;
 
 
-public class ClientWelcome extends Activity {
+public class UserWelcome extends Activity {
 
     Person currentUser = MainActivity.currentUser; //get currentUser from MainActivity
     //Cook cookUser;

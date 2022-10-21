@@ -4,7 +4,10 @@ import static android.app.Activity.RESULT_OK;
 
 import static com.seg2105.mealer_project.R.id.editTextVoidCheque;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,10 +26,13 @@ import android.widget.ImageView;
 
 import android.widget.EditText;
 import android.text.TextUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
+
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +54,13 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     TextView textCookErrorMessage; //error message text view
     Button buttonCookRegister; //register button
     DatabaseReference users = MainActivity.getUsers(); //get user database from MainActivity
+
+
+    //AP uploading the image
+    Button btnSelectVoidCheque;
+    ImageView imgViewPreviewSelectedImage;
+    int SELECT_PICTURE = 200;
+    private Uri filePath;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -120,7 +133,45 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
         buttonCookRegister.setOnClickListener(this); //allows register button to be clicked
 
+
+        imgViewPreviewSelectedImage = (ImageView) rootView.findViewById(R.id.imgViewCheque);
+
+        btnSelectVoidCheque = (Button) rootView.findViewById(R.id.btnSelectVoidCheque);
+        btnSelectVoidCheque.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                imageChooser();
+            }
+
+        });
+
         return rootView;
+    }
+
+    public void imageChooser() {
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(i,"Select Picture"),SELECT_PICTURE);
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == SELECT_PICTURE && resultCode == Activity.RESULT_OK
+                && data != null && data.getData() != null )
+        {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                imgViewPreviewSelectedImage.setImageBitmap(bitmap);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+
+        }
     }
 
     @Override
@@ -161,7 +212,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
                             users.child(emailAddress).setValue(newCook);
                             Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
                             //button navigation
-                            Intent intent = new Intent(getActivity(), ClientWelcome.class);
+                            Intent intent = new Intent(getActivity(), UserWelcome.class);
                             startActivity(intent);
                         } else { //account already exists with this email
                             textCookErrorMessage.setText("An account already exists with this email");

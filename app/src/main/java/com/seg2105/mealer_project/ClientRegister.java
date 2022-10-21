@@ -161,7 +161,7 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
                             users.child(emailAddress).setValue(newClient);
                             Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
                             //button navigation
-                            Intent intent = new Intent(getActivity(), ClientWelcome.class);
+                            Intent intent = new Intent(getActivity(), UserWelcome.class);
                             startActivity(intent);
                         } else { //account already exists with this email
                             textClientErrorMessage.setText("An account already exists with this email");
