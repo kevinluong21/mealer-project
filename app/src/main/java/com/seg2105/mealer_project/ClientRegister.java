@@ -145,7 +145,7 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
 
         textClientErrorMessage.setText("");
 
-        if (inputValidation(firstNameRaw,lastNameRaw,emailAddress,addressNumber,addressStreet,creditCardNumber,creditCardCVV,creditCardExpiryDate,password) == true) {
+        if (inputValidation(firstNameRaw,lastNameRaw,emailAddressRaw,addressNumber,addressStreet,creditCardNumber,creditCardCVV,creditCardExpiryDate,password) == true) {
 
             if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
                     && !TextUtils.isEmpty(addressNumber) && !TextUtils.isEmpty(creditCardNumber) && !TextUtils.isEmpty(creditCardCVV) && !TextUtils.isEmpty(creditCardExpiryDate) && !TextUtils.isEmpty(password)) {
@@ -159,6 +159,7 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
                             CreditCard card = new CreditCard(creditCardExpiryDate, creditCardNumber, creditCardCVV);
                             Client newClient = new Client(firstName, lastName, emailAddress, password, address, card);
                             users.child(emailAddress).setValue(newClient);
+                            MainActivity.currentUser = newClient;
                             Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
                             //button navigation
                             Intent intent = new Intent(getActivity(), UserWelcome.class);

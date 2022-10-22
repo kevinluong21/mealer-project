@@ -197,7 +197,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
         textCookErrorMessage.setText("");
 
-        if(inputValidation(firstNameRaw,lastNameRaw,emailAddress,addressNumber,addressStreet,password) == true){
+        if(inputValidation(firstNameRaw,lastNameRaw,emailAddressRaw,addressNumber,addressStreet,password) == true){
 
             if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
                     && !TextUtils.isEmpty(addressStreet) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(voidCheque) && !TextUtils.isEmpty(password)) {
@@ -210,6 +210,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
                             Address address = new Address(addressNumber, addressStreet);
                             Cook newCook = new Cook(firstName, lastName, emailAddress, password, description, address, voidCheque);
                             users.child(emailAddress).setValue(newCook);
+                            MainActivity.currentUser = newCook;
                             Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
                             //button navigation
                             Intent intent = new Intent(getActivity(), UserWelcome.class);

@@ -1,6 +1,8 @@
 package com.seg2105.mealer_project;
 
-public class Address {
+import java.io.Serializable;
+
+public class Address implements Serializable {
 
     protected String streetNum;
     protected String streetName;
@@ -10,7 +12,7 @@ public class Address {
         this.streetName = streetName;
     }
 
-    protected String getStreetName(){return this.streetName;}
+    public String getStreetName(){return this.streetName;}
 
-    protected String getStreetNum(){return this.streetNum;}
+    public String getStreetNum(){return this.streetNum;}
 }

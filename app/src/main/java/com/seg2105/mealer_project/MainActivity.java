@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
     Button buttonLogin; //button for login
     TextView textErrorMessage; //display text for error messages
     protected static DatabaseReference users; //refers to the Firebase database. used to read and write to database.
-    protected static Person currentUser;
+    protected static Person currentUser; //stores the current user that is logged in
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,9 @@ public class MainActivity extends Activity {
                 //the idea of the MyCallback interface was taken from: https://stackoverflow.com/questions/47847694/how-to-return-datasnapshot-value-as-a-result-of-a-method/47853774
                 //the implementation for the interface was done ourselves
                 public void onCallback(Administrator admin, Cook cook, Client client) { //waits until the search is done and the user that was found is returned (as an argument)
-                    /*checkUser returns null for the other 2 arguments and the other one returns the correct user*/
+                    /*checkUser returns null if the user is not of that role and returns the actual value in the argument where the user is of that role
+                    * (e.g. if a Client is found, the return would be (null, null, clientFound)
+                    * this approach was used to maintain the original class of the object being passed as an argument*/
                     if (admin != null || cook != null || client != null) { //match found as one of 3 classes
                         if (admin != null) {
                             currentUser = admin;
@@ -99,6 +101,7 @@ public class MainActivity extends Activity {
                         }
                         if (!currentUser.accountPassword.equals(password)) { //passwords do not match
                             textErrorMessage.setText("Incorrect password");
+                            currentUser = null;
                         } else { //correct username and password
                             Toast.makeText(MainActivity.this, "Signed in as " + currentUser.firstName + " " + currentUser.lastName, Toast.LENGTH_LONG).show(); //display Toast of successful log in
                             //goes to the welcome page

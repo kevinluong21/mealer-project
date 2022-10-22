@@ -8,9 +8,8 @@ public abstract class Person implements Serializable {
     protected String lastName;
     protected String emailAddress; //acts as the primary key
     protected String accountPassword;
-    //    protected String address;
-    protected String profilePhoto; //source of the photo
-    protected String accountStatus; //online, offline
+    protected String profilePhoto; //source of the photo (not implemented in this deliverable)
+    protected String accountStatus; //online, offline (not implemented in this deliverable)
 
     public String getRole() {
         return this.role;

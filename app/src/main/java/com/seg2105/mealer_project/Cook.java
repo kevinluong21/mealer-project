@@ -1,5 +1,7 @@
 package com.seg2105.mealer_project;
 
+import android.graphics.Bitmap;
+
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -8,7 +10,8 @@ public class Cook extends Person implements Serializable {
 
     private String description;
     private Address address;
-    private String voidCheque;
+    private String voidCheque; //(not pushed into database yet)
+//    Bitmap voidCheque;
 
     private int soldMeals;
     private int customerRating;

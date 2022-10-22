@@ -1,6 +1,8 @@
 package com.seg2105.mealer_project;
 
-public class CreditCard {
+import java.io.Serializable;
+
+public class CreditCard implements Serializable {
 
     protected String expiryDate;
     protected String cardNumber;
