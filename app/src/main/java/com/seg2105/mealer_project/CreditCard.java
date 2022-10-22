@@ -15,9 +15,9 @@ public class CreditCard implements Serializable {
         this.CVV = CVV;
     }
 
-    protected String getExpiryDate(){return this.expiryDate;}
+    public String getExpiryDate(){return this.expiryDate;}
 
-    protected String getCardNumber(){return this.cardNumber;}
+    public String getCardNumber(){return this.cardNumber;}
 
-    protected String getCVV(){return this.CVV;}
+    public String getCVV(){return this.CVV;}
 }
