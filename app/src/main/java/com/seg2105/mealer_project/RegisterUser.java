@@ -2,6 +2,8 @@ package com.seg2105.mealer_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,8 +26,9 @@ public class RegisterUser extends AppCompatActivity {
     Button callCookFragment;
     LinearLayout selectRoleText;
     LinearLayout layoutRoles;
-    Button backClient;
+    Button btnBackToMain;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +41,15 @@ public class RegisterUser extends AppCompatActivity {
         //callClientFragment.setOnClickListener(this);
 
         callCookFragment = findViewById(R.id.callCookFragment);
-        //backClient = findViewById(R.id.backClient);
-        //View v = inflater
+        btnBackToMain = (Button) findViewById(R.id.btnBackToMain);
+
+        btnBackToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
 
 
 
