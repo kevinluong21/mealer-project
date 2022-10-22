@@ -261,7 +261,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     }
 
     protected static boolean checkStreet(String street){
-        if(street.matches("[a-zA-Z][a-zA-Z-.]*")){
+        if(street.matches("[a-zA-Z-. ]*")){
            return true;
         }
         return false;
