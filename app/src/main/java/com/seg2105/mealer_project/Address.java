@@ -7,6 +7,9 @@ public class Address implements Serializable {
     protected String streetNum;
     protected String streetName;
 
+    public Address() {
+
+    }
     public Address(String streetNum, String streetName){
         this.streetNum = streetNum;
         this.streetName = streetName;

@@ -8,6 +8,9 @@ public class CreditCard implements Serializable {
     protected String cardNumber;
     protected String CVV;
 
+    public CreditCard() {
+
+    }
     public CreditCard(String expiryDate, String cardNumber, String CVV){
 
         this.expiryDate = expiryDate;
