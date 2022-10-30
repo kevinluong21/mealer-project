@@ -79,7 +79,7 @@ public class MainActivity extends Activity {
         textErrorMessage.setText("");
 
         if (!TextUtils.isEmpty(emailAddress) && !TextUtils.isEmpty(password)) { //check if username and password are NOT empty
-            checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() { //the MyCallback interface is used to deal with the asynchronous searching of the database
+            checkUser(emailAddress, new UserCallback<Administrator, Cook, Client>() { //the MyCallback interface is used to deal with the asynchronous searching of the database
                 //essentially, searching a database runs in the background so this interface ensures that we do not let it slip into the background
                 //so that a value can be returned when it is ready and not just 'null'
                 @Override
@@ -119,7 +119,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    protected static void checkUser(String emailAddress, MyCallback<Administrator, Cook, Client> myCallback) { //check for user in database by searching using the email and stores the match in the currentUser object
+    protected static void checkUser(String emailAddress, UserCallback<Administrator, Cook, Client> userCallback) { //check for user in database by searching using the email and stores the match in the currentUser object
         emailAddress = emailAddressToKey(emailAddress); //it can be called outside, but this ensures that if it is forgotten, it does not throw an error
         DatabaseReference users = FirebaseDatabase.getInstance().getReference("users");
         DatabaseReference childRef = users.child(emailAddress);
@@ -135,19 +135,19 @@ public class MainActivity extends Activity {
                 if (snapshot.exists()) {
                     if (snapshot.getValue(Administrator.class).getRole().equals("Administrator")) {
                         Administrator admin = snapshot.getValue(Administrator.class);
-                        myCallback.onCallback(admin, null, null);
+                        userCallback.onCallback(admin, null, null);
                     }
                     else if (snapshot.getValue(Administrator.class).getRole().equals("Cook")) {
                         Cook cook = snapshot.getValue(Cook.class);
-                        myCallback.onCallback(null, cook, null);
+                        userCallback.onCallback(null, cook, null);
                     }
                     else if (snapshot.getValue(Administrator.class).getRole().equals("Client")) {
                         Client client = snapshot.getValue(Client.class);
-                        myCallback.onCallback(null, null, client);
+                        userCallback.onCallback(null, null, client);
                     }
                 }
                 else { //user is not found so call the method with a null Person object (null means no user was found)
-                    myCallback.onCallback(null, null, null);
+                    userCallback.onCallback(null, null, null);
                 }
             }
 

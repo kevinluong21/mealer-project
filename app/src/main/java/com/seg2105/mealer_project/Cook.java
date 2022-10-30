@@ -1,6 +1,7 @@
 package com.seg2105.mealer_project;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 import java.io.Serializable;
 import java.util.LinkedList;
@@ -10,8 +11,7 @@ public class Cook extends Person implements Serializable {
 
     private String description;
     private Address address;
-    private String voidCheque; //(not pushed into database yet)
-//    Bitmap voidCheque;
+    private String voidCheque; //refers to the image in the firebase cloud storage
 
     private int soldMeals;
     private int customerRating;

@@ -2,8 +2,6 @@ package com.seg2105.mealer_project;
 
 import static android.app.Activity.RESULT_OK;
 
-import static com.seg2105.mealer_project.R.id.editTextVoidCheque;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,10 +11,12 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +30,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
@@ -49,11 +55,13 @@ public class CookRegister extends Fragment implements View.OnClickListener {
     EditText editTextAddressNumber; //address number text field
     EditText editTextAddressStreet; //address street text field
     EditText editTextDescription; //credit card text field
-    EditText editTextVoidCheque; //void cheque text field
     EditText editTextPassword; //password text field
     TextView textCookErrorMessage; //error message text view
     Button buttonCookRegister; //register button
     DatabaseReference users = MainActivity.getUsers(); //get user database from MainActivity
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference imageStorage = storage.getReference();
+    Bitmap voidChequeBitmap;
 
 
     //AP uploading the image
@@ -126,7 +134,6 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         editTextAddressNumber = (EditText) rootView.findViewById(R.id.editTextAddressNumber);
         editTextAddressStreet = (EditText) rootView.findViewById(R.id.editTextAddressStreet);
         editTextDescription = (EditText) rootView.findViewById(R.id.editTextDescription);
-        editTextVoidCheque = (EditText) rootView.findViewById(R.id.editTextVoidCheque);
         editTextPassword = (EditText) rootView.findViewById(R.id.editTextPassword);
         textCookErrorMessage = (TextView) rootView.findViewById(R.id.textCookErrorMessage);
         buttonCookRegister = (Button) rootView.findViewById(R.id.buttonCookRegister);
@@ -163,8 +170,8 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         {
             filePath = data.getData();
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
-                imgViewPreviewSelectedImage.setImageBitmap(bitmap);
+                voidChequeBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), filePath);
+                imgViewPreviewSelectedImage.setImageBitmap(voidChequeBitmap);
             }
             catch (IOException e)
             {
@@ -172,6 +179,33 @@ public class CookRegister extends Fragment implements View.OnClickListener {
             }
 
         }
+    }
+
+    public void uploadImage(String emailAddress, ImageCallback<String> imageCallback) {
+        //upload the void cheque picture to the firebase cloud storage
+        StorageReference voidCheque = imageStorage.child("voidCheque/" + emailAddress + ".jpg"); //creates a new reference in the firebase cloud storage
+        //the email address will be used as the file name
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        voidChequeBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos); //compress bitmap to be a jpg image
+        byte[] voidChequeData = baos.toByteArray();
+
+        UploadTask uploadTask = voidCheque.putBytes(voidChequeData); //the task to upload the image into the storage reference
+        uploadTask.addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                String errorMessage = exception.getMessage();
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                voidCheque.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() { //get the URL of the image in the database to store in the realtime database
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        imageCallback.onCallback(uri.toString());
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -192,7 +226,6 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         String addressNumber = editTextAddressNumber.getText().toString().trim();
         String addressStreet = editTextAddressStreet.getText().toString().trim();
         String description = editTextDescription.getText().toString().trim();
-        String voidCheque = editTextVoidCheque.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
         textCookErrorMessage.setText("");
@@ -200,21 +233,27 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         if(inputValidation(firstNameRaw,lastNameRaw,emailAddressRaw,addressNumber,addressStreet,password) == true){
 
             if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
-                    && !TextUtils.isEmpty(addressStreet) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(voidCheque) && !TextUtils.isEmpty(password)) {
+                    && !TextUtils.isEmpty(addressStreet) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(password)) {
                 String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
                 String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
-                MainActivity.checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() {
+                MainActivity.checkUser(emailAddress, new UserCallback<Administrator, Cook, Client>() {
                     @Override
                     public void onCallback(Administrator admin, Cook cook, Client client) {
                         if (admin == null && cook == null && client == null) { //no account exists yet with this email
-                            Address address = new Address(addressNumber, addressStreet);
-                            Cook newCook = new Cook(firstName, lastName, emailAddress, password, description, address, voidCheque);
-                            users.child(emailAddress).setValue(newCook);
-                            MainActivity.currentUser = newCook;
-                            Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
-                            //button navigation
-                            Intent intent = new Intent(getActivity(), UserWelcome.class);
-                            startActivity(intent);
+                            Address address = new Address(addressNumber, addressStreet); //create a new address object
+                            uploadImage(emailAddress, new ImageCallback<String>() { //retrieving an image URL is an async process so a method must be implemented to return the URL
+                                //on success
+                                @Override
+                                public void onCallback(String imageURL) { //imageURL contains a String of the url pointing to the void cheque in the firebase cloud storage
+                                    Cook newCook = new Cook(firstName, lastName, emailAddress, password, description, address, imageURL);
+                                    users.child(emailAddress).setValue(newCook);
+                                    MainActivity.currentUser = newCook;
+                                    Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
+                                    //button navigation
+                                    Intent intent = new Intent(getActivity(), UserWelcome.class);
+                                    startActivity(intent);
+                                }
+                            }); //upload image and set voidChequeURL to the image URL in the firebase cloud storage
                         } else { //account already exists with this email
                             textCookErrorMessage.setText("An account already exists with this email");
                         }

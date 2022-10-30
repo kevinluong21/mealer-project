@@ -100,14 +100,6 @@
             android:inputType="textPersonName"
             android:textColor="#668C96"
             android:textSize="24sp" />
-        <EditText
-            android:id="@+id/editTextVoidCheque"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="Enter void cheque"
-            android:inputType="text"
-            android:textSize="24sp" />
 
         <Button
             android:id="@+id/btnSelectVoidCheque"

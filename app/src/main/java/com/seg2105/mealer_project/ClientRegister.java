@@ -151,7 +151,7 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
                     && !TextUtils.isEmpty(addressNumber) && !TextUtils.isEmpty(creditCardNumber) && !TextUtils.isEmpty(creditCardCVV) && !TextUtils.isEmpty(creditCardExpiryDate) && !TextUtils.isEmpty(password)) {
                 String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
                 String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
-                MainActivity.checkUser(emailAddress, new MyCallback<Administrator, Cook, Client>() {
+                MainActivity.checkUser(emailAddress, new UserCallback<Administrator, Cook, Client>() {
                     @Override
                     public void onCallback(Administrator admin, Cook cook, Client client) {
                         if (admin == null && cook == null && client == null) { //no account exists yet with this email
