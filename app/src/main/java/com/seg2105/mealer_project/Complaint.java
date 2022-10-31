@@ -1,28 +1,47 @@
 package com.seg2105.mealer_project;
 
-public class Complaint {
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 
-    private Client issuingClient;
-    private Cook respondentCook;
+public class Complaint implements Serializable {
+
+    //private Client issuingClient;
+    //private Cook respondentCook;
+
+    private String clientEmail;
+    private String cookEmail;
     private String description;
+    private String ID;
+    private static int complaintCounter;
 
     private Meal meal; //the meal it relates to
 
-    private boolean isAdressed; //new,completed;
+    private boolean isAddressed; //new,completed;
 
-    public Complaint(String description, Client client, Cook cook){
+    public Complaint(String description, String clientEmail, String cookEmail){
         this.description=description;
-        this.respondentCook=cook;
-        this.issuingClient = client;
-        this.isAdressed = false;
+        this.cookEmail=cookEmail;
+        this.clientEmail = clientEmail;
+        this.isAddressed = false;
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        complaintCounter++;
+        this.ID = ("ComplaintNumber" + complaintCounter);
+
+        //this.ID = ("Complaint number  " + complaintCounter + " filed on " + timestamp);
+
     }
 
-    public Cook getCook(){
-        return this.respondentCook;
+    public String getID(){
+        return this.ID;
     }
 
-    public Client getClient(){
-        return this.issuingClient;
+    public String getCookEmail(){
+        return this.cookEmail;
+    }
+
+    public String getClientEmail(){
+        return this.clientEmail;
     }
 
     public String getDescription(){
@@ -30,7 +49,7 @@ public class Complaint {
     }
 
     public void setComplaintStatus(){
-        this.isAdressed = true;
+        this.isAddressed = true;
     }
 
 }

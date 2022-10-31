@@ -29,6 +29,9 @@ public class MainActivity extends Activity {
     protected static DatabaseReference users; //refers to the Firebase database. used to read and write to database.
     protected static Person currentUser; //stores the current user that is logged in
 
+    protected static DatabaseReference complaints; // refers to firabase database the list of complaints
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,10 +44,34 @@ public class MainActivity extends Activity {
         textErrorMessage = (TextView) findViewById(R.id.textErrorMessage);
 
         users = FirebaseDatabase.getInstance().getReference("users"); //creates a list named "users" in the database
+        complaints = FirebaseDatabase.getInstance().getReference("complaints"); //creates a list named "complaints" in the database
 
         //testing database and login
         Administrator admin = new Administrator("Support", "Admin", "admin", "123");
         users.child("admin").setValue(admin);
+
+
+
+        // CREATING COMPLAINTS IN DB FOR DELIVERABLE 2
+        // cook: test@gmail.com password
+        //client: p@gmail.com password
+        String clientEmail = "p@gmail.com";
+        String cookEmail = "test@gmail.com";
+        String description = "The cook never mentioned that the dish contains honey which lead to s severe alergic reaction. He did not reply to me after I tried to contact him";
+
+        Complaint complaintFirst = new Complaint(description,clientEmail,cookEmail);
+        complaints.child(complaintFirst.getID()).setValue(complaintFirst);
+
+        Complaint complaintSecond = new Complaint("food was late","yay@person.com","testcook@yahoo.ca");
+        Complaint complaintThird = new Complaint("cook was rude","yay@person.com","chec@gmail.com");
+        Complaint complaintFourth = new Complaint("didn't follow instructions about spiciness","testclient@gmail.com","cook@gmail.com");
+        Complaint complaintFifth = new Complaint("food was cold","testclient@gmail.com","testcook@yahoo.ca");
+        complaints.child(complaintSecond.getID()).setValue(complaintSecond);
+        complaints.child(complaintThird.getID()).setValue(complaintThird);
+        complaints.child(complaintFourth.getID()).setValue(complaintFourth);
+        complaints.child(complaintFifth.getID()).setValue(complaintFifth);
+
+
 
         //buttonRegister=findViewById(R.id.buttonRegister);
         //buttonRegister.setOnClickListener(this);
@@ -53,6 +80,9 @@ public class MainActivity extends Activity {
     protected static DatabaseReference getUsers() { //method used across fragments
         return users;
     }
+
+    protected static DatabaseReference getComplaints(){return complaints;}
+
 
     protected static String emailAddressToKey(String emailAddress) { //converts email address to a key (firebase does not allow certain characters in an email to be a key)
         emailAddress = emailAddress.replace(".", ",");
