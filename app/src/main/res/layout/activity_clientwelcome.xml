@@ -28,11 +28,23 @@
             android:layout_height="150dp" />
 
         <Button
+            android:id="@+id/btnAdminComplaints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Proceed to complaints"
+            android:visibility="invisible" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="150dp" />
+
+        <Button
             android:id="@+id/clientLogOffID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="clientLogOff"
             android:text="Log Off" />
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

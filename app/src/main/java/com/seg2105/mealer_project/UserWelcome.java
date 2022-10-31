@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
 public class UserWelcome extends Activity {
 
     Person currentUser = MainActivity.currentUser; //get currentUser from MainActivity
+    Button btnAdminComplaints;
     //Cook cookUser;
 
     TextView textViewWelcomeMessage;
@@ -17,10 +19,24 @@ public class UserWelcome extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientwelcome);
+        btnAdminComplaints = (Button) findViewById(R.id.btnAdminComplaints);
+
 
         textViewWelcomeMessage= findViewById(R.id.textViewWelcome);
             textViewWelcomeMessage.setText("Welcome "+  currentUser.getFirstName() + "\n" +"You are logged in as a " + currentUser.getRole());
+            if(currentUser.getRole().equals("Administrator")){
+                btnAdminComplaints.setVisibility(View.VISIBLE);
 
+
+            }
+
+        btnAdminComplaints.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserWelcome.this,AdminComplaints.class );
+                startActivity(intent);
+            }
+        });
 
     }
 

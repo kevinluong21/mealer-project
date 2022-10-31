@@ -12,12 +12,16 @@ public class Complaint implements Serializable {
     private String clientEmail;
     private String cookEmail;
     private String description;
-    private String ID;
+    private String id;
     private static int complaintCounter;
 
     private Meal meal; //the meal it relates to
 
     private boolean isAddressed; //new,completed;
+
+    public Complaint() { //empty constructor is needed for database!
+
+    }
 
     public Complaint(String description, String clientEmail, String cookEmail){
         this.description=description;
@@ -26,14 +30,14 @@ public class Complaint implements Serializable {
         this.isAddressed = false;
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         complaintCounter++;
-        this.ID = ("ComplaintNumber" + complaintCounter);
+        this.id = ("ComplaintNumber" + complaintCounter);
 
         //this.ID = ("Complaint number  " + complaintCounter + " filed on " + timestamp);
 
     }
 
-    public String getID(){
-        return this.ID;
+    public String getId(){
+        return this.id;
     }
 
     public String getCookEmail(){

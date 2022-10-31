@@ -60,16 +60,16 @@ public class MainActivity extends Activity {
         String description = "The cook never mentioned that the dish contains honey which lead to s severe alergic reaction. He did not reply to me after I tried to contact him";
 
         Complaint complaintFirst = new Complaint(description,clientEmail,cookEmail);
-        complaints.child(complaintFirst.getID()).setValue(complaintFirst);
+        complaints.child(complaintFirst.getId()).setValue(complaintFirst);
 
         Complaint complaintSecond = new Complaint("food was late","yay@person.com","testcook@yahoo.ca");
         Complaint complaintThird = new Complaint("cook was rude","yay@person.com","chec@gmail.com");
         Complaint complaintFourth = new Complaint("didn't follow instructions about spiciness","testclient@gmail.com","cook@gmail.com");
         Complaint complaintFifth = new Complaint("food was cold","testclient@gmail.com","testcook@yahoo.ca");
-        complaints.child(complaintSecond.getID()).setValue(complaintSecond);
-        complaints.child(complaintThird.getID()).setValue(complaintThird);
-        complaints.child(complaintFourth.getID()).setValue(complaintFourth);
-        complaints.child(complaintFifth.getID()).setValue(complaintFifth);
+        complaints.child(complaintSecond.getId()).setValue(complaintSecond);
+        complaints.child(complaintThird.getId()).setValue(complaintThird);
+        complaints.child(complaintFourth.getId()).setValue(complaintFourth);
+        complaints.child(complaintFifth.getId()).setValue(complaintFifth);
 
 
 
