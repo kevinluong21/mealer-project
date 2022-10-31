@@ -145,10 +145,10 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
 
         textClientErrorMessage.setText("");
 
-        if (inputValidation(firstNameRaw,lastNameRaw,emailAddressRaw,addressNumber,addressStreet,creditCardNumber,creditCardCVV,creditCardExpiryDate,password) == true) {
+        if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
+                && !TextUtils.isEmpty(addressNumber) && !TextUtils.isEmpty(creditCardNumber) && !TextUtils.isEmpty(creditCardCVV) && !TextUtils.isEmpty(creditCardExpiryDate) && !TextUtils.isEmpty(password)) {
 
-            if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
-                    && !TextUtils.isEmpty(addressNumber) && !TextUtils.isEmpty(creditCardNumber) && !TextUtils.isEmpty(creditCardCVV) && !TextUtils.isEmpty(creditCardExpiryDate) && !TextUtils.isEmpty(password)) {
+            if (inputValidation(firstNameRaw,lastNameRaw,emailAddressRaw,addressNumber,addressStreet,creditCardNumber,creditCardCVV,creditCardExpiryDate,password) == true) {
                 String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
                 String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
                 MainActivity.checkUser(emailAddress, new UserCallback<Administrator, Cook, Client>() {
@@ -169,9 +169,9 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
                         }
                     }
                 });
-            } else { //at least one text field is empty
-                textClientErrorMessage.setText("All fields must be filled");
             }
+        }else { //at least one text field is empty
+            textClientErrorMessage.setText("All fields must be filled");
         }
     }
 

@@ -230,10 +230,10 @@ public class CookRegister extends Fragment implements View.OnClickListener {
 
         textCookErrorMessage.setText("");
 
-        if(inputValidation(firstNameRaw,lastNameRaw,emailAddressRaw,addressNumber,addressStreet,password) == true){
+        if(!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
+                && !TextUtils.isEmpty(addressStreet) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(password)){
 
-            if (!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
-                    && !TextUtils.isEmpty(addressStreet) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(password)) {
+            if (inputValidation(firstNameRaw,lastNameRaw,emailAddressRaw,addressNumber,addressStreet,password) == true) {
                 String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name
                 String lastName = lastNameRaw.substring(0, 1).toUpperCase() + lastNameRaw.substring(1); //basic capitalization of first letter of last name
                 MainActivity.checkUser(emailAddress, new UserCallback<Administrator, Cook, Client>() {
@@ -259,9 +259,9 @@ public class CookRegister extends Fragment implements View.OnClickListener {
                         }
                     }
                 });
-            } else { //at least one text field is empty
-                textCookErrorMessage.setText("All fields must be filled");
             }
+        }else { //at least one text field is empty
+            textCookErrorMessage.setText("All fields must be filled");
         }
     }
 
