@@ -65,10 +65,10 @@ public class MainActivity extends Activity {
         Complaint complaintFirst = new Complaint(description,clientEmail,cookEmail);
         complaints.child(complaintFirst.getId()).setValue(complaintFirst);
 
-        Complaint complaintSecond = new Complaint("food was late","yay@person.com","testcook@yahoo.ca");
-        Complaint complaintThird = new Complaint("cook was rude","yay@person.com","chec@gmail.com");
-        Complaint complaintFourth = new Complaint("didn't follow instructions about spiciness","testclient@gmail.com","cook@gmail.com");
-        Complaint complaintFifth = new Complaint("food was cold","testclient@gmail.com","testcook@yahoo.ca");
+        Complaint complaintSecond = new Complaint("food was late","yay@person.com","ap@mail.com");
+        Complaint complaintThird = new Complaint("cook was rude","yay@person.com","apetr@gmail.com");
+        Complaint complaintFourth = new Complaint("didn't follow instructions about spiciness","testclient@gmail.com","chec@gmail.com");
+        Complaint complaintFifth = new Complaint("food was cold","testclient@gmail.com","cook@gmail.com");
         complaints.child(complaintSecond.getId()).setValue(complaintSecond);
         complaints.child(complaintThird.getId()).setValue(complaintThird);
         complaints.child(complaintFourth.getId()).setValue(complaintFourth);
