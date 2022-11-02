@@ -12,6 +12,7 @@ public class Cook extends Person implements Serializable {
     private String description;
     private Address address;
     private String voidCheque; //refers to the image in the firebase cloud storage
+    private boolean accountActive;
 
     private int soldMeals;
     private int customerRating;
@@ -33,9 +34,20 @@ public class Cook extends Person implements Serializable {
         this.address = address;
         this.description = description;
         this.voidCheque = voidCheque;
+        this.accountActive = true;
 
         this.soldMeals = 0;
         this.customerRating = 0;
+    }
+
+    //gets account status
+    public boolean getAccountStatus(){
+        return this.accountActive;
+    }
+
+    //sets value for account status
+    public void setAccountStatus(boolean status){
+        this.accountActive = status;
     }
 
     public Address getAddress() { //getter methods required for database serialization

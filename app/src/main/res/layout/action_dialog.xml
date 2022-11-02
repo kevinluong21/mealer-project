@@ -49,27 +49,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/btnDismiss"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-
+            android:gravity="center"
             android:text="Dismiss" />
 
         <Space
-            android:layout_width="100dp"
-            android:layout_height="5dp" />
+            android:layout_width="10dp"
+            android:layout_height="80dp" />
 
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="10dp" />
         <Button
-            android:id="@+id/btnSuspendCook"
+            android:id="@+id/btnSuspendTemp"
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="Suspend Temporarily" />
 
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="80dp" />
 
-            android:text="Suspend Cook" />
+        <Button
+            android:id="@+id/btnSuspendPerm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Suspend permanently" />
     </LinearLayout>
 
 

@@ -3,6 +3,7 @@ package com.seg2105.mealer_project;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.service.controls.templates.TemperatureControlTemplate;
 import android.view.LayoutInflater;
@@ -103,7 +104,8 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
 
         //final EditText editTextPrice = (EditText) dialogView.findViewById(R.id.dialog_editTextPrice);
         final Button btnDismiss = (Button) dialogView.findViewById(R.id.btnDismiss);
-        final Button btnSuspend = (Button) dialogView.findViewById(R.id.btnSuspendCook);
+        final Button btnSuspendTemp = (Button) dialogView.findViewById(R.id.btnSuspendTemp);
+        final Button btnSuspendPerm = (Button) dialogView.findViewById(R.id.btnSuspendPerm);
 
         textViewDescription.setText(String.valueOf(complaint.getDescription()));
         textViewClient.setText(complaint.getClientEmail());
@@ -122,6 +124,23 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
                 b.dismiss();
             }
         });
+
+
+        btnSuspendTemp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //complaint.getCookEmail();
+
+
+            }
+        });
+    }
+
+    public void showDatePickerDialogue(){
+        DatePickerDialog.Builder dialogBuilder = new DatePickerDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.action_dialog, null);
+        dialogBuilder.setView(dialogView);
     }
 
     private boolean deleteComplaint(String id) {
