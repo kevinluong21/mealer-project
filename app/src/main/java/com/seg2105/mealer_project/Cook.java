@@ -13,6 +13,9 @@ public class Cook extends Person implements Serializable {
     private Address address;
     private String voidCheque; //refers to the image in the firebase cloud storage
     private boolean accountActive;
+    private String suspensionEndDate;
+    private boolean permSuspension;
+
 
     private int soldMeals;
     private int customerRating;
@@ -34,7 +37,8 @@ public class Cook extends Person implements Serializable {
         this.address = address;
         this.description = description;
         this.voidCheque = voidCheque;
-        this.accountActive = true;
+        this.accountActive = true;//active status
+        this.permSuspension = false;//default actuve
 
         this.soldMeals = 0;
         this.customerRating = 0;
@@ -48,6 +52,22 @@ public class Cook extends Person implements Serializable {
     //sets value for account status
     public void setAccountStatus(boolean status){
         this.accountActive = status;
+    }
+
+    public String getSuspensionEndDate(){
+        return this.suspensionEndDate;
+    }
+
+    public void setSuspensionEndDate(String endDate){
+        this.suspensionEndDate = endDate;
+    }
+
+    public boolean getPermSuspension(){
+        return this.permSuspension;
+    }
+
+    public void setPermSuspension(boolean permSuspension){
+        this.permSuspension = permSuspension;
     }
 
     public Address getAddress() { //getter methods required for database serialization

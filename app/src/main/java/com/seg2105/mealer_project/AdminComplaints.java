@@ -1,15 +1,19 @@
 package com.seg2105.mealer_project;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.service.controls.templates.TemperatureControlTemplate;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,8 +27,12 @@ import com.google.firebase.database.ValueEventListener;
 import org.w3c.dom.Text;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+//actionDialogue
 
 public class AdminComplaints extends AppCompatActivity implements Serializable {
 
@@ -107,6 +115,9 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
         final Button btnSuspendTemp = (Button) dialogView.findViewById(R.id.btnSuspendTemp);
         final Button btnSuspendPerm = (Button) dialogView.findViewById(R.id.btnSuspendPerm);
 
+        //date edit text
+        final EditText editTextDate = (EditText) dialogView.findViewById(R.id.editTextDate);
+
         textViewDescription.setText(String.valueOf(complaint.getDescription()));
         textViewClient.setText(complaint.getClientEmail());
         textViewCook.setText(complaint.getCookEmail());
@@ -130,8 +141,34 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
             @Override
             public void onClick(View view) {
                 //complaint.getCookEmail();
+                //add a hind dd,mm,yyyy
+                String date = editTextDate.getText().toString();
+                MainActivity.checkUser(complaint.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
+                    @Override
+                    public void onCallback(Administrator user1, Cook user2, Client user3) {
+                        if (user2 != null){//if cook
+                            user2.setAccountStatus(false);//deactivate account status of cook temporarily
+                            user2.setSuspensionEndDate(date);
+                            b.dismiss();
+                        }
+                    }
+                });
+            }
+        });
 
-
+        btnSuspendPerm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.checkUser(complaint.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
+                    @Override
+                    public void onCallback(Administrator user1, Cook user2, Client user3) {
+                        if (user2 != null){//if cook
+                            user2.setAccountStatus(false);//deactivate account status of cook temporarily
+                            user2.setPermSuspension(true);
+                            b.dismiss();
+                        }
+                    }
+                });
             }
         });
     }
