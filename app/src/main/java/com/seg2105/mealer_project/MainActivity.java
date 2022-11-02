@@ -28,6 +28,9 @@ public class MainActivity extends Activity {
     TextView textErrorMessage; //display text for error messages
     protected static DatabaseReference users; //refers to the Firebase database. used to read and write to database.
     protected static Person currentUser; //stores the current user that is logged in
+    protected static Administrator loggedInAdmin; //stores the Administrator that is logged in
+    protected static Cook loggedInCook; //stores the Cook that is logged in
+    protected static Client loggedInClient; //stores the Client that is logged in
 
     protected static DatabaseReference complaints; // refers to firabase database the list of complaints
 
@@ -122,12 +125,15 @@ public class MainActivity extends Activity {
                     if (admin != null || cook != null || client != null) { //match found as one of 3 classes
                         if (admin != null) {
                             currentUser = admin;
+                            loggedInAdmin = admin;
                         }
                         else if (cook != null) {
                             currentUser = cook;
+                            loggedInCook = cook;
                         }
                         else {
                             currentUser = client;
+                            loggedInClient = client;
                         }
                         if (!currentUser.accountPassword.equals(password)) { //passwords do not match
                             textErrorMessage.setText("Incorrect password");
