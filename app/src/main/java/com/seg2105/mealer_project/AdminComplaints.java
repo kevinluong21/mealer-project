@@ -2,6 +2,8 @@ package com.seg2105.mealer_project;
 
 import static android.content.ContentValues.TAG;
 
+import static com.seg2105.mealer_project.MainActivity.users;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -149,6 +151,8 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
                         if (user2 != null){//if cook
                             user2.setAccountStatus(false);//deactivate account status of cook temporarily
                             user2.setSuspensionEndDate(date);
+                            users.child(user2.getEmailAddress()).setValue(user2);
+                            deleteComplaint(complaint.getId());
                             b.dismiss();
                         }
                     }
@@ -165,12 +169,15 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
                         if (user2 != null){//if cook
                             user2.setAccountStatus(false);//deactivate account status of cook temporarily
                             user2.setPermSuspension(true);
+                            users.child(user2.getEmailAddress()).setValue(user2);
+                            deleteComplaint(complaint.getId());
                             b.dismiss();
                         }
                     }
                 });
             }
         });
+
     }
 
     public void showDatePickerDialogue(){
