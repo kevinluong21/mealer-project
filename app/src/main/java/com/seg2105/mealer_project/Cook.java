@@ -82,6 +82,8 @@ public class Cook extends Person implements Serializable {
         return this.voidCheque;
     }
 
+    public int getSoldMeals(){return this.soldMeals;}
+
     public static void addMeal(){
 
     }
