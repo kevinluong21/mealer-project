@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.service.controls.templates.TemperatureControlTemplate;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -142,21 +143,28 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
         btnSuspendTemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //complaint.getCookEmail();
-                //add a hind dd,mm,yyyy
-                String date = editTextDate.getText().toString();
-                MainActivity.checkUser(complaint.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
-                    @Override
-                    public void onCallback(Administrator user1, Cook user2, Client user3) {
-                        if (user2 != null){//if cook
-                            user2.setAccountStatus(false);//deactivate account status of cook temporarily
-                            user2.setSuspensionEndDate(date);
-                            users.child(user2.getEmailAddress()).setValue(user2);
-                            deleteComplaint(complaint.getId());
-                            b.dismiss();
+                String date = editTextDate.getText().toString().trim();
+                TextView textSuspendError = (TextView) findViewById(R.id.textSuspendError);
+
+                textSuspendError.setText(""); //reset text view to empty
+
+                if (TextUtils.isEmpty(date)) {
+                    textSuspendError.setText("The date cannot be empty for a temporary suspension.");
+                }
+                else {
+                    MainActivity.checkUser(complaint.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
+                        @Override
+                        public void onCallback(Administrator user1, Cook user2, Client user3) {
+                            if (user2 != null){//if cook
+                                user2.setAccountStatus(false);//deactivate account status of cook temporarily
+                                user2.setSuspensionEndDate(date);
+                                users.child(user2.getEmailAddress()).setValue(user2);
+                                deleteComplaint(complaint.getId());
+                                b.dismiss();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
 
