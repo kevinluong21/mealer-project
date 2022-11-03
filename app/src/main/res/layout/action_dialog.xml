@@ -77,9 +77,16 @@
         android:gravity="center"
         android:text="Suspend Temporarily" />
 
+    <TextView
+        android:id="@+id/textSuspendError"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:textColor="#FF0000" />
+
     <Space
         android:layout_width="10dp"
-        android:layout_height="20dp" />
+        android:layout_height="30dp" />
 
     <Button
         android:id="@+id/btnSuspendPerm"
