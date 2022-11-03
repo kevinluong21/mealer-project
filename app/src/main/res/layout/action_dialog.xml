@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
+
     <Space
         android:layout_width="10dp"
         android:layout_height="10dp" />
@@ -10,34 +12,37 @@
 
     <TextView
         android:id="@+id/textViewComplaintName"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
     <Space
         android:layout_width="10dp"
         android:layout_height="10dp" />
 
     <TextView
         android:id="@+id/txtViewComplaintDescription"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
     <Space
         android:layout_width="10dp"
         android:layout_height="10dp" />
 
     <TextView
         android:id="@+id/textViewClient"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="TextView" />
+
     <Space
         android:layout_width="10dp"
         android:layout_height="10dp" />
 
     <TextView
         android:id="@+id/textViewCook"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:text="TextView" />
 
@@ -45,52 +50,43 @@
         android:layout_width="10dp"
         android:layout_height="10dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+    <Button
+        android:id="@+id/btnDismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Dismiss" />
 
-        <Button
-            android:id="@+id/btnDismiss"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Dismiss" />
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="20dp" />
 
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="80dp" />
+    <EditText
+        android:id="@+id/editTextDate"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="dd/mm/yyyy"
+        android:inputType="date" />
 
+    <Button
+        android:id="@+id/btnSuspendTemp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Suspend Temporarily" />
 
-        <EditText
-            android:id="@+id/editTextDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="date" />
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="20dp" />
 
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="10dp" />
-        <Button
-            android:id="@+id/btnSuspendTemp"
-            android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Suspend Temporarily" />
-
-        <Space
-            android:layout_width="10dp"
-            android:layout_height="80dp" />
-
-        <Button
-            android:id="@+id/btnSuspendPerm"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Suspend permanently" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/btnSuspendPerm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Suspend permanently" />
 
 
 </LinearLayout>

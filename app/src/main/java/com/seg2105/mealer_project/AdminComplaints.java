@@ -180,13 +180,6 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
 
     }
 
-    public void showDatePickerDialogue(){
-        DatePickerDialog.Builder dialogBuilder = new DatePickerDialog.Builder(this);
-        LayoutInflater inflater = getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.action_dialog, null);
-        dialogBuilder.setView(dialogView);
-    }
-
     private boolean deleteComplaint(String id) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("complaints").child(id);
         dR.removeValue();

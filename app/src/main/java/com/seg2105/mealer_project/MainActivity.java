@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
     protected static Cook loggedInCook; //stores the Cook that is logged in
     protected static Client loggedInClient; //stores the Client that is logged in
 
-    protected static DatabaseReference complaints; // refers to firabase database the list of complaints
+    protected static DatabaseReference complaints; // refers to firebase database the list of complaints
 
 
     @Override
