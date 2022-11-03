@@ -62,13 +62,13 @@ public class MainActivity extends Activity {
         String cookEmail = "test@gmail.com";
         String description = "The cook never mentioned that the dish contains honey which lead to s severe alergic reaction. He did not reply to me after I tried to contact him";
 
-        Complaint complaintFirst = new Complaint(description,clientEmail,cookEmail);
+        Complaint complaintFirst = new Complaint(description,clientEmail,cookEmail, "ComplaintNumber1");
         complaints.child(complaintFirst.getId()).setValue(complaintFirst);
 
-        Complaint complaintSecond = new Complaint("food was late","yay@person.com","ap@mail.com");
-        Complaint complaintThird = new Complaint("cook was rude","yay@person.com","apetr@gmail.com");
-        Complaint complaintFourth = new Complaint("didn't follow instructions about spiciness","testclient@gmail.com","chec@gmail.com");
-        Complaint complaintFifth = new Complaint("food was cold","testclient@gmail.com","cook@gmail.com");
+        Complaint complaintSecond = new Complaint("food was late","yay@person.com","ap@mail.com","ComplaintNumber2");
+        Complaint complaintThird = new Complaint("cook was rude","yay@person.com","apetr@gmail.com", "ComplaintNumber3");
+        Complaint complaintFourth = new Complaint("didn't follow instructions about spiciness","testclient@gmail.com","chec@gmail.com", "ComplaintNumber4");
+        Complaint complaintFifth = new Complaint("food was cold","testclient@gmail.com","cook@gmail.com", "ComplaintNumber5");
         complaints.child(complaintSecond.getId()).setValue(complaintSecond);
         complaints.child(complaintThird.getId()).setValue(complaintThird);
         complaints.child(complaintFourth.getId()).setValue(complaintFourth);

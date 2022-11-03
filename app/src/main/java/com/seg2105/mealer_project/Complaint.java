@@ -23,14 +23,14 @@ public class Complaint implements Serializable {
 
     }
 
-    public Complaint(String description, String clientEmail, String cookEmail){
+    public Complaint(String description, String clientEmail, String cookEmail, String id){
         this.description=description;
         this.cookEmail=cookEmail;
         this.clientEmail = clientEmail;
         this.isAddressed = false;
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         complaintCounter++;
-        this.id = ("ComplaintNumber" + complaintCounter);
+        this.id = id;
 
         //this.ID = ("Complaint number  " + complaintCounter + " filed on " + timestamp);
 

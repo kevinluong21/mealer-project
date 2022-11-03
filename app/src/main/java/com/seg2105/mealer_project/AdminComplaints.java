@@ -41,6 +41,7 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
     ListView listViewComplaints;
     List<Complaint> complaints;
     DatabaseReference database;
+    Button backToWelcomePage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,16 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
         listViewComplaints = (ListView) findViewById(R.id.listViewComplaints);
         complaints = new ArrayList<>();
         onItemLongClick();
+
+
+        backToWelcomePage = (Button) findViewById(R.id.btnBackToAdminWelcome);
+
+        backToWelcomePage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
@@ -121,9 +132,10 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
         final EditText editTextDate = (EditText) dialogView.findViewById(R.id.editTextDate);
 
         textViewDescription.setText(String.valueOf(complaint.getDescription()));
-        textViewClient.setText(complaint.getClientEmail());
-        textViewCook.setText(complaint.getCookEmail());
-        textViewId.setText(complaint.getId());
+        textViewClient.setText("Client: " + complaint.getClientEmail());
+        textViewCook.setText("Cook: " + complaint.getCookEmail());
+        textViewId.setVisibility(View.GONE);
+        //textViewId.setText(complaint.getId());
 
         dialogBuilder.setTitle(complaint.getId());
         final AlertDialog b = dialogBuilder.create();
