@@ -56,4 +56,6 @@ public class Complaint implements Serializable {
         this.isAddressed = true;
     }
 
+    public boolean getComplaintStatus() {return this.isAddressed;}
+
 }

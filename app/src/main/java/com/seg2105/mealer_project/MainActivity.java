@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
         //client: p@gmail.com password
         String clientEmail = "p@gmail.com";
         String cookEmail = "test@gmail.com";
-        String description = "The cook never mentioned that the dish contains honey which lead to s severe alergic reaction. He did not reply to me after I tried to contact him";
+        String description = "The cook never mentioned that the dish contains honey which lead to severe alergic reaction. He did not reply to me after I tried to contact him";
 
         Complaint complaintFirst = new Complaint(description,clientEmail,cookEmail, "ComplaintNumber1");
         complaints.child(complaintFirst.getId()).setValue(complaintFirst);
