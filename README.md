@@ -4,4 +4,4 @@ SEG2105[B] Project
 admin login info:
 
 username: admin
-password: 123
+password: admin
