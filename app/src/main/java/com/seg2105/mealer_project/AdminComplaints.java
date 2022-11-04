@@ -131,6 +131,7 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
 
         //date edit text
         final EditText editTextDate = (EditText) dialogView.findViewById(R.id.editTextDate);
+        final TextView textSuspendError = (TextView) dialogView.findViewById(R.id.textSuspendError);
 
         textViewDescription.setText(String.valueOf(complaint.getDescription()));
         textViewClient.setText("Client: " + complaint.getClientEmail());
@@ -156,12 +157,14 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
             @Override
             public void onClick(View view) {
                 String date = editTextDate.getText().toString().trim();
-                TextView textSuspendError = (TextView) findViewById(R.id.textSuspendError);
 
                 textSuspendError.setText(""); //reset text view to empty
 
-                if (TextUtils.isEmpty(date)) {
+                if (TextUtils.isEmpty(date)) { //String for date cannot be empty
                     textSuspendError.setText("The date cannot be empty for a temporary suspension.");
+                }
+                else if (!date.matches("^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$")) { //invalid date input
+                    textSuspendError.setText("Invalid values for date. It must follow the format 'dd/mm/yyyy'.");
                 }
                 else {
                     MainActivity.checkUser(complaint.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
