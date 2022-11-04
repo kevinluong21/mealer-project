@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
         complaints = FirebaseDatabase.getInstance().getReference("complaints"); //creates a list named "complaints" in the database
 
         //testing database and login
-        Administrator admin = new Administrator("Support", "Admin", "admin", "123");
+        Administrator admin = new Administrator("Support", "Admin", "admin", "admin");
         users.child("admin").setValue(admin);
 
 
