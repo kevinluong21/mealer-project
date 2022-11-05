@@ -20,7 +20,6 @@ email: test@gmail.com
 password: password
 
 Complaint 2 
-Cook: 
 email: ap@mail.com
 password: password
 
