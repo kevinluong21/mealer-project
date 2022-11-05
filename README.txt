@@ -13,6 +13,8 @@ Password: admin
 Deliverable 2 
 2022-11-04
 
+NOTE: This deliverable makes use of Firebase Cloud Storage and sometimes missing dependencies may cause an error even though they are pushed to the build.gradle file. Hopefully, this is not the case, but it has occured before.
+
 The login and password for cooks are provided
 
 Complaint 1 
