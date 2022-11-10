@@ -15,7 +15,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="350dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -27,31 +27,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="15dp"
-        android:gravity="center|top"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:id="@+id/nameOfApp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-black"
-            android:text="mealer"
-            android:textColor="#52220F"
-            android:textSize="34sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="375dp"
         android:layout_marginEnd="25dp"
         android:background="#0fff"
         android:orientation="vertical"
@@ -59,13 +39,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/textViewLoginTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
         <EditText
             android:id="@+id/editTextEmailAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+
             android:drawableLeft="@android:drawable/sym_action_email"
             android:drawablePadding="10dp"
-
             android:ems="10"
             android:hint="Email Address"
             android:inputType="textPersonName"
@@ -132,7 +124,8 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:cornerRadius="10dp" />
+            app:cornerRadius="10dp"
+            />
 
         <Space
             android:layout_width="0dp"

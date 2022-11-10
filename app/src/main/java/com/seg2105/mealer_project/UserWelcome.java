@@ -24,6 +24,7 @@ public class UserWelcome extends Activity {
     //Cook cookUser;
 
     TextView textViewWelcomeMessage;
+    TextView textViewActionPrompt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,12 +34,16 @@ public class UserWelcome extends Activity {
 
 
         textViewWelcomeMessage = findViewById(R.id.textViewWelcome);
-        textViewWelcomeMessage.setText("Welcome " + currentUser.getFirstName() + "\n" + "You are logged in as a " + currentUser.getRole());
+        textViewWelcomeMessage.setText("Hi " + currentUser.getFirstName() + "," + "\n" + "You are logged in as a " + currentUser.getRole());
+
+        textViewActionPrompt = findViewById(R.id.textViewActionPrompt);
+
         if (currentUser.getRole().equals("Administrator")) {
             btnAdminComplaints.setVisibility(View.VISIBLE);
         }
 
         if (currentUser.getRole().equals("Cook")) {
+            textViewActionPrompt.setText("What will you create today?");
             if (!MainActivity.loggedInCook.getAccountStatus()) {
                 AlertDialog.Builder suspensionDialog = new AlertDialog.Builder(this);
                 suspensionDialog.setCancelable(false); //cannot close the dialog by clicking outside of the box
@@ -76,6 +81,10 @@ public class UserWelcome extends Activity {
                     e.printStackTrace();
                 }
             }
+        }
+
+        if (currentUser.getRole().equals("Client")) {
+            textViewActionPrompt.setText("Let's find your next meal");
         }
 
         btnAdminComplaints.setOnClickListener(new View.OnClickListener() {
