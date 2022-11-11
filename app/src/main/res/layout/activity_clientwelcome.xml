@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -21,14 +23,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hi user,"
-            android:textAlignment="center"
-            android:textSize="30sp" />
+            android:textAlignment="textStart"
+            android:textColor="#000000"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textViewActionPrompt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Let's find for your next meal"
+            android:text="Let's find your next meal"
+            android:textAlignment="textStart"
+            android:textColor="#000000"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -37,18 +43,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="25dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3">
 
         <TextView
             android:id="@+id/textViewCategoriesTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Categories"
+            android:textColor="#7E7E7E"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -68,6 +75,7 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/layoutMainDish"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -82,7 +90,8 @@
                             android:id="@+id/imageViewMainDish"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:srcCompat="@drawable/maindish_icon" />
+                            tools:srcCompat="@drawable/maindish_icon"
+                            android:src="@drawable/maindish_icon"/>
 
 
                     </androidx.cardview.widget.CardView>
@@ -92,11 +101,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Main Dish"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="#000000" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layoutSoup"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -111,7 +122,8 @@
                             android:id="@+id/imageViewSoup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:srcCompat="@drawable/soup_icon" />
+                            tools:srcCompat="@drawable/soup_icon"
+                            android:src="@drawable/soup_icon"/>
 
 
                     </androidx.cardview.widget.CardView>
@@ -121,11 +133,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Soup"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="#000000" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layoutDesert"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -140,7 +154,8 @@
                             android:id="@+id/imageViewDesert"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:srcCompat="@tools:sample/avatars" />
+                            tools:srcCompat="@drawable/donut_icon"
+                            android:src="@drawable/donut_icon"/>
 
 
                     </androidx.cardview.widget.CardView>
@@ -150,11 +165,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Desert"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="#000000" />
 
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/layoutItalian"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
@@ -169,7 +186,8 @@
                             android:id="@+id/imageViewItalian"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            tools:srcCompat="@tools:sample/avatars" />
+                            tools:srcCompat="@drawable/pasta_icon"
+                            android:src="@drawable/pasta_icon"/>
 
 
                     </androidx.cardview.widget.CardView>
@@ -179,7 +197,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Desert"
-                        android:textAlignment="center" />
+                        android:textAlignment="center"
+                        android:textColor="#000000" />
 
                 </LinearLayout>
 
