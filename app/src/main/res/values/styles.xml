@@ -1,5 +1,13 @@
 <resources>
 
+    <!--    code from https://www.geeksforgeeks.org/bottom-navigation-bar-in-android/-->
+    <style name="nav_icon_colours" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#000000</item>
+        <item name="colorPrimaryDark">#90E2A8</item>
+        <item name="colorAccent">#757575</item>
+    </style>
+
     <style name="Widget.Theme.Mealerproject.ButtonBar.Fullscreen" parent="">
         <item name="android:background">@color/black_overlay</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
