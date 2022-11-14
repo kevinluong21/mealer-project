@@ -23,6 +23,10 @@ public class UserWelcome extends Activity {
     Button btnAdminComplaints;
     //Cook cookUser;
 
+
+    Button btnAddMeal;
+    Button btnReviewOfferedMeals;
+
     TextView textViewWelcomeMessage;
     TextView textViewActionPrompt;
 
@@ -32,6 +36,8 @@ public class UserWelcome extends Activity {
         setContentView(R.layout.activity_clientwelcome);
         btnAdminComplaints = (Button) findViewById(R.id.btnAdminComplaints);
 
+        btnAddMeal = (Button) findViewById(R.id.btnAddMeal);
+        btnReviewOfferedMeals = (Button) findViewById(R.id.btnReviewOfferedMeals);
 
         textViewWelcomeMessage = findViewById(R.id.textViewWelcome);
         textViewWelcomeMessage.setText("Hi " + currentUser.getFirstName() + ",");
@@ -42,6 +48,7 @@ public class UserWelcome extends Activity {
         if (currentUser.getRole().equals("Administrator")) {
             btnAdminComplaints.setVisibility(View.VISIBLE);
         }
+
 
         if (currentUser.getRole().equals("Cook")) {
 //            textViewActionPrompt.setText("What will you create today?");
@@ -81,7 +88,21 @@ public class UserWelcome extends Activity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+
+
+
             }
+
+            btnAddMeal.setVisibility(View.VISIBLE);
+            btnReviewOfferedMeals.setVisibility(View.VISIBLE);
+
+            btnReviewOfferedMeals.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(UserWelcome.this, ReviewMealsActivity.class);
+                    startActivity(intent);
+                }
+            });
         }
 
         if (currentUser.getRole().equals("Client")) {
@@ -95,6 +116,14 @@ public class UserWelcome extends Activity {
                 startActivity(intent);
             }
         });
+
+        btnAddMeal.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserWelcome.this, MealActivity.class);
+                startActivity(intent);
+            }
+        } );
 
     }
 

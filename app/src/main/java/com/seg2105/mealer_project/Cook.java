@@ -32,6 +32,7 @@ public class Cook extends Person implements Serializable {
         this.role = "Cook";
         this.firstName = firstName;
         this.lastName = lastName;
+
         this.emailAddress = emailAddress;
         this.accountPassword = accountPassword;
         this.address = address;
@@ -42,6 +43,10 @@ public class Cook extends Person implements Serializable {
 
         this.soldMeals = 0;
         this.customerRating = 0;
+
+        offeredMeals = new LinkedList<Meal>();
+        meals = new LinkedList<Meal>();
+
     }
 
     //gets account status
@@ -83,9 +88,9 @@ public class Cook extends Person implements Serializable {
     }
 
     public int getSoldMeals(){return this.soldMeals;}
-
-    public static void addMeal(){
-
+//addition of meal to the offered meal list
+    public void addMeal( Meal mealToAdd){
+        offeredMeals.add(mealToAdd);
     }
 
     public static void rejectRequest(){

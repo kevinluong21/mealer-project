@@ -27,6 +27,7 @@
             android:text="+ New Meal"
             android:textAlignment="center"
             android:textAllCaps="false"
+            android:visibility="invisible"
             app:cornerRadius="50dp" />
     </LinearLayout>
 
@@ -291,6 +292,23 @@
             app:labelVisibilityMode="auto"
             app:menu="@menu/bottom_nav_bar" />
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="400dp"
+        android:layout_marginBottom="250dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <Button
+            android:id="@+id/btnReviewOfferedMeals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Review Offered Meals" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
