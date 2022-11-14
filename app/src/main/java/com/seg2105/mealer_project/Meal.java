@@ -18,31 +18,35 @@ public class Meal implements Serializable {
     //private boolean isInOfferedList;
 
     //empty constructor is necessary for firebase
-    public Meal(){
+    public Meal() {
 
     }
 
-    public Meal(String name, String mealType, String cuisineType, String listOfInredients, String listOfAllergens, double price, String description, boolean offeredInMenu){
+    public Meal(String name, String mealType, String cuisineType, String listOfIngredients, String listOfAllergens, double price, String description, boolean offeredInMenu){
 
         this.name = name;
         this.mealType = mealType;
         this.cuisineType = cuisineType;
-        this.listOfAllergens = listOfAllergens;
-        this.listOfIngredients = listOfInredients;
-        /*ingredients = new LinkedList<String>();
-        for(int i = 0; i<listOfInredients.length; i++){
-            ingredients.add(listOfInredients[i]);
-        }
-        allergens = new LinkedList<String>();
-        for(int j = 0; j<listOfAllergens.length; j++){
-            allergens.add(listOfInredients[j]);
-        }*/
+//        this.listOfAllergens = listOfAllergens;
+//        this.listOfIngredients = listOfIngredients;
 
+        this.ingredients = new LinkedList<String>();
+        String[] temp = listOfIngredients.split(","); //split string by comma and store in temp string array
+
+        for (int i = 0; i < temp.length; i++) { //push each ingredient onto ingredients linked list
+            this.ingredients.push(temp[i]);
+        }
+
+        this.allergens = new LinkedList<String>();
+        temp = listOfAllergens.split(","); //split string by comma and store in temp string array
+
+        for (int i = 0; i < temp.length; i++) {
+            this.allergens.push(temp[i]); //push each allergen onto allergens linked list
+        }
 
         this.price = price;
         this.description = description;
         this.isInMenu = offeredInMenu;
-
     }
 
     public String getName() {
