@@ -23,7 +23,6 @@ public class MainActivity extends Activity {
     //Button registerButton;
     EditText editTextEmailAddress; //username text field
     EditText editTextPassword; //password text field
-    Button buttonRegister; //button for registration
     Button buttonLogin; //button for login
     TextView textErrorMessage; //display text for error messages
     protected static DatabaseReference users; //refers to the Firebase database. used to read and write to database.
@@ -42,7 +41,6 @@ public class MainActivity extends Activity {
 
         editTextEmailAddress = (EditText) findViewById(R.id.editTextEmailAddress);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        buttonRegister = (Button) findViewById(R.id.buttonClientRegister);
         buttonLogin = (Button) findViewById(R.id.buttonLogin);
         textErrorMessage = (TextView) findViewById(R.id.textErrorMessage);
 
@@ -73,11 +71,6 @@ public class MainActivity extends Activity {
         complaints.child(complaintThird.getId()).setValue(complaintThird);
         complaints.child(complaintFourth.getId()).setValue(complaintFourth);
         complaints.child(complaintFifth.getId()).setValue(complaintFifth);
-
-
-
-        //buttonRegister=findViewById(R.id.buttonRegister);
-        //buttonRegister.setOnClickListener(this);
     }
 
     protected static DatabaseReference getUsers() { //method used across fragments
