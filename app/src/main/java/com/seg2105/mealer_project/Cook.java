@@ -39,7 +39,7 @@ public class Cook extends Person implements Serializable {
         this.description = description;
         this.voidCheque = voidCheque;
         this.accountActive = true;//active status
-        this.permSuspension = false;//default actuve
+        this.permSuspension = false;//default active
 
         this.soldMeals = 0;
         this.customerRating = 0;
@@ -109,10 +109,25 @@ public class Cook extends Person implements Serializable {
 
     }
 
-    public static void removeMealOffer(){
-
+    public LinkedList<Meal> getMeals() {//returns meals
+        return meals;
     }
 
+    public LinkedList<Meal> getOfferedMeals() {//returns offeredMeals
+        return offeredMeals;
+    }
 
+    public int lengthOfOfferdMeals(){//length of the linked list
+        LinkedList<Meal> temp = getOfferedMeals();
+        return temp.size()-1;
+    }
 
+    public void removeMealOffer(Meal mealToRemove){
+        int length = lengthOfOfferdMeals();//setting upperbound of for loop
+        for (int i = 0; i< length; i++){
+            if(offeredMeals.get(i) == mealToRemove){//if the meal at the index is the one to remove, remove it
+                offeredMeals.remove(i);//removing i from linked list
+            }
+        }
+    }
 }
