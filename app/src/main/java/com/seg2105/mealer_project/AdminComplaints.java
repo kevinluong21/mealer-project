@@ -33,6 +33,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 //actionDialogue
@@ -76,7 +77,7 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
         database.addValueEventListener(new ValueEventListener(){
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
-                //
+                //HERE
                 complaints.clear();
 
                 for(DataSnapshot postSnapshot:dataSnapshot.getChildren()){
@@ -108,6 +109,48 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
                 return true;
             }
         });
+    }
+
+    //date picker
+    public String makeDateString(int day, int month, int year)
+    {
+        //month day year -prev
+        //year day month -current
+        //day month year -goal
+        Log.d("day",Integer.toString(day));
+        Log.d("year",Integer.toString(year));
+        return day + "/" + getMonthFormat(month) + "/" + year;
+    }
+
+    private String getMonthFormat(int month)
+    {
+        if(month == 1)
+            return "01";
+        if(month == 2)
+            return "02";
+        if(month == 3)
+            return "03";
+        if(month == 4)
+            return "04";
+        if(month == 5)
+            return "05";
+        if(month == 6)
+            return "06";
+        if(month == 7)
+            return "07";
+        if(month == 8)
+            return "08";
+        if(month == 9)
+            return "09";
+        if(month == 10)
+            return "10";
+        if(month == 11)
+            return "11";
+        if(month == 12)
+            return "12";
+
+        //default should never happen
+        return "01";
     }
 
     private void showActionDialog(Complaint complaint) {
@@ -150,13 +193,48 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
                 deleteComplaint(complaint.getId());
                 b.dismiss();
             }
+
         });
 
+
+
+        editTextDate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                    DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
+                    {
+                        @Override
+                        public void onDateSet(android.widget.DatePicker datePicker, int year, int month, int day) {
+                            month = month + 1;
+
+                            String date = makeDateString(day, month, year);
+                            Log.d("HERE",date);
+
+                            editTextDate.setText(date);
+                        }
+                    };
+
+                    Calendar cal = Calendar.getInstance();
+                    int year = cal.get(Calendar.YEAR);
+                    int month = cal.get(Calendar.MONTH);
+                    int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                    int style = android.app.AlertDialog.THEME_HOLO_LIGHT;
+
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(AdminComplaints.this, style, dateSetListener, year, month, day);
+                    datePickerDialog.show();
+
+                    //datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());//cannot set to the past
+                    //datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+            }
+        });
 
         btnSuspendTemp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String date = editTextDate.getText().toString().trim();
+                Log.d("dateType",date.getClass().getName());
 
                 textSuspendError.setText(""); //reset text view to empty
 
