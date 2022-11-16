@@ -25,7 +25,7 @@ public class MealsList extends ArrayAdapter<Meal> implements Serializable {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View listViewItem = inflater.inflate(R.layout.layout_complaint_list, null, true);
+        View listViewItem = inflater.inflate(R.layout.layout_meal_list, null, true);
 
         TextView textViewMealName = (TextView) listViewItem.findViewById(R.id.textViewMealName);
         TextView txtViewMealType = (TextView) listViewItem.findViewById(R.id.txtViewMealType);
