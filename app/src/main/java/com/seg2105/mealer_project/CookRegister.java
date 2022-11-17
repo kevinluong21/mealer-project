@@ -248,6 +248,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
                                     Cook newCook = new Cook(firstName, lastName, emailAddress, password, description, address, imageURL);
                                     users.child(emailAddress).setValue(newCook);
                                     MainActivity.currentUser = newCook;
+                                    MainActivity.loggedInCook = newCook;
                                     Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
                                     //button navigation
                                     Intent intent = new Intent(getActivity(), UserWelcome.class);

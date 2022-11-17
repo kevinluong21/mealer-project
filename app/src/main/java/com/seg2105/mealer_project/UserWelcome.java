@@ -51,7 +51,6 @@ public class UserWelcome extends Activity {
 
 
         if (currentUser.getRole().equals("Cook")) {
-//            textViewActionPrompt.setText("What will you create today?");
             if (!MainActivity.loggedInCook.getAccountStatus()) {
                 AlertDialog.Builder suspensionDialog = new AlertDialog.Builder(this);
                 suspensionDialog.setCancelable(false); //cannot close the dialog by clicking outside of the box

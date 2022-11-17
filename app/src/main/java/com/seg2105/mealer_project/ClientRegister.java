@@ -160,6 +160,7 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
                             Client newClient = new Client(firstName, lastName, emailAddress, password, address, card);
                             users.child(emailAddress).setValue(newClient);
                             MainActivity.currentUser = newClient;
+                            MainActivity.loggedInClient = newClient;
                             Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
                             //button navigation
                             Intent intent = new Intent(getActivity(), UserWelcome.class);
