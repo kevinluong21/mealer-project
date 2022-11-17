@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -20,8 +21,10 @@ public class Cook extends Person implements Serializable {
     private int soldMeals;
     private int customerRating;
 
-    private LinkedList <Meal> meals;
-    private LinkedList <Meal> offeredMeals;
+//    private LinkedList <Meal> meals;
+//    private LinkedList <Meal> offeredMeals;
+    private HashMap<String, Meal> meals;
+    private HashMap<String, Meal> offeredMeals;
     private Queue <MealRequest> purchaseRequest;
 
     public Cook() { //empty constructor is needed for database!
@@ -44,8 +47,11 @@ public class Cook extends Person implements Serializable {
         this.soldMeals = 0;
         this.customerRating = 0;
 
-        offeredMeals = new LinkedList<Meal>();
-        meals = new LinkedList<Meal>();
+//        offeredMeals = new LinkedList<Meal>();
+//        meals = new LinkedList<Meal>();
+
+        this.meals = new HashMap<String, Meal>();
+        this.offeredMeals = new HashMap<String, Meal>();
 
     }
 
@@ -89,18 +95,26 @@ public class Cook extends Person implements Serializable {
 
     public int getSoldMeals(){return this.soldMeals;}
 
+    public HashMap<String, Meal> getMeals() {
+        return meals;
+    }
+
+    public HashMap<String, Meal> getOfferedMeals() {
+        return offeredMeals;
+    }
+
     //addition of meal to the offered meal list
-    public void addMeal( Meal mealToAdd){
-        offeredMeals.add(mealToAdd);
-    }
+//    public void addMeal( Meal mealToAdd){
+//        offeredMeals.add(mealToAdd);
+//    }
 
-    public void setMeals(LinkedList<Meal> meals) {
-        this.meals = meals;
-    }
-
-    public void setOfferedMeals(LinkedList<Meal> offeredMeals) {
-        this.offeredMeals = offeredMeals;
-    }
+//    public void setMeals(LinkedList<Meal> meals) {
+//        this.meals = meals;
+//    }
+//
+//    public void setOfferedMeals(LinkedList<Meal> offeredMeals) {
+//        this.offeredMeals = offeredMeals;
+//    }
 
     public static void rejectRequest(){
 
@@ -118,25 +132,25 @@ public class Cook extends Person implements Serializable {
 
     }
 
-    public LinkedList<Meal> getMeals() {//returns meals
-        return meals;
-    }
+//    public LinkedList<Meal> getMeals() {//returns meals
+//        return meals;
+//    }
+//
+//    public LinkedList<Meal> getOfferedMeals() {//returns offeredMeals
+//        return offeredMeals;
+//    }
 
-    public LinkedList<Meal> getOfferedMeals() {//returns offeredMeals
-        return offeredMeals;
-    }
-
-    public int lengthOfOfferdMeals(){//length of the linked list
-        LinkedList<Meal> temp = getOfferedMeals();
-        return temp.size()-1;
-    }
-
-    public void removeMealOffer(Meal mealToRemove){
-        int length = lengthOfOfferdMeals();//setting upperbound of for loop
-        for (int i = 0; i< length; i++){
-            if(offeredMeals.get(i) == mealToRemove){//if the meal at the index is the one to remove, remove it
-                offeredMeals.remove(i);//removing i from linked list
-            }
-        }
-    }
+//    public int lengthOfOfferdMeals(){//length of the linked list
+//        LinkedList<Meal> temp = getOfferedMeals();
+//        return temp.size()-1;
+//    }
+//
+//    public void removeMealOffer(Meal mealToRemove){
+//        int length = lengthOfOfferdMeals();//setting upperbound of for loop
+//        for (int i = 0; i< length; i++){
+//            if(offeredMeals.get(i) == mealToRemove){//if the meal at the index is the one to remove, remove it
+//                offeredMeals.remove(i);//removing i from linked list
+//            }
+//        }
+//    }
 }

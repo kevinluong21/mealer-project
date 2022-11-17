@@ -39,7 +39,7 @@ public class Meal implements Serializable {
 
         for (int i = 0; i < temp.length; i++) { //push each ingredient onto ingredients linked list
 //            this.ingredients.push(temp[i]);
-            this.ingredients.put(Integer.toString(i), temp[i]);
+            this.ingredients.put(Integer.toString(i) + "_key", temp[i]);
         }
 
 //        this.allergens = new LinkedList<String>();
@@ -48,7 +48,7 @@ public class Meal implements Serializable {
 
         for (int i = 0; i < temp.length; i++) {
 //            this.allergens.push(temp[i]); //push each allergen onto allergens linked list
-            this.allergens.put(Integer.toString(i), temp[i]);
+            this.allergens.put(Integer.toString(i) + "_key", temp[i]);
         }
 
         this.price = price;
