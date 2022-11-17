@@ -231,7 +231,7 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         textCookErrorMessage.setText("");
 
         if(!TextUtils.isEmpty(firstNameRaw) && !TextUtils.isEmpty(lastNameRaw) && !TextUtils.isEmpty(emailAddressRaw) && !TextUtils.isEmpty(addressNumber)
-                && !TextUtils.isEmpty(addressStreet) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(password)){
+                && !TextUtils.isEmpty(addressStreet) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(password)){ //error check for no void cheque
 
             if (inputValidation(firstNameRaw,lastNameRaw,emailAddressRaw,addressNumber,addressStreet,password) == true) {
                 String firstName = firstNameRaw.substring(0, 1).toUpperCase() + firstNameRaw.substring(1); //basic capitalization of first letter of first name

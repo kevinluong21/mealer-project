@@ -88,9 +88,18 @@ public class Cook extends Person implements Serializable {
     }
 
     public int getSoldMeals(){return this.soldMeals;}
-//addition of meal to the offered meal list
+
+    //addition of meal to the offered meal list
     public void addMeal( Meal mealToAdd){
         offeredMeals.add(mealToAdd);
+    }
+
+    public void setMeals(LinkedList<Meal> meals) {
+        this.meals = meals;
+    }
+
+    public void setOfferedMeals(LinkedList<Meal> offeredMeals) {
+        this.offeredMeals = offeredMeals;
     }
 
     public static void rejectRequest(){

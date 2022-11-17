@@ -91,7 +91,6 @@ public class MealActivity extends AppCompatActivity implements Serializable {
         String cuisineType = editTextCuisineType.getText().toString().trim().toLowerCase();
 
         //MUST IMPLEMENT PARSING THROUGH THE STRING ARRAY
-        //FOR NOW ONLY 1 INGREDIENT WILL BE ADDED TO TEST
         String listOfIngredients = editTextIngredients.getText().toString().trim().toLowerCase();
         String listOfAllergens = editTextAllergens.getText().toString().trim().toLowerCase();
         String priceString = editTextPrice.getText().toString().trim().toLowerCase();
@@ -99,7 +98,7 @@ public class MealActivity extends AppCompatActivity implements Serializable {
         String description = editTextDescription.getText().toString().trim().toLowerCase();
         boolean isInMenu = checkBoxAddToMenu.isChecked();
 
-        Meal newMeal = new Meal(mealName,mealType,cuisineType,listOfIngredients,listOfAllergens,price,description,isInMenu);
+        Meal newMeal = new Meal(mealName, mealType, cuisineType, listOfIngredients, listOfAllergens, price, description, isInMenu);
 
         users.child(currentCook.getEmailAddress()).child("meals").child(newMeal.getName()).setValue(newMeal);
 
