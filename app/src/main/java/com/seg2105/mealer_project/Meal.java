@@ -17,7 +17,9 @@ public class Meal implements Serializable {
     private HashMap<String, String> allergens;
     private double price;
     private String description;
-    private boolean isInMenu;
+    private boolean offering; //the meal is being offered
+    private double rating;
+    private int numSold; //how many the cook has sold of this meal
     //private boolean isInOfferedList;
 
     //empty constructor is necessary for firebase
@@ -25,35 +27,30 @@ public class Meal implements Serializable {
 
     }
 
-    public Meal(String name, String mealType, String cuisineType, String listOfIngredients, String listOfAllergens, double price, String description, boolean offeredInMenu){
+    public Meal(String name, String mealType, String cuisineType, String listOfIngredients, String listOfAllergens, double price, String description, boolean offering){
 
         this.name = name;
         this.mealType = mealType;
         this.cuisineType = cuisineType;
-//        this.listOfAllergens = listOfAllergens;
-//        this.listOfIngredients = listOfIngredients;
-
-//        this.ingredients = new LinkedList<String>();
         this.ingredients = new HashMap<String, String>();
         String[] temp = listOfIngredients.split(","); //split string by comma and store in temp string array
 
         for (int i = 0; i < temp.length; i++) { //push each ingredient onto ingredients linked list
-//            this.ingredients.push(temp[i]);
             this.ingredients.put(Integer.toString(i) + "_key", temp[i]);
         }
 
-//        this.allergens = new LinkedList<String>();
         this.allergens = new HashMap<String, String>();
         temp = listOfAllergens.split(","); //split string by comma and store in temp string array
 
         for (int i = 0; i < temp.length; i++) {
-//            this.allergens.push(temp[i]); //push each allergen onto allergens linked list
             this.allergens.put(Integer.toString(i) + "_key", temp[i]);
         }
 
         this.price = price;
         this.description = description;
-        this.isInMenu = offeredInMenu;
+        this.offering = offering;
+        this.rating = 0; //0 by default
+        this.numSold = 0; //0 by default
     }
 
     public String getName() {
@@ -75,8 +72,8 @@ public class Meal implements Serializable {
 //    public String listOfAllergens() {
 //        return listOfAllergens;
 //    }
-    public boolean isPresentInMenu(){
-        return isInMenu;
+    public boolean isOffering(){
+        return offering;
     }
 
 
@@ -103,5 +100,13 @@ public class Meal implements Serializable {
 
     public String getDescription() {
         return description;
+    }
+
+    public double getRating() {
+        return this.rating;
+    }
+
+    public int getNumSold() {
+        return this.numSold;
     }
 }

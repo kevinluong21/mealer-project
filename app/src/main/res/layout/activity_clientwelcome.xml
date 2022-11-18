@@ -6,6 +6,14 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteY="290dp">
+
+    </FrameLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -258,12 +266,6 @@
 
 
                 <Button
-                    android:id="@+id/btnReviewOfferedMeals"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Review Offered Meals" />
-
-                <Button
                     android:id="@+id/btnAdminComplaints"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -298,15 +300,15 @@
             android:background="@drawable/nav_top_shadow" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavBar"
             style="@style/nav_icon_colours"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="#FFFFFF"
+            android:background="#FFFF"
             app:elevation="10dp"
-            app:itemIconTint="@color/black"
-            app:itemTextColor="#000000"
-            app:labelVisibilityMode="auto"
+            app:itemIconTint="@drawable/selector"
+            app:itemTextColor="@color/selector"
             app:menu="@menu/bottom_nav_bar" />
 
     </LinearLayout>

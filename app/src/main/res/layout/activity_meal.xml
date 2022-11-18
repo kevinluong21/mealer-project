@@ -111,7 +111,7 @@
             android:id="@+id/btnAddMealCompleted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add meal to offered list"
+            android:text="Add meal"
             android:translationX="193dp" />
 
         <TextView

@@ -6,23 +6,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.common.ErrorDialogFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
-public class UserWelcome extends Activity {
+public class UserWelcome extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
 
     Person currentUser = MainActivity.currentUser; //get currentUser from MainActivity
     Button btnAdminComplaints;
     //Cook cookUser;
-
 
     Button btnAddMeal;
     Button btnReviewOfferedMeals;
@@ -30,14 +36,20 @@ public class UserWelcome extends Activity {
     TextView textViewWelcomeMessage;
     TextView textViewActionPrompt;
 
+    BottomNavigationView bottomNavBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clientwelcome);
+
+        bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
+        bottomNavBar.setOnItemSelectedListener(this);
+        bottomNavBar.setSelectedItemId(R.id.btnHome);
+
         btnAdminComplaints = (Button) findViewById(R.id.btnAdminComplaints);
 
         btnAddMeal = (Button) findViewById(R.id.btnAddMeal);
-        btnReviewOfferedMeals = (Button) findViewById(R.id.btnReviewOfferedMeals);
 
         textViewWelcomeMessage = findViewById(R.id.textViewWelcome);
         textViewWelcomeMessage.setText("Hi " + currentUser.getFirstName() + ",");
@@ -93,15 +105,6 @@ public class UserWelcome extends Activity {
             }
 
             btnAddMeal.setVisibility(View.VISIBLE);
-            btnReviewOfferedMeals.setVisibility(View.VISIBLE);
-
-            btnReviewOfferedMeals.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(UserWelcome.this, ReviewMealsActivity.class);
-                    startActivity(intent);
-                }
-            });
         }
 
         if (currentUser.getRole().equals("Client")) {
@@ -151,5 +154,18 @@ public class UserWelcome extends Activity {
 
         final AlertDialog b = suspensionDialog.create();
         b.show();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.btnHome:
+                return true;
+            case R.id.btnProfile:
+                startActivity(new Intent(getApplicationContext(),PersonalProfile.class));
+                overridePendingTransition(0,0);
+                return true;
+        }
+        return false;
     }
 }

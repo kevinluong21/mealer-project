@@ -9,7 +9,7 @@
     <ScrollView
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/layoutBottomNavBar"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -39,6 +39,7 @@
                         android:layout_height="fill_parent"
                         android:layout_weight="1"
                         android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/ramen"
                         tools:src="@tools:sample/backgrounds/scenic" />
                 </androidx.cardview.widget.CardView>
 
@@ -64,8 +65,10 @@
 
                     <ImageView
                         android:id="@+id/imageProfilePhoto"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        app:srcCompat="@drawable/maindish_icon"
                         tools:src="@tools:sample/avatars" />
                 </androidx.cardview.widget.CardView>
 
@@ -103,7 +106,7 @@
             <LinearLayout
                 android:id="@+id/layoutOfferedMenu"
                 android:layout_width="match_parent"
-                android:layout_height="731dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="25dp"
@@ -125,25 +128,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="10dp" />
 
-                <LinearLayout
-                    android:id="@+id/layoutOfferedMenuList"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listOfferedMeals"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_layout"
-                    android:backgroundTint="#EFEFEF"
-                    android:orientation="vertical">
+                    android:layout_height="match_parent" />
 
-                    <ListView
-                        android:id="@+id/listOfferedMenu"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="10dp"
-                        android:isScrollContainer="false"
-                        android:nestedScrollingEnabled="false"
-                        android:scrollbars="none" />
-                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutMenu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="21dp"
+                android:layout_marginEnd="25dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutOfferedMenu">
+
+                <TextView
+                    android:id="@+id/textMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Menu"
+                    android:textAlignment="center"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listMeals"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
 
@@ -165,10 +185,12 @@
             android:background="@drawable/nav_top_shadow" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
+            android:id="@+id/bottomNavBar"
             style="@style/nav_icon_colours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:itemIconTint="@drawable/selector"
+            app:itemTextColor="@color/selector"
             app:menu="@menu/bottom_nav_bar" />
     </LinearLayout>
 
