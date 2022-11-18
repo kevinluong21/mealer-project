@@ -7,6 +7,7 @@
     tools:context=".MealActivity">
 
     <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="16dp"
@@ -94,32 +95,48 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout6"
+        android:layout_width="401dp"
+        android:layout_height="93dp"
         android:layout_marginTop="400dp"
         android:layout_marginBottom="200dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <Button
             android:id="@+id/btnAddMealCompleted"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add meal to offered list" />
+            android:text="Add meal to offered list"
+            android:translationX="193dp" />
+
+        <TextView
+            android:id="@+id/mealErrorMessage"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textColor="#FF0000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:translationX="-120dp"
+            android:translationY="35dp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/linearLayout7"
+        android:layout_width="411dp"
+        android:layout_height="171dp"
         android:layout_marginTop="500dp"
-        android:layout_marginBottom="100dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
         <Button
             android:id="@+id/btnBackHomeToCook"
