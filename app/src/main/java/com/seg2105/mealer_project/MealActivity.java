@@ -119,6 +119,8 @@ public class MealActivity extends AppCompatActivity implements Serializable {
             } else {
                 mealErrorMessage.setText("All fields must be filled");
             }
+        }else {
+            mealErrorMessage.setText("Price must be formatted like this 1.00");
         }
 
     }
@@ -140,31 +142,32 @@ public class MealActivity extends AppCompatActivity implements Serializable {
             if(checkCuisineType(cuisine) == true){
                 if(checkPrice(price) == true){
                     return true;
-                }else{return false;}
-            }else{return false;}
-        }else{return false;}
+                }else{
+                mealErrorMessage.setText("Price must be formatted like this 1.00");
+                return false;}
+            }else{mealErrorMessage.setText("Cuisine type must only contain letters a through z");
+                return false;}
+        }else{mealErrorMessage.setText("Meal type must be main dish, side dish, appetizer, or dessert");
+            return false;}
     }
-    public boolean checkMealType(String type){
+    public static boolean checkMealType(String type){
         type = type.toLowerCase();
         if(type.equals("main dish") || type.equals("side dish") || type.equals("dessert") || type.equals("appetizer")){
             return true;
         }else{
-            mealErrorMessage.setText("Meal type must be main dish, side dish, appetizer, or dessert");
             return false;
         }
     }
-    public boolean checkCuisineType(String type){
+    public static boolean checkCuisineType(String type){
         if(type.matches("[a-zA-Z\\-]*")){
             return true;
         }
-        mealErrorMessage.setText("Cuisine type must only contain letters a through z");
         return false;
     }
-    public boolean checkPrice(String p){
+    public static boolean checkPrice(String p){
         if(p.matches("[0-9]*[.][0-9]{2}")){
             return true;
         }
-        mealErrorMessage.setText("Price must be formatted like this 1.00");
         return false;
     }
 

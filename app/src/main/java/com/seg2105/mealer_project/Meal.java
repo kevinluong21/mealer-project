@@ -76,6 +76,8 @@ public class Meal implements Serializable {
         return offering;
     }
 
+    public void setOffering(boolean newOffer){offering = newOffer;}
+
 
 //    public LinkedList<String> getIngredients() {
 //        return ingredients;
