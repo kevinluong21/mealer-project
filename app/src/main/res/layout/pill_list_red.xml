@@ -21,14 +21,14 @@
             android:layout_alignRight="@id/textItem"
             android:layout_alignBottom="@id/textItem"
             android:scaleType="fitXY"
-            app:srcCompat="@drawable/pill_shaped_green" />
+            app:srcCompat="@drawable/pill_shaped_red" />
 
         <TextView
             android:id="@+id/textItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="ingredient"
+            android:text="allergen"
             android:textSize="16sp" />
     </RelativeLayout>
 

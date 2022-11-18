@@ -1,5 +1,9 @@
 <resources>
-
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
     <!--    code from https://www.geeksforgeeks.org/bottom-navigation-bar-in-android/-->
     <style name="nav_icon_colours" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <!-- Customize your theme here. -->

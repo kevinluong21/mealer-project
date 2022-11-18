@@ -2,6 +2,7 @@
 
 package com.seg2105.mealer_project;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -126,6 +129,29 @@ public class PersonalProfile extends AppCompatActivity {
                                 @Override public void onItemClick(View view, int position) {
                                     Intent intent = new Intent(PersonalProfile.this, MealPage.class);
                                     intent.putExtra("meal", offeredMeals.get(position));
+                                    startActivity(intent);
+                                }
+
+                                @Override public void onLongItemClick(View view, int position) {
+                                    AlertDialog.Builder removeMeal = new AlertDialog.Builder(getApplicationContext());
+                                    removeMeal.setCancelable(true);
+                                    removeMeal.setTitle("Remove " + offeredMeals.get(position).getName() + " from Offered Menu?");
+                                    removeMeal.setPositiveButton("Remove", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                        cookMeals.child(offeredMeals.get(position).getName()).removeValue();
+                                        Toast.makeText(getApplicationContext(), "Meal Removed", Toast.LENGTH_LONG).show();
+                                    });
+                                    removeMeal.setNegativeButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                        dialog.dismiss();
+                                    });
+                                }
+                            })
+                    );
+
+                    listMeals.addOnItemTouchListener(
+                            new RecyclerItemClickListener(getApplicationContext(), listMeals ,new RecyclerItemClickListener.OnItemClickListener() {
+                                @Override public void onItemClick(View view, int position) {
+                                    Intent intent = new Intent(PersonalProfile.this, MealPage.class);
+                                    intent.putExtra("meal", meals.get(position));
                                     startActivity(intent);
                                 }
 
