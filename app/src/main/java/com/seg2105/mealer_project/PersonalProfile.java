@@ -133,16 +133,21 @@ public class PersonalProfile extends AppCompatActivity {
                                 }
 
                                 @Override public void onLongItemClick(View view, int position) {
-                                    AlertDialog.Builder removeMeal = new AlertDialog.Builder(getApplicationContext());
+                                    AlertDialog.Builder removeMeal = new AlertDialog.Builder(PersonalProfile.this);
                                     removeMeal.setCancelable(true);
                                     removeMeal.setTitle("Remove " + offeredMeals.get(position).getName() + " from Offered Menu?");
+                                    removeMeal.setMessage("Click 'Remove' to stop offering this meal. The meal will still be on the Menu.");
                                     removeMeal.setPositiveButton("Remove", (DialogInterface.OnClickListener) (dialog, which) -> {
-                                        cookMeals.child(offeredMeals.get(position).getName()).removeValue();
+                                        Meal toRemove = offeredMeals.get(position);
+                                        toRemove.setOffering(false);
+                                        cookMeals.child(toRemove.getName()).setValue(toRemove);
                                         Toast.makeText(getApplicationContext(), "Meal Removed", Toast.LENGTH_LONG).show();
                                     });
                                     removeMeal.setNegativeButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
                                         dialog.dismiss();
                                     });
+                                    removeMeal.create();
+                                    removeMeal.show();
                                 }
                             })
                     );
@@ -156,7 +161,26 @@ public class PersonalProfile extends AppCompatActivity {
                                 }
 
                                 @Override public void onLongItemClick(View view, int position) {
-                                    // do whatever
+                                    AlertDialog.Builder offerDeleteMeal = new AlertDialog.Builder(PersonalProfile.this);
+                                    offerDeleteMeal.setCancelable(true);
+                                    offerDeleteMeal.setTitle("Offer or Delete " + meals.get(position).getName() + " from Menu?");
+                                    offerDeleteMeal.setMessage("Choose the appropriate button below to offer or permanently delete the meal " +
+                                            "from the menu.");
+                                    offerDeleteMeal.setPositiveButton("Delete", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                        cookMeals.child(meals.get(position).getName()).removeValue();
+                                        Toast.makeText(getApplicationContext(), "Meal Deleted", Toast.LENGTH_LONG).show();
+                                    });
+                                    offerDeleteMeal.setNegativeButton("Offer", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                        Meal toOffer = meals.get(position);
+                                        toOffer.setOffering(true);
+                                        cookMeals.child(toOffer.getName()).setValue(toOffer);
+                                        Toast.makeText(getApplicationContext(), "Meal Now Offering", Toast.LENGTH_LONG).show();
+                                    });
+                                    offerDeleteMeal.setNeutralButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                        dialog.dismiss();
+                                    });
+                                    offerDeleteMeal.create();
+                                    offerDeleteMeal.show();
                                 }
                             })
                     );
