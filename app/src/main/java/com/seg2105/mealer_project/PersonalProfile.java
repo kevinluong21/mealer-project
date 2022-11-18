@@ -25,6 +25,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class PersonalProfile extends AppCompatActivity {
@@ -40,6 +42,8 @@ public class PersonalProfile extends AppCompatActivity {
     BottomNavigationView bottomNavBar;
     RecyclerView listOfferedMeals;
     RecyclerView listMeals;
+    TextView textOfferedMenu;
+    TextView textMenu;
     DatabaseReference cookMeals;
 
     public PersonalProfile() {
@@ -72,14 +76,20 @@ public class PersonalProfile extends AppCompatActivity {
 
         textName = (TextView) findViewById(R.id.textName);
         textRole = (TextView) findViewById(R.id.textRole);
+        textOfferedMenu = (TextView) findViewById(R.id.textOfferedMenu);
+        textMenu = (TextView) findViewById(R.id.textMenu);
 
         textName.setText(MainActivity.currentUser.getFirstName() + " " + MainActivity.currentUser.getLastName());
         textRole.setText(MainActivity.currentUser.getRole());
 
+        textOfferedMenu.setVisibility(View.GONE);
+        textMenu.setVisibility(View.GONE);
         listOfferedMeals.setVisibility(View.GONE);
         listMeals.setVisibility(View.GONE);
 
         if (MainActivity.currentUser.getRole().equals("Cook")) {
+            textOfferedMenu.setVisibility(View.VISIBLE);
+            textMenu.setVisibility(View.VISIBLE);
             listOfferedMeals.setVisibility(View.VISIBLE);
             listMeals.setVisibility(View.VISIBLE);
 
