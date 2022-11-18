@@ -110,6 +110,7 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="25dp"
+                android:nestedScrollingEnabled="false"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -163,7 +164,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/listMeals"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:nestedScrollingEnabled="false" />
 
             </LinearLayout>
 

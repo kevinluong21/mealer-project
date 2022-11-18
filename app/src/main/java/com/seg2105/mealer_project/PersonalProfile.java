@@ -5,20 +5,17 @@ package com.seg2105.mealer_project;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Locale;
 
 public class PersonalProfile extends AppCompatActivity {
 
@@ -41,8 +37,7 @@ public class PersonalProfile extends AppCompatActivity {
     BottomNavigationView bottomNavBar;
     RecyclerView listOfferedMeals;
     RecyclerView listMeals;
-    DatabaseReference cookMeals = FirebaseDatabase.getInstance().getReference("users").child(MainActivity.emailAddressToKey(MainActivity.loggedInCook.getEmailAddress()))
-            .child("meals");
+    DatabaseReference cookMeals;
 
     public PersonalProfile() {
         super(R.layout.activity_personal_profile);
@@ -52,6 +47,9 @@ public class PersonalProfile extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_profile);
+
+        listOfferedMeals = (RecyclerView) findViewById(R.id.listOfferedMeals);
+        listMeals = (RecyclerView) findViewById(R.id.listMeals);
 
         bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
         bottomNavBar.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
@@ -72,31 +70,45 @@ public class PersonalProfile extends AppCompatActivity {
         textName = (TextView) findViewById(R.id.textName);
         textRole = (TextView) findViewById(R.id.textRole);
 
-        textName.setText(MainActivity.loggedInCook.getFirstName() + " " + MainActivity.loggedInCook.getLastName());
-        textRole.setText(MainActivity.loggedInCook.getRole());
+        textName.setText(MainActivity.currentUser.getFirstName() + " " + MainActivity.currentUser.getLastName());
+        textRole.setText(MainActivity.currentUser.getRole());
+
+        listOfferedMeals.setVisibility(View.GONE);
+        listMeals.setVisibility(View.GONE);
 
         if (MainActivity.currentUser.getRole().equals("Cook")) {
-            listOfferedMeals = (RecyclerView) findViewById(R.id.listOfferedMeals);
-            listMeals = (RecyclerView) findViewById(R.id.listMeals);
-            ArrayList<MealProfileModel> offeredMeals = new ArrayList<MealProfileModel>();
-            ArrayList<MealProfileModel> meals = new ArrayList<MealProfileModel>();
+            listOfferedMeals.setVisibility(View.VISIBLE);
+            listMeals.setVisibility(View.VISIBLE);
+
+            cookMeals = FirebaseDatabase.getInstance().getReference("users").child(MainActivity.emailAddressToKey(MainActivity.loggedInCook.getEmailAddress()))
+                    .child("meals");
+
+            ArrayList<MealProfileModel> offeredMealModels = new ArrayList<MealProfileModel>();
+            ArrayList<MealProfileModel> mealModels = new ArrayList<MealProfileModel>();
+            ArrayList<Meal> offeredMeals = new ArrayList<Meal>();
+            ArrayList<Meal> meals = new ArrayList<Meal>();
 
             cookMeals.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    offeredMealModels.clear();
+                    mealModels.clear();
                     offeredMeals.clear();
+                    meals.clear();
 
                     for (DataSnapshot postSnapshot : snapshot.getChildren()) {
                         Meal meal = postSnapshot.getValue(Meal.class);
 
                         if (meal.isOffering()) {
-                            offeredMeals.add(new MealProfileModel(meal.getName(), meal.getPrice(), meal.getRating(), meal.getNumSold()));
+                            offeredMeals.add(meal);
+                            offeredMealModels.add(new MealProfileModel(meal.getName(), meal.getPrice(), meal.getRating(), meal.getNumSold()));
                         }
-                        meals.add(new MealProfileModel(meal.getName(), meal.getPrice(), meal.getRating(), meal.getNumSold()));
+                        meals.add(meal);
+                        mealModels.add(new MealProfileModel(meal.getName(), meal.getPrice(), meal.getRating(), meal.getNumSold()));
                     }
 
-                    ProfileMealsAdapter offeredMealsAdapter = new ProfileMealsAdapter(PersonalProfile.this, offeredMeals);
-                    ProfileMealsAdapter mealsAdapter = new ProfileMealsAdapter(PersonalProfile.this, meals);
+                    ProfileMealsAdapter offeredMealsAdapter = new ProfileMealsAdapter(PersonalProfile.this, offeredMealModels);
+                    ProfileMealsAdapter mealsAdapter = new ProfileMealsAdapter(PersonalProfile.this, mealModels);
 
                     //creates a vertical list
                     LinearLayoutManager offeredMealsLayoutManager = new LinearLayoutManager(PersonalProfile.this, LinearLayoutManager.VERTICAL, false);
@@ -107,6 +119,21 @@ public class PersonalProfile extends AppCompatActivity {
 
                     listMeals.setLayoutManager(mealsLayoutManager);
                     listMeals.setAdapter(mealsAdapter);
+
+                    //allows for recyclerview items to be clicked (code from https://stackoverflow.com/questions/24471109/recyclerview-onclick)
+                    listOfferedMeals.addOnItemTouchListener(
+                            new RecyclerItemClickListener(getApplicationContext(), listOfferedMeals ,new RecyclerItemClickListener.OnItemClickListener() {
+                                @Override public void onItemClick(View view, int position) {
+                                    Intent intent = new Intent(PersonalProfile.this, MealPage.class);
+                                    intent.putExtra("meal", offeredMeals.get(position));
+                                    startActivity(intent);
+                                }
+
+                                @Override public void onLongItemClick(View view, int position) {
+                                    // do whatever
+                                }
+                            })
+                    );
                 }
 
                 @Override
