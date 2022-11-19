@@ -10,30 +10,26 @@ GitHub Repo: https://github.com/kevinluong21/mealer-project
 Username: admin
 Password: admin
 
-Deliverable 2 
-2022-11-04
+Deliverable 3
+2022-11-18
 
 NOTE: This deliverable makes use of Firebase Cloud Storage and sometimes missing dependencies may cause an error even though they are pushed to the build.gradle file. Hopefully, this is not the case, but it has occured before.
 
 The login and password for cooks are provided
 
-Complaint 1 
+Cook 1
 email: test@gmail.com
 password: password
 
-Complaint 2 
+Cook 2
 email: ap@mail.com
 password: password
 
-Complaint 3:
-email: apetr@gmail.com
-password: password
 
-Complaint 4:
+Cook 3
 email: chec@gmail.com
 password: password
 
-Complaint 5
+Cook 4
 email: cook@gmail.com
 password: password
-
