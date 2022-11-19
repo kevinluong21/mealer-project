@@ -157,7 +157,7 @@ public class PersonalProfile extends AppCompatActivity {
                                 @Override public void onLongItemClick(View view, int position) {
                                     if (longClickCounter == 0) {
                                         AlertDialog.Builder removeMeal = new AlertDialog.Builder(PersonalProfile.this);
-                                        removeMeal.setCancelable(true);
+                                        removeMeal.setCancelable(false);
                                         removeMeal.setTitle("Remove " + offeredMeals.get(position).getName() + " from Offered Menu?");
                                         removeMeal.setMessage("Click 'Remove' to stop offering this meal. The meal will still be on the Menu.");
                                         removeMeal.setPositiveButton("Remove", (DialogInterface.OnClickListener) (dialog, which) -> {
@@ -196,7 +196,7 @@ public class PersonalProfile extends AppCompatActivity {
                                 @Override public void onLongItemClick(View view, int position) {
                                     if (longClickCounter == 0) {
                                         AlertDialog.Builder offerDeleteMeal = new AlertDialog.Builder(PersonalProfile.this);
-                                        offerDeleteMeal.setCancelable(true);
+                                        offerDeleteMeal.setCancelable(false);
                                         offerDeleteMeal.setTitle("Offer or Delete " + meals.get(position).getName() + " from Menu?");
                                         offerDeleteMeal.setMessage("Choose the appropriate button below to offer or permanently delete the meal " +
                                                 "from the menu.");
