@@ -152,6 +152,9 @@ public class PersonalProfile extends AppCompatActivity {
                                         toRemove.setOffering(false);
                                         cookMeals.child(toRemove.getName()).setValue(toRemove);
                                         Toast.makeText(getApplicationContext(), "Meal Removed", Toast.LENGTH_LONG).show();
+
+                                        //AP dialogue dismiss
+                                        dialog.dismiss();
                                     });
                                     removeMeal.setNegativeButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
                                         dialog.dismiss();
@@ -179,12 +182,17 @@ public class PersonalProfile extends AppCompatActivity {
                                     offerDeleteMeal.setPositiveButton("Delete", (DialogInterface.OnClickListener) (dialog, which) -> {
                                         cookMeals.child(meals.get(position).getName()).removeValue();
                                         Toast.makeText(getApplicationContext(), "Meal Deleted", Toast.LENGTH_LONG).show();
+                                        //AP
+                                        dialog.dismiss();
                                     });
                                     offerDeleteMeal.setNegativeButton("Offer", (DialogInterface.OnClickListener) (dialog, which) -> {
                                         Meal toOffer = meals.get(position);
                                         toOffer.setOffering(true);
                                         cookMeals.child(toOffer.getName()).setValue(toOffer);
                                         Toast.makeText(getApplicationContext(), "Meal Now Offering", Toast.LENGTH_LONG).show();
+
+                                        //AP
+                                        dialog.dismiss();
                                     });
                                     offerDeleteMeal.setNeutralButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
                                         dialog.dismiss();

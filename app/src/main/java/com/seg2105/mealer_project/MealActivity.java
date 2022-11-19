@@ -1,9 +1,12 @@
 package com.seg2105.mealer_project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -11,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
@@ -34,6 +38,8 @@ public class MealActivity extends AppCompatActivity implements Serializable {
     Button btnBack;
 
     DatabaseReference users = MainActivity.getUsers(); //get user database from MainActivity
+
+    BottomNavigationView bottomNavBar;
 
     Button btnAddMealCompleted;
 
@@ -83,6 +89,24 @@ public class MealActivity extends AppCompatActivity implements Serializable {
                 }
             }
         });
+
+        bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
+        bottomNavBar.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.btnHome:
+                        startActivity(new Intent(getApplicationContext(),UserWelcome.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                    case R.id.btnProfile:
+                        startActivity(new Intent(getApplicationContext(),PersonalProfile.class));
+                        overridePendingTransition(0,0);
+                        return true;
+                }
+                return false;
+            }
+        });
+        bottomNavBar.getMenu().findItem(R.id.btnProfile).setChecked(true);
 
 
     }
