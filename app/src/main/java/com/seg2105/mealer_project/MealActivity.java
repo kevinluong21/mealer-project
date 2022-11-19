@@ -106,7 +106,7 @@ public class MealActivity extends AppCompatActivity implements Serializable {
                 return false;
             }
         });
-        bottomNavBar.getMenu().findItem(R.id.btnProfile).setChecked(true);
+        bottomNavBar.getMenu().findItem(R.id.btnHome).setChecked(true);
 
 
     }
