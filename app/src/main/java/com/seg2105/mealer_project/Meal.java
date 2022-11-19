@@ -36,14 +36,16 @@ public class Meal implements Serializable {
         String[] temp = listOfIngredients.split(","); //split string by comma and store in temp string array
 
         for (int i = 0; i < temp.length; i++) { //push each ingredient onto ingredients linked list
-            this.ingredients.put(Integer.toString(i) + "_key", temp[i]);
+            String trimmed = temp[i].trim();
+            this.ingredients.put(Integer.toString(i) + "_key", trimmed);
         }
 
         this.allergens = new HashMap<String, String>();
         temp = listOfAllergens.split(","); //split string by comma and store in temp string array
 
         for (int i = 0; i < temp.length; i++) {
-            this.allergens.put(Integer.toString(i) + "_key", temp[i]);
+            String trimmed = temp[i].trim();
+            this.allergens.put(Integer.toString(i) + "_key", trimmed);
         }
 
         this.price = price;
