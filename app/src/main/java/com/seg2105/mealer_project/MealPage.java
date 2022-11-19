@@ -52,6 +52,7 @@ public class MealPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_page);
 
+        //when this activity is opened, a meal object is passed to display its information on this page
         this.meal = (Meal) getIntent().getSerializableExtra("meal");
 
         //bottom nav bar
@@ -93,6 +94,8 @@ public class MealPage extends AppCompatActivity {
         textAboutMeal.setText("About "+ meal.getName());
         textDescription.setText(meal.getDescription());
 
+
+        //this will input the ingredients and allergens into recyclerviews on the meal page
         ArrayList<IngredientModel> ingredients = new ArrayList<IngredientModel>();
         ArrayList<IngredientModel> allergens = new ArrayList<IngredientModel>();
 
