@@ -201,8 +201,14 @@ public class PersonalProfile extends AppCompatActivity {
                                         offerDeleteMeal.setMessage("Choose the appropriate button below to offer or permanently delete the meal " +
                                                 "from the menu.");
                                         offerDeleteMeal.setPositiveButton("Delete", (DialogInterface.OnClickListener) (dialog, which) -> {
-                                            cookMeals.child(meals.get(position).getName()).removeValue();
-                                            Toast.makeText(getApplicationContext(), "Meal Deleted", Toast.LENGTH_LONG).show();
+                                            Meal toDelete = meals.get(position);
+                                            if (!toDelete.isOffering()) { //meal can ONLY be deleted if it is not being offered
+                                                cookMeals.child(meals.get(position).getName()).removeValue();
+                                                Toast.makeText(getApplicationContext(), "Meal Deleted", Toast.LENGTH_LONG).show();
+                                            }
+                                            else {
+                                                Toast.makeText(getApplicationContext(), "Meal cannot be deleted if still being offered", Toast.LENGTH_LONG).show();
+                                            }
                                             longClickCounter = 0;
                                             //AP
                                             dialog.dismiss();
