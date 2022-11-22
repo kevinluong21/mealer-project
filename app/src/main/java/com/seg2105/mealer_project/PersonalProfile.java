@@ -5,10 +5,8 @@ package com.seg2105.mealer_project;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -101,8 +97,8 @@ public class PersonalProfile extends AppCompatActivity {
             cookMeals = FirebaseDatabase.getInstance().getReference("users").child(MainActivity.emailAddressToKey(MainActivity.loggedInCook.getEmailAddress()))
                     .child("meals");
 
-            ArrayList<MealProfileModel> offeredMealModels = new ArrayList<MealProfileModel>();
-            ArrayList<MealProfileModel> mealModels = new ArrayList<MealProfileModel>();
+            ArrayList<MealListModel> offeredMealModels = new ArrayList<MealListModel>();
+            ArrayList<MealListModel> mealModels = new ArrayList<MealListModel>();
             ArrayList<Meal> offeredMeals = new ArrayList<Meal>();
             ArrayList<Meal> meals = new ArrayList<Meal>();
 
@@ -122,14 +118,14 @@ public class PersonalProfile extends AppCompatActivity {
 
                         if (meal.isOffering()) {
                             offeredMeals.add(meal);
-                            offeredMealModels.add(new MealProfileModel(meal.getName(), meal.getPrice(), meal.getRating(), meal.getNumSold()));
+                            offeredMealModels.add(new MealListModel(meal.getName(), meal.getPrice(), meal.getRating(), meal.getNumSold()));
                         }
                         meals.add(meal);
-                        mealModels.add(new MealProfileModel(meal.getName(), meal.getPrice(), meal.getRating(), meal.getNumSold()));
+                        mealModels.add(new MealListModel(meal.getName(), meal.getPrice(), meal.getRating(), meal.getNumSold()));
                     }
 
-                    ProfileMealsAdapter offeredMealsAdapter = new ProfileMealsAdapter(PersonalProfile.this, offeredMealModels);
-                    ProfileMealsAdapter mealsAdapter = new ProfileMealsAdapter(PersonalProfile.this, mealModels);
+                    MealListAdapter offeredMealsAdapter = new MealListAdapter(PersonalProfile.this, offeredMealModels);
+                    MealListAdapter mealsAdapter = new MealListAdapter(PersonalProfile.this, mealModels);
 
                     //creates a vertical list
                     LinearLayoutManager offeredMealsLayoutManager = new LinearLayoutManager(PersonalProfile.this, LinearLayoutManager.VERTICAL, false);

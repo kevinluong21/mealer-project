@@ -94,7 +94,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -115,15 +115,19 @@
             android:width="140dp"
             android:backgroundTint="#90E2A8"
             android:onClick="login"
+            android:paddingLeft="0dp"
+            android:paddingTop="0dp"
+            android:paddingRight="0dp"
+            android:paddingBottom="0dp"
             android:text="Login"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:cornerRadius="10dp" />
+            app:iconPadding="0dp" />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout5"

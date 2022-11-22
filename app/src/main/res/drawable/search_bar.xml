@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--code from https://stackoverflow.com/questions/32796955/android-custom-searchview-rounded-corners-->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#EFEFEF"/>
+    <corners android:radius="20dp"/>
+    <padding android:left="15dp"
+        android:bottom="15dp"
+        android:right="15dp"
+        android:top="15dp"/>
+</shape>

@@ -14,27 +14,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.*;
 
-public class ProfileMealsAdapter extends RecyclerView.Adapter<ProfileMealsAdapter.ViewHolder>{
+public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.ViewHolder>{
 
     private final Context context;
-    private final ArrayList<MealProfileModel> mealProfileModels;
+    private final ArrayList<MealListModel> mealProfileModels;
 
-    public ProfileMealsAdapter(Context context, ArrayList<MealProfileModel> mealProfileModels) {
+    public MealListAdapter(Context context, ArrayList<MealListModel> mealProfileModels) {
         this.context = context;
         this.mealProfileModels = mealProfileModels;
     }
 
     @NonNull
     @Override
-    public ProfileMealsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public MealListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.meal_list, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ProfileMealsAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull MealListAdapter.ViewHolder holder, int position) {
         //image view is not set yet
-        MealProfileModel model = mealProfileModels.get(position);
+        MealListModel model = mealProfileModels.get(position);
         holder.imageMeal.setBackgroundResource(model.getImageSrc());
         holder.textMealName.setText(model.getMealName());
         holder.textPrice.setText(Double.toString(model.getPrice()));

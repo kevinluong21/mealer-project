@@ -3,16 +3,14 @@
 
 package com.seg2105.mealer_project;
 
-import java.util.Locale;
-
-public class MealProfileModel {
+public class MealListModel {
     private String mealName;
     private double price;
     private double rating;
     private int mealsSold; //number of this meal that were sold so far
     private int imageSrc;
 
-    public MealProfileModel(String mealName, double price, double rating, int mealsSold) {
+    public MealListModel(String mealName, double price, double rating, int mealsSold) {
         this.mealName = mealName.substring(0, 1).toUpperCase() + mealName.substring(1).toLowerCase();
         this.price = price;
         this.rating = rating;
