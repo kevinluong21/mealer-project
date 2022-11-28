@@ -257,7 +257,8 @@
                         android:id="@+id/searchBar"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="@drawable/search_bar" />
+                        android:background="@drawable/search_bar"
+                        android:onClick="openSearchResults" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/listClientMeals"

@@ -37,8 +37,8 @@ public class MealListAdapter extends RecyclerView.Adapter<MealListAdapter.ViewHo
         MealListModel model = mealProfileModels.get(position);
         holder.imageMeal.setBackgroundResource(model.getImageSrc());
         holder.textMealName.setText(model.getMealName());
-        holder.textPrice.setText(Double.toString(model.getPrice()));
-        holder.textMealRating.setText(Double.toString(model.getRating()));
+        holder.textPrice.setText(model.getPrice());
+        holder.textMealRating.setText(model.getRating());
         holder.textMealsSold.setText(Integer.toString(model.getMealsSold()));
     }
 

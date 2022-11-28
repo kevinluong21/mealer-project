@@ -46,6 +46,7 @@
             app:layout_constraintTop_toBottomOf="@+id/layoutTitle">
 
             <SearchView
+                android:id="@+id/searchBar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/search_bar" />
@@ -63,7 +64,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/layoutSearch">
 
-            <androidx.recyclerview.widget.RecyclerView
+            <ListView
                 android:id="@+id/listSearchResults"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

@@ -1,11 +1,13 @@
 package com.seg2105.mealer_project;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class Meal implements Serializable {
-
+    private String cookEmail; //email of cook that offers this meal
+    private Address cookAddress; //address of cook that offers this meal
     private String name;
     private String mealType;
     private String cuisineType;
@@ -27,8 +29,9 @@ public class Meal implements Serializable {
 
     }
 
-    public Meal(String name, String mealType, String cuisineType, String listOfIngredients, String listOfAllergens, double price, String description, boolean offering){
-
+    public Meal(Cook cook, String name, String mealType, String cuisineType, String listOfIngredients, String listOfAllergens, double price, String description, boolean offering){
+        this.cookEmail = cook.getEmailAddress();
+        this.cookAddress = cook.getAddress();
         this.name = name;
         this.mealType = mealType;
         this.cuisineType = cuisineType;
@@ -55,6 +58,14 @@ public class Meal implements Serializable {
         this.numSold = 0; //0 by default
     }
 
+    public String getCookEmail() {
+        return cookEmail;
+    }
+
+    public Address getCookAddress() {
+        return this.cookAddress;
+    }
+
     public String getName() {
         return name;
     }
@@ -67,28 +78,11 @@ public class Meal implements Serializable {
         return cuisineType;
     }
 
-//    public String getListOfIngredients() {
-//        return listOfIngredients;
-//    }
-//
-//    public String listOfAllergens() {
-//        return listOfAllergens;
-//    }
     public boolean isOffering(){
         return offering;
     }
 
     public void setOffering(boolean newOffer){offering = newOffer;}
-
-
-//    public LinkedList<String> getIngredients() {
-//        return ingredients;
-//    }
-//
-//    public LinkedList<String> getAllergens() {
-//        return allergens;
-//    }
-
 
     public HashMap<String, String> getIngredients() {
         return ingredients;
@@ -102,12 +96,39 @@ public class Meal implements Serializable {
         return price;
     }
 
+    public String displayPrice() { //formats price for string display
+        String price = Double.toString(this.price);
+        Log.d("TAG", price);
+        String[] priceSplit = price.split("\\.");
+
+        if (priceSplit[1].length() >= 2) {
+            price = priceSplit[0] + priceSplit[1].substring(0, 2); //cut off the rest of the price at 2 decimal places
+        }
+        else if (priceSplit[1].length() == 1) {
+            price = priceSplit[0] + priceSplit[1] + "0";
+        }
+        return price;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public double getRating() {
         return this.rating;
+    }
+
+    public String displayRating() { //formats rating for string display
+        String rating = Double.toString(this.rating);
+        String[] ratingSplit = rating.split("\\.");
+
+        if (ratingSplit[1].length() >= 2) {
+            rating = ratingSplit[0] + ratingSplit[1].substring(0, 1); //cut off the rest of the price at 1 decimal place
+        }
+        else if (ratingSplit[1].length() == 0) {
+            rating = ratingSplit[0] + ratingSplit[1] + "0";
+        }
+        return rating;
     }
 
     public int getNumSold() {

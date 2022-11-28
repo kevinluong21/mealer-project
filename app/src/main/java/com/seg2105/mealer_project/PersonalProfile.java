@@ -118,10 +118,10 @@ public class PersonalProfile extends AppCompatActivity {
 
                         if (meal.isOffering()) {
                             offeredMeals.add(meal);
-                            offeredMealModels.add(new MealListModel(meal.getName(), meal.getPrice(), meal.getRating(), meal.getNumSold()));
+                            offeredMealModels.add(new MealListModel(meal.getName(), meal.displayPrice(), meal.displayRating(), meal.getNumSold()));
                         }
                         meals.add(meal);
-                        mealModels.add(new MealListModel(meal.getName(), meal.getPrice(), meal.getRating(), meal.getNumSold()));
+                        mealModels.add(new MealListModel(meal.getName(), meal.displayPrice(), meal.displayRating(), meal.getNumSold()));
                     }
 
                     MealListAdapter offeredMealsAdapter = new MealListAdapter(PersonalProfile.this, offeredMealModels);

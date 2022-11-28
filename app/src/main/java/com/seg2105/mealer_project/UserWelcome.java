@@ -3,7 +3,6 @@ package com.seg2105.mealer_project;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -44,7 +43,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
     DatabaseReference users;
     protected static ArrayList<Meal> meals;
     RecyclerView listClientMeals;
-    protected static ArrayList<MealListModel> mealModels;
+    ArrayList<MealListModel> mealModels;
 
     BottomNavigationView bottomNavBar;
 
@@ -112,9 +111,6 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
-
-
             }
 
             btnAddMeal.setVisibility(View.VISIBLE);
@@ -131,11 +127,11 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         if (dataSnapshot.getValue(Administrator.class).getRole().equals("Cook")) {
                             Cook cook = dataSnapshot.getValue(Cook.class);
-                            if (cook.getMeals() != null) {
+                            if (cook.getAccountStatus() && cook.getMeals() != null) { //meals must come from a cook that is non-suspended and has meals
                                 for (Meal meal : cook.getMeals().values()) {
-                                    if (meal.isOffering()) {
+                                    if (meal.isOffering()) { //meal must be currently offered by the cook
                                         meals.add(meal);
-                                        mealModels.add(new MealListModel(meal.getName(), meal.getPrice(), meal.getRating(), meal.getNumSold()));
+                                        mealModels.add(new MealListModel(meal.getName(), meal.displayPrice(), meal.displayRating(), meal.getNumSold()));
                                     }
                                 }
                             }
@@ -181,12 +177,20 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
             case R.id.clientLogOffID:
                 clientLogOff(v);
                 break;
+            case R.id.searchBar:
+                openSearchResults();
+                break;
         }
     }
 
     public void clientLogOff(View v) {
         //CRASHES ONLY WHEN ASKED TO GO TO MAIN ACTIVITY
         Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+    }
+
+    public void openSearchResults() {
+        Intent i = new Intent(this, Search.class);
         startActivity(i);
     }
 

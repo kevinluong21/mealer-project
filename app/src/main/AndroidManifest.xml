@@ -16,6 +16,13 @@
         android:theme="@style/Theme.Mealerproject"
         tools:targetApi="31">
         <activity
+            android:name=".Search"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ReviewMealsActivity"
             android:exported="false">
             <meta-data

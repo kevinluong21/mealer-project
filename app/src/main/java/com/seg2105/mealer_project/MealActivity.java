@@ -21,11 +21,7 @@ import java.io.Serializable;
 
 public class MealActivity extends AppCompatActivity implements Serializable {
 
-
     Person currentCook = MainActivity.currentUser;
-    //currentUser.getRole();
-
-
     EditText editTextMealName;
     EditText editTextMealType;
     EditText editTextCuisineType;
@@ -134,7 +130,7 @@ public class MealActivity extends AppCompatActivity implements Serializable {
                     && !TextUtils.isEmpty(listOfAllergens) && !TextUtils.isEmpty(priceString) && !TextUtils.isEmpty(description)) {
                 if(inputValidation(mealType,cuisineType,priceString) == true){
 
-                    Meal newMeal = new Meal(mealName, mealType, cuisineType, listOfIngredients, listOfAllergens, price, description, isInMenu);
+                    Meal newMeal = new Meal(MainActivity.loggedInCook, mealName, mealType, cuisineType, listOfIngredients, listOfAllergens, price, description, isInMenu);
 
                     users.child(currentCook.getEmailAddress()).child("meals").child(newMeal.getName()).setValue(newMeal);
                     Toast.makeText(getApplicationContext(), "Meal added", Toast.LENGTH_LONG).show();
