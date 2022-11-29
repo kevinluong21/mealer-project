@@ -40,6 +40,7 @@ public class PersonalProfile extends AppCompatActivity {
     RecyclerView listMeals;
     TextView textOfferedMenu;
     TextView textMenu;
+    Person user;
     DatabaseReference cookMeals;
 
     int longClickCounter;
@@ -52,6 +53,12 @@ public class PersonalProfile extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_profile);
+
+        this.user = (Person) getIntent().getSerializableExtra("user");
+
+        if (this.user == null) {
+            user = MainActivity.currentUser;
+        }
 
         listOfferedMeals = (RecyclerView) findViewById(R.id.listOfferedMeals);
         listMeals = (RecyclerView) findViewById(R.id.listMeals);
@@ -78,8 +85,8 @@ public class PersonalProfile extends AppCompatActivity {
         textOfferedMenu = (TextView) findViewById(R.id.textOfferedMenu);
         textMenu = (TextView) findViewById(R.id.textMenu);
 
-        textName.setText(MainActivity.currentUser.getFirstName() + " " + MainActivity.currentUser.getLastName());
-        textRole.setText(MainActivity.currentUser.getRole());
+        textName.setText(user.getFirstName() + " " + user.getLastName());
+        textRole.setText(user.getRole());
 
         textOfferedMenu.setVisibility(View.GONE);
         textMenu.setVisibility(View.GONE);
@@ -88,13 +95,13 @@ public class PersonalProfile extends AppCompatActivity {
 
 
         //only display meals if the signed in user is a cook
-        if (MainActivity.currentUser.getRole().equals("Cook")) {
+        if (user.getRole().equals("Cook")) {
             textOfferedMenu.setVisibility(View.VISIBLE);
             textMenu.setVisibility(View.VISIBLE);
             listOfferedMeals.setVisibility(View.VISIBLE);
             listMeals.setVisibility(View.VISIBLE);
 
-            cookMeals = FirebaseDatabase.getInstance().getReference("users").child(MainActivity.emailAddressToKey(MainActivity.loggedInCook.getEmailAddress()))
+            cookMeals = FirebaseDatabase.getInstance().getReference("users").child(MainActivity.emailAddressToKey(user.getEmailAddress()))
                     .child("meals");
 
             ArrayList<MealListModel> offeredMealModels = new ArrayList<MealListModel>();

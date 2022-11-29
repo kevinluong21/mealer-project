@@ -177,6 +177,7 @@
         android:id="@+id/layoutBottomNavBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -192,6 +193,7 @@
             style="@style/nav_icon_colours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             app:itemIconTint="@drawable/selector"
             app:itemTextColor="@color/selector"
             app:menu="@menu/bottom_nav_bar" />

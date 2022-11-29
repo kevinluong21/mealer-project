@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
@@ -46,6 +49,14 @@ public class MealPage extends AppCompatActivity {
         //when this activity is opened, a meal object is passed to display its information on this page
         this.meal = (Meal) getIntent().getSerializableExtra("meal");
 
+        //sets the toolbar for this activity
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        setActionBar(toolbar);
+//        ActionBar actionBar = getSupportActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        toolbar.setTitle("");
+//        toolbar.setOverflowIcon(R.drawable.icons8_menu_vertical_32);
+
         //bottom nav bar
         bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
         bottomNavBar.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
@@ -77,13 +88,28 @@ public class MealPage extends AppCompatActivity {
         textDescription = (TextView) findViewById(R.id.textDescription);
 
         textMealName.setText(meal.getName());
-        textMealCook.setText(MainActivity.loggedInCook.getFirstName() + " " + MainActivity.loggedInCook.getLastName());
+        textMealCook.setText(meal.getCookFirstName() + " " + meal.getCookLastName());
         textMealRating.setText(Double.toString(meal.getRating()));
         textMealType.setText(meal.getMealType());
         textCuisineType.setText(meal.getCuisineType());
         textPrice.setText(Double.toString(meal.getPrice()));
         textAboutMeal.setText("About "+ meal.getName());
         textDescription.setText(meal.getDescription());
+
+        //take the user to the profile of the cook on click of their name
+        textMealCook.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MealPage.this, PersonalProfile.class);
+                MainActivity.checkUser(meal.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
+                    @Override
+                    public void onCallback(Administrator user1, Cook user2, Client user3) {
+                        intent.putExtra("user", user2);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
 
 
         //this will input the ingredients and allergens into recyclerviews on the meal page

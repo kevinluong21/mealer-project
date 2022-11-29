@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -47,7 +49,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
     RecyclerView listClientMeals;
     ArrayList<MealListModel> mealModels;
 
-    SearchView searchBar;
+    LinearLayout searchBar;
 
     BottomNavigationView bottomNavBar;
 
@@ -73,7 +75,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
         textViewActionPrompt = findViewById(R.id.textViewActionPrompt);
         textViewActionPrompt.setText("You are logged in as a " + currentUser.getRole());
 
-        searchBar = (SearchView) findViewById(R.id.searchBar);
+        searchBar = (LinearLayout) findViewById(R.id.searchBar);
         searchBar.setOnClickListener(new View.OnClickListener() { //opens fragment with search and search results
             @Override
             public void onClick(View view) {
@@ -157,6 +159,21 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
 
                     listClientMeals.setLayoutManager(mealListLayoutManager);
                     listClientMeals.setAdapter(mealListAdapter);
+
+                    //allows for recyclerview items to be clicked (code from https://stackoverflow.com/questions/24471109/recyclerview-onclick)
+                    listClientMeals.addOnItemTouchListener(
+                            new RecyclerItemClickListener(getApplicationContext(), listClientMeals ,new RecyclerItemClickListener.OnItemClickListener() {
+                                //onclick of an item, pass the meal into the meal page to display all its information to the user
+                                @Override public void onItemClick(View view, int position) {
+                                    Intent intent = new Intent(UserWelcome.this, MealPage.class);
+                                    intent.putExtra("meal", meals.get(position));
+                                    startActivity(intent);
+                                }
+
+                                @Override public void onLongItemClick(View view, int position) {
+                                }
+                            })
+                    );
                 }
 
                 @Override

@@ -1,12 +1,14 @@
 package com.seg2105.mealer_project;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 public class Client extends Person implements Serializable {
 
     //instance variables
     private Address address;
     private CreditCard creditCardInfo;
+    private HashMap<String, Meal> likedMeals;
 
     public Client() { //empty constructor is needed for database!
 
@@ -20,6 +22,7 @@ public class Client extends Person implements Serializable {
         this.accountPassword = accountPassword;
         this.address = address;
         this.creditCardInfo = creditCardInfo;
+        this.likedMeals = new HashMap<String, Meal>();
     }
 
     public Address getAddress() { //getter methods required for database serialization
@@ -30,11 +33,15 @@ public class Client extends Person implements Serializable {
         return this.creditCardInfo;
     }
 
+    public HashMap<String, Meal> getLikedMeals() {
+        return this.likedMeals;
+    }
+
     /*
      * @return String[]
      * returns the results for meal type search
      * */
-    public static String[] searchMealType(String s){
+    public String[] searchMealType(String s){
         return null;
     }
 
@@ -42,7 +49,7 @@ public class Client extends Person implements Serializable {
      * @return String{[]
      * returns the results for meal name search
      * */
-    public static String[] searchMealName(String s){
+    public String[] searchMealName(String s){
         return null;
     }
 
@@ -50,44 +57,44 @@ public class Client extends Person implements Serializable {
      * @return String[]
      * returns the results for cuisine type search
      * */
-    public static String searchCuisineType(String s){
+    public String searchCuisineType(String s){
         return null;
     }
 
     /*
      * search meal
      * */
-    public static void selectMeal(){
+    public void selectMeal(){
         //selects a meal
     }
 
     /*
      * display meal state
      * */
-    public static void mealState(){
+    public void mealState(){
         //returns the state of the meal
     }
 
     /*
      * rate the meal
      * */
-    public static void rateMeal(int rating){
+    public void rateMeal(int rating){
         //rate with int rating
     }
 
     /*
      * complaint submission
      * */
-    public static void submitComplaint(String complaint){
+    public void submitComplaint(String complaint){
         //submits a complaint
     }
 
     /*
-     * prints all past previousPurchases formated
+     * prints all past previousPurchases formatted
      * */
-    public static void viewPreviousPurchases(String[] previousPurchases){
+    public void viewPreviousPurchases(String[] previousPurchases) {
         int counter = 1;
-        for (int i = 0; i < previousPurchases.length-1; i++){
+        for (int i = 0; i < previousPurchases.length - 1; i++) {
             System.out.println(counter + "." + previousPurchases[i]);
             counter++;
         }

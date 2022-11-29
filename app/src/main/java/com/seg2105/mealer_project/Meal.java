@@ -6,6 +6,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class Meal implements Serializable {
+    private String cookFirstName;
+    private String cookLastName;
     private String cookEmail; //email of cook that offers this meal
     private Address cookAddress; //address of cook that offers this meal
     private String name;
@@ -30,6 +32,8 @@ public class Meal implements Serializable {
     }
 
     public Meal(Cook cook, String name, String mealType, String cuisineType, String listOfIngredients, String listOfAllergens, double price, String description, boolean offering){
+        this.cookFirstName = cook.getFirstName();
+        this.cookLastName = cook.getLastName();
         this.cookEmail = cook.getEmailAddress();
         this.cookAddress = cook.getAddress();
         this.name = name;
@@ -62,6 +66,13 @@ public class Meal implements Serializable {
         return cookEmail;
     }
 
+    public String getCookFirstName() {
+        return cookFirstName;
+    }
+
+    public String getCookLastName() {
+        return cookLastName;
+    }
     public Address getCookAddress() {
         return this.cookAddress;
     }

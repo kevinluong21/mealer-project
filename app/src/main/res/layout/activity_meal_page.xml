@@ -4,8 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="@color/white"
     tools:context=".MealPage">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/toolbar"/>
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -19,17 +32,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <View
+                android:id="@+id/view4"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginEnd="25dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <LinearLayout
                 android:id="@+id/layoutMealImage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
-                android:layout_marginTop="25dp"
                 android:layout_marginEnd="25dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/view4">
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="350dp"
@@ -63,6 +85,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Meal Name"
+                    android:textColor="@color/black"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -75,14 +98,16 @@
                         android:id="@+id/textMealCookTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Meal by " />
+                        android:text="Meal by "
+                        android:textColor="@color/black" />
 
                     <TextView
                         android:id="@+id/textMealCook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Cook Name" />
+                        android:text="Cook Name"
+                        android:textColor="@color/black" />
                 </LinearLayout>
 
                 <TextView
@@ -91,13 +116,15 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@android:drawable/btn_star_big_on"
                     android:gravity="center_vertical"
-                    android:text="5.0" />
+                    android:text="5.0"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/textMealType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Main Dish"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <TextView
@@ -105,6 +132,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Italian"
+                    android:textColor="@color/black"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -119,6 +147,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="$"
+                        android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -127,6 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
+                        android:textColor="@color/black"
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
@@ -193,6 +223,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="About Meal Name"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
@@ -200,7 +231,8 @@
                         android:id="@+id/textDescription"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Description" />
+                        android:text="Description"
+                        android:textColor="@color/black" />
                 </LinearLayout>
             </LinearLayout>
 

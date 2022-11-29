@@ -4,7 +4,10 @@ package com.seg2105.mealer_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -27,6 +30,15 @@ public class Search extends AppCompatActivity {
         listSearchResults = (ListView) findViewById(R.id.listSearchResults);
         adapter = new SearchResultAdapter(this, meals);
         listSearchResults.setAdapter(adapter);
+
+        listSearchResults.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(Search.this, MealPage.class);
+                intent.putExtra("meal", meals.get(i));
+                startActivity(intent);
+            }
+        });
 
         SearchView searchBar = (SearchView) findViewById(R.id.searchBar);
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
