@@ -6,299 +6,305 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF">
 
-    <FrameLayout
-        android:id="@+id/container"
+    <ScrollView
+        android:id="@+id/scrollView4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteY="290dp">
+        android:fillViewport="true">
 
-        <ScrollView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
+                android:id="@+id/layoutAddMeal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="right|center_vertical"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-                <LinearLayout
-                    android:id="@+id/layoutAddMeal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="25dp"
-                    android:gravity="right|center_vertical"
-                    android:orientation="horizontal"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <Button
-                        android:id="@+id/btnAddMeal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:backgroundTint="#90E2A8"
-                        android:text="+ New Meal"
-                        android:textAlignment="center"
-                        android:textAllCaps="false"
-                        android:visibility="invisible"
-                        app:cornerRadius="50dp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutWelcomeMessage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="25dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layoutAddMeal">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal"></LinearLayout>
-
-                    <TextView
-                        android:id="@+id/textViewWelcome"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hi user,"
-                        android:textAlignment="textStart"
-                        android:textColor="#000000"
-                        android:textSize="30sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/textViewActionPrompt"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Let's find your next meal"
-                        android:textAlignment="textStart"
-                        android:textColor="#000000"
-                        android:textSize="18sp" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layoutCategories"
+                <Button
+                    android:id="@+id/btnAddMeal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="20dp"
-                    android:orientation="vertical"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layoutWelcomeMessage">
+                    android:backgroundTint="#90E2A8"
+                    android:text="+ New Meal"
+                    android:textAlignment="center"
+                    android:textAllCaps="false"
+                    android:visibility="invisible"
+                    app:cornerRadius="50dp" />
+            </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/textViewCategoriesTitle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Categories"
-                        android:textColor="#7E7E7E"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/layoutWelcomeMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="25dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutAddMeal">
 
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"></LinearLayout>
 
-                    <HorizontalScrollView
-                        android:id="@+id/scrollViewCategories"
-                        android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/textViewWelcome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hi user,"
+                    android:textAlignment="textStart"
+                    android:textColor="#000000"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textViewActionPrompt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Let's find your next meal"
+                    android:textAlignment="textStart"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutWelcomeMessage">
+
+                <TextView
+                    android:id="@+id/textViewCategoriesTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Categories"
+                    android:textColor="#7E7E7E"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <HorizontalScrollView
+                    android:id="@+id/scrollViewCategories"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbarSize="0dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:scrollbarSize="0dp">
+                        android:orientation="horizontal">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:id="@+id/layoutMainDish"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal">
+                            android:orientation="vertical"
+                            android:paddingRight="10dp">
 
-                            <LinearLayout
-                                android:id="@+id/layoutMainDish"
+                            <ImageView
+                                android:id="@+id/imageView"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                android:background="@drawable/food_category_button"
+                                app:srcCompat="@drawable/maindish_icon" />
+
+                            <TextView
+                                android:id="@+id/textViewMainDish"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:paddingRight="10dp">
-
-                                <ImageView
-                                    android:id="@+id/imageView"
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp"
-                                    android:background="@drawable/food_category_button"
-                                    app:srcCompat="@drawable/maindish_icon" />
-
-                                <TextView
-                                    android:id="@+id/textViewMainDish"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Main Dish"
-                                    android:textAlignment="center"
-                                    android:textColor="#000000" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/layoutSoup"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:paddingRight="10dp">
-
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp"
-                                    app:cardCornerRadius="10dp">
-
-                                    <ImageView
-                                        android:id="@+id/imageViewSoup"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:src="@drawable/soup_icon"
-                                        tools:srcCompat="@drawable/soup_icon" />
-
-
-                                </androidx.cardview.widget.CardView>
-
-                                <TextView
-                                    android:id="@+id/textViewSoup"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Soup"
-                                    android:textAlignment="center"
-                                    android:textColor="#000000" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/layoutDesert"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:paddingRight="10dp">
-
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp"
-                                    app:cardCornerRadius="10dp">
-
-                                    <ImageView
-                                        android:id="@+id/imageViewDesert"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:src="@drawable/donut_icon"
-                                        tools:srcCompat="@drawable/donut_icon" />
-
-
-                                </androidx.cardview.widget.CardView>
-
-                                <TextView
-                                    android:id="@+id/textViewDesert"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Desert"
-                                    android:textAlignment="center"
-                                    android:textColor="#000000" />
-
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/layoutItalian"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="vertical"
-                                android:paddingRight="10dp">
-
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp"
-                                    app:cardCornerRadius="10dp">
-
-                                    <ImageView
-                                        android:id="@+id/imageViewItalian"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:src="@drawable/pasta_icon"
-                                        tools:srcCompat="@drawable/pasta_icon" />
-
-
-                                </androidx.cardview.widget.CardView>
-
-                                <TextView
-                                    android:id="@+id/textViewItalian"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:text="Desert"
-                                    android:textAlignment="center"
-                                    android:textColor="#000000" />
-
-                            </LinearLayout>
+                                android:layout_height="wrap_content"
+                                android:text="Main Dish"
+                                android:textAlignment="center"
+                                android:textColor="#000000" />
 
                         </LinearLayout>
-                    </HorizontalScrollView>
 
-                </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/layoutSoup"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingRight="10dp">
 
-                <LinearLayout
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:cardCornerRadius="10dp">
+
+                                <ImageView
+                                    android:id="@+id/imageViewSoup"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/soup_icon"
+                                    tools:srcCompat="@drawable/soup_icon" />
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:id="@+id/textViewSoup"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Soup"
+                                android:textAlignment="center"
+                                android:textColor="#000000" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutDesert"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingRight="10dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:cardCornerRadius="10dp">
+
+                                <ImageView
+                                    android:id="@+id/imageViewDesert"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/donut_icon"
+                                    tools:srcCompat="@drawable/donut_icon" />
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:id="@+id/textViewDesert"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Desert"
+                                android:textAlignment="center"
+                                android:textColor="#000000" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layoutItalian"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:paddingRight="10dp">
+
+                            <androidx.cardview.widget.CardView
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
+                                app:cardCornerRadius="10dp">
+
+                                <ImageView
+                                    android:id="@+id/imageViewItalian"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/pasta_icon"
+                                    tools:srcCompat="@drawable/pasta_icon" />
+
+
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:id="@+id/textViewItalian"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Desert"
+                                android:textAlignment="center"
+                                android:textColor="#000000" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutMealList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_marginEnd="25dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutCategories">
+
+                <SearchView
+                    android:id="@+id/searchBar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginEnd="25dp"
-                    android:orientation="vertical"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layoutCategories">
+                    android:layout_height="50dp"
+                    android:background="@drawable/search_bar"
+                    android:focusableInTouchMode="false"
+                    android:iconifiedByDefault="false" />
 
-                    <SearchView
-                        android:id="@+id/searchBar"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/search_bar"
-                        android:onClick="openSearchResults" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/listClientMeals"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-                </LinearLayout>
-
-                <LinearLayout
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/listClientMeals"
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="25dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layoutCategories">
+
+
+                <Button
+                    android:id="@+id/btnAdminComplaints"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="25dp"
-                    android:layout_marginTop="80dp"
-                    android:layout_marginEnd="25dp"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/layoutCategories">
+                    android:text="Proceed to complaints"
+                    android:visibility="invisible" />
 
+                <Button
+                    android:id="@+id/clientLogOffID"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="clientLogOff"
+                    android:text="Log Off" />
 
-                    <Button
-                        android:id="@+id/btnAdminComplaints"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Proceed to complaints"
-                        android:visibility="invisible" />
+            </LinearLayout>
 
-                    <Button
-                        android:id="@+id/clientLogOffID"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:onClick="clientLogOff"
-                        android:text="Log Off" />
+            <View
+                android:id="@+id/view3"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginTop="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutMealList" />
 
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </ScrollView>
-    </FrameLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
     <LinearLayout
         android:id="@+id/layoutBottomNav"

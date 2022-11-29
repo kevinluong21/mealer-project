@@ -3,9 +3,11 @@ package com.seg2105.mealer_project;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -45,6 +47,8 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
     RecyclerView listClientMeals;
     ArrayList<MealListModel> mealModels;
 
+    SearchView searchBar;
+
     BottomNavigationView bottomNavBar;
 
     @Override
@@ -68,6 +72,14 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
 
         textViewActionPrompt = findViewById(R.id.textViewActionPrompt);
         textViewActionPrompt.setText("You are logged in as a " + currentUser.getRole());
+
+        searchBar = (SearchView) findViewById(R.id.searchBar);
+        searchBar.setOnClickListener(new View.OnClickListener() { //opens fragment with search and search results
+            @Override
+            public void onClick(View view) {
+                openSearchResults(view);
+            }
+        });
 
         if (currentUser.getRole().equals("Administrator")) {
             btnAdminComplaints.setVisibility(View.VISIBLE);
@@ -177,9 +189,6 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
             case R.id.clientLogOffID:
                 clientLogOff(v);
                 break;
-            case R.id.searchBar:
-                openSearchResults();
-                break;
         }
     }
 
@@ -189,7 +198,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
         startActivity(i);
     }
 
-    public void openSearchResults() {
+    public void openSearchResults(View v) {
         Intent i = new Intent(this, Search.class);
         startActivity(i);
     }

@@ -3,6 +3,7 @@
 package com.seg2105.mealer_project;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +16,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SearchResultAdapter extends ArrayAdapter<Meal> implements Filterable {
 
-    ArrayList<Meal> meals;
+    ArrayList<Meal> originalMealList; //source list must be cleared so that it can be filtered, so this keeps a copy of meals to
+    //be added back
 
     public SearchResultAdapter(@NonNull Context context, ArrayList<Meal> list) {
         super(context, 0, list);
-        meals = UserWelcome.meals;
+        originalMealList = new ArrayList<Meal>(list); //creates a copy of meals
     }
 
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
@@ -49,7 +52,7 @@ public class SearchResultAdapter extends ArrayAdapter<Meal> implements Filterabl
         textPrice.setText(currentNumberPosition.displayPrice());
 
         TextView textMealType = currentItemView.findViewById(R.id.textMealTypeResult);
-        textMealType.setText(currentNumberPosition.getCuisineType());
+        textMealType.setText(currentNumberPosition.getMealType());
 
         TextView textCuisineType = currentItemView.findViewById(R.id.textCuisineTypeResult);
         textCuisineType.setText(currentNumberPosition.getCuisineType());
@@ -65,9 +68,9 @@ public class SearchResultAdapter extends ArrayAdapter<Meal> implements Filterabl
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
-            ArrayList<Meal> filteredList = new ArrayList<Meal>();
+            ArrayList<Meal> filteredList = new ArrayList<>();
 
-            for (Meal meal : meals) {
+            for (Meal meal : originalMealList) {
                 //these conditions are all in else if statements because, though they are not mutually exclusive, it only needs
                 //to show the result once
                 if (meal.getName().contains(constraint)) { //filter by name
@@ -91,11 +94,17 @@ public class SearchResultAdapter extends ArrayAdapter<Meal> implements Filterabl
         protected void publishResults(CharSequence constraint, FilterResults results) {
             ArrayList<Meal> arrayList;
             if (results != null && results.values != null) {
+                arrayList = (ArrayList<Meal>) results.values;
+                clear();
+                addAll(arrayList);
                 notifyDataSetChanged();
-            }
-            else {
-                notifyDataSetInvalidated();
             }
         }
     };
+
+    @NonNull
+    @Override
+    public Filter getFilter() {
+        return filter;
+    }
 }

@@ -98,14 +98,13 @@ public class Meal implements Serializable {
 
     public String displayPrice() { //formats price for string display
         String price = Double.toString(this.price);
-        Log.d("TAG", price);
         String[] priceSplit = price.split("\\.");
 
         if (priceSplit[1].length() >= 2) {
-            price = priceSplit[0] + priceSplit[1].substring(0, 2); //cut off the rest of the price at 2 decimal places
+            price = priceSplit[0] + "." + priceSplit[1].substring(0, 2); //cut off the rest of the price at 2 decimal places
         }
         else if (priceSplit[1].length() == 1) {
-            price = priceSplit[0] + priceSplit[1] + "0";
+            price = priceSplit[0] + "." + priceSplit[1] + "0";
         }
         return price;
     }
@@ -123,10 +122,10 @@ public class Meal implements Serializable {
         String[] ratingSplit = rating.split("\\.");
 
         if (ratingSplit[1].length() >= 2) {
-            rating = ratingSplit[0] + ratingSplit[1].substring(0, 1); //cut off the rest of the price at 1 decimal place
+            rating = ratingSplit[0] + "." + ratingSplit[1].substring(0, 1); //cut off the rest of the rating at 1 decimal place
         }
         else if (ratingSplit[1].length() == 0) {
-            rating = ratingSplit[0] + ratingSplit[1] + "0";
+            rating = ratingSplit[0] + "." + ratingSplit[1] + "0";
         }
         return rating;
     }
