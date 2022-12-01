@@ -4,6 +4,7 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
         <item name="actionOverflowButtonStyle">@style/OverflowIcon</item>
+        <item name="android:navigationBarColor">@color/white</item>
     </style>
 
     <style name="OverflowIcon" parent="Widget.AppCompat.ActionButton.Overflow">
