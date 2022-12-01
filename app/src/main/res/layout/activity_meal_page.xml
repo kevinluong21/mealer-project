@@ -17,8 +17,7 @@
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/toolbar"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView3"
@@ -268,6 +267,7 @@
             style="@style/nav_icon_colours"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/white"
             app:itemIconTint="@drawable/selector"
             app:itemTextColor="@color/selector"
             app:menu="@menu/bottom_nav_bar" />

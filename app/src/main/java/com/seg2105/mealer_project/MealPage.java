@@ -1,6 +1,7 @@
 package com.seg2105.mealer_project;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,15 +9,17 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 
@@ -50,12 +53,12 @@ public class MealPage extends AppCompatActivity {
         this.meal = (Meal) getIntent().getSerializableExtra("meal");
 
         //sets the toolbar for this activity
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setActionBar(toolbar);
-//        ActionBar actionBar = getSupportActionBar();
-//        actionBar.setDisplayHomeAsUpEnabled(true);
-//        toolbar.setTitle("");
-//        toolbar.setOverflowIcon(R.drawable.icons8_menu_vertical_32);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        toolbar.setNavigationIcon(R.drawable.icons8_chevron_left_24);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //bottom nav bar
         bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
@@ -141,5 +144,34 @@ public class MealPage extends AppCompatActivity {
 
         listAllergens.setLayoutManager(allergensLayoutManager);
         listAllergens.setAdapter(allergenAdapter);
+    }
+
+    //create toolbar menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //different toolbars based on the logged in user
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //toolbar menu select action
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.actionLike:
+                //if already on the liked list of client, set icon to filled by default
+                //if not, reset to default
+                item.setIcon(R.drawable.icons8_favorite_24_filled);
+                break;
+
+            case R.id.actionComplaint:
+                //insert action complaint activity here!
+                break;
+
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

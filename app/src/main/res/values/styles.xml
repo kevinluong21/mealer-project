@@ -3,10 +3,15 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="actionOverflowButtonStyle">@style/OverflowIcon</item>
     </style>
+
+    <style name="OverflowIcon" parent="Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/black</item>
+    </style>
+
     <!--    code from https://www.geeksforgeeks.org/bottom-navigation-bar-in-android/-->
     <style name="nav_icon_colours" parent="Theme.MaterialComponents.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">#000000</item>
         <item name="colorPrimaryDark">#90E2A8</item>
         <item name="colorAccent">#757575</item>

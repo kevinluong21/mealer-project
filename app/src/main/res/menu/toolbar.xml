@@ -3,13 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/action_favorite"
-        android:icon="@drawable/icons8_heart_50"
+        android:id="@+id/actionLike"
+        android:icon="@drawable/icons8_favorite_24"
         android:title="Like"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
-        android:id="@+id/action_submit_complaint"
+        android:id="@+id/actionComplaint"
         android:title="Report"
         app:showAsAction="never"></item>
 </menu>
