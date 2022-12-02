@@ -5,6 +5,7 @@ package com.seg2105.mealer_project;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -59,6 +61,14 @@ public class PersonalProfile extends AppCompatActivity {
         if (this.user == null) {
             user = MainActivity.currentUser;
         }
+
+        //sets the toolbar for this activity
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        toolbar.setNavigationIcon(R.drawable.icons8_chevron_left_24);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         listOfferedMeals = (RecyclerView) findViewById(R.id.listOfferedMeals);
         listMeals = (RecyclerView) findViewById(R.id.listMeals);
@@ -244,5 +254,33 @@ public class PersonalProfile extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    //create toolbar menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //different toolbars based on the logged in user
+        getMenuInflater().inflate(R.menu.toolbar_profile, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //toolbar menu select action
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+//            case R.id.actionComplaint:
+//                //insert action complaint activity here!
+//                break;
+
+            case R.id.actionLogout:
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
+                break;
+
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -44,6 +45,8 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
     TextView textViewWelcomeMessage;
     TextView textViewActionPrompt;
 
+    ConstraintLayout layoutClient;
+
     DatabaseReference users;
     protected static ArrayList<Meal> meals;
     RecyclerView listClientMeals;
@@ -66,6 +69,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
         bottomNavBar.setSelectedItemId(R.id.btnHome);
 
         btnAdminComplaints = (Button) findViewById(R.id.btnAdminComplaints);
+        layoutClient = (ConstraintLayout) findViewById(R.id.layoutClient);
 
         btnAddMeal = (Button) findViewById(R.id.btnAddMeal);
 
@@ -85,10 +89,12 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
 
         if (currentUser.getRole().equals("Administrator")) {
             btnAdminComplaints.setVisibility(View.VISIBLE);
+            layoutClient.setVisibility(View.GONE);
         }
 
 
         if (currentUser.getRole().equals("Cook")) {
+            layoutClient.setVisibility(View.GONE);
             if (!MainActivity.loggedInCook.getAccountStatus()) {
                 AlertDialog.Builder suspensionDialog = new AlertDialog.Builder(this);
                 suspensionDialog.setCancelable(false); //cannot close the dialog by clicking outside of the box
@@ -131,6 +137,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
         }
 
         if (currentUser.getRole().equals("Client")) {
+            layoutClient.setVisibility(View.VISIBLE);
             meals = new ArrayList<Meal>(); //for meal page
             mealModels = new ArrayList<MealListModel>(); //for recyclerview
 
