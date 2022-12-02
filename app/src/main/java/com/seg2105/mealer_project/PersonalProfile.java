@@ -45,6 +45,11 @@ public class PersonalProfile extends AppCompatActivity {
     Person user;
     DatabaseReference cookMeals;
 
+    MenuItem ratingCook;
+
+
+
+
     int longClickCounter;
 
     public PersonalProfile() {
@@ -67,11 +72,13 @@ public class PersonalProfile extends AppCompatActivity {
         toolbar.setTitle("");
         toolbar.setNavigationIcon(R.drawable.icons8_chevron_left_24);
 
+
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         listOfferedMeals = (RecyclerView) findViewById(R.id.listOfferedMeals);
         listMeals = (RecyclerView) findViewById(R.id.listMeals);
+
 
         //bottom nav bar for this activity
         bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
@@ -102,6 +109,14 @@ public class PersonalProfile extends AppCompatActivity {
         textMenu.setVisibility(View.GONE);
         listOfferedMeals.setVisibility(View.GONE);
         listMeals.setVisibility(View.GONE);
+
+
+
+
+
+
+
+
 
 
         //only display meals if the signed in user is a cook
@@ -261,16 +276,26 @@ public class PersonalProfile extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         //different toolbars based on the logged in user
         getMenuInflater().inflate(R.menu.toolbar_profile, menu);
+        MenuItem rate = menu.findItem(R.id.rateACook);
+        rate.setVisible(false);
+        if(user.getRole().equals("Client")){
+            rate.setVisible(true);
+        }
+
+
         return super.onCreateOptionsMenu(menu);
     }
 
     //toolbar menu select action
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+
         switch (item.getItemId()) {
 //            case R.id.actionComplaint:
 //                //insert action complaint activity here!
 //                break;
+
 
             case R.id.actionLogout:
                 Intent i = new Intent(this, MainActivity.class);
@@ -280,7 +305,15 @@ public class PersonalProfile extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
+
+            case R.id.rateACook:
+                Intent j = new Intent(this, CookClientEvaluation.class);
+                startActivity(j);
+                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }

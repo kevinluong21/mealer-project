@@ -11,4 +11,7 @@
         android:id="@+id/actionLogout"
         android:title="Log Out"
         app:showAsAction="never"></item>
+    <item
+        android:id="@+id/rateACook"
+        android:title="Rate a cook" />
 </menu>
