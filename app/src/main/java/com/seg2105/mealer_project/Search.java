@@ -2,10 +2,14 @@
 
 package com.seg2105.mealer_project;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,6 +29,14 @@ public class Search extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        //sets the toolbar for this activity
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        toolbar.setNavigationIcon(R.drawable.icons8_chevron_left_24);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         meals = UserWelcome.meals; //list of all meals in the system (by a non-suspended cook)
         listSearchResults = (ListView) findViewById(R.id.listSearchResults);
@@ -54,5 +66,24 @@ public class Search extends AppCompatActivity {
                 return false;
             }
         });
+    }
+
+    //create toolbar menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        //different toolbars based on the logged in user
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //toolbar menu select action
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
