@@ -57,24 +57,25 @@ public class MealPage extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //bottom nav bar
-        bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
-        bottomNavBar.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.btnHome:
-                        startActivity(new Intent(getApplicationContext(),UserWelcome.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.btnProfile:
-                        startActivity(new Intent(getApplicationContext(),PersonalProfile.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
-            }
-        });
-        bottomNavBar.getMenu().findItem(R.id.btnProfile).setChecked(true);
+        //bottom nav bar no longer needed now that there is a toolbar
+//        //bottom nav bar
+//        bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
+//        bottomNavBar.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
+//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                switch (item.getItemId()) {
+//                    case R.id.btnHome:
+//                        startActivity(new Intent(getApplicationContext(),UserWelcome.class));
+//                        overridePendingTransition(0,0);
+//                        return true;
+//                    case R.id.btnProfile:
+//                        startActivity(new Intent(getApplicationContext(),PersonalProfile.class));
+//                        overridePendingTransition(0,0);
+//                        return true;
+//                }
+//                return false;
+//            }
+//        });
+//        bottomNavBar.getMenu().findItem(R.id.btnProfile).setChecked(true);
 
         listIngredients = (RecyclerView) findViewById(R.id.listIngredients);
         listAllergens = (RecyclerView) findViewById(R.id.listAllergens);

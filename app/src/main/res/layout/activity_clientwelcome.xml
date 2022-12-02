@@ -83,17 +83,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
+                android:visibility="visible"
                 app:layout_constraintTop_toBottomOf="@id/layoutWelcomeMessage"
                 tools:layout_editor_absoluteX="25dp">
+
+                <LinearLayout
+                    android:id="@+id/layoutPurchases"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/textPurchases"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Current Orders"
+                        android:textColor="#7E7E7E"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/layoutCategories"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="25dp"
+                    android:layout_marginTop="25dp"
                     android:orientation="vertical"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toBottomOf="@id/layoutPurchases">
 
                     <TextView
                         android:id="@+id/textViewCategoriesTitle"
@@ -126,12 +149,20 @@
                                 android:orientation="vertical"
                                 android:paddingRight="10dp">
 
-                                <ImageView
-                                    android:id="@+id/imageView"
+                                <androidx.cardview.widget.CardView
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
-                                    android:background="@drawable/food_category_button"
-                                    app:srcCompat="@drawable/maindish_icon" />
+                                    app:cardCornerRadius="10dp">
+
+                                    <ImageView
+                                        android:id="@+id/imageViewMainDish"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:src="@drawable/maindish_icon"
+                                        tools:srcCompat="@drawable/maindish_icon" />
+
+
+                                </androidx.cardview.widget.CardView>
 
                                 <TextView
                                     android:id="@+id/textViewMainDish"
@@ -285,6 +316,36 @@
                         android:id="@+id/listClientMeals"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutCook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/layoutWelcomeMessage">
+
+                <LinearLayout
+                    android:id="@+id/layoutOrders"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginEnd="25dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <TextView
+                        android:id="@+id/textOrdersTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Your Orders"
+                        android:textColor="#7E7E7E"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
