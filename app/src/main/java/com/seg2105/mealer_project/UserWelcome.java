@@ -46,6 +46,8 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
     TextView textViewActionPrompt;
 
     ConstraintLayout layoutClient;
+    ConstraintLayout layoutCook;
+    LinearLayout layoutAdmin;
 
     DatabaseReference users;
     protected static ArrayList<Meal> meals;
@@ -68,9 +70,11 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
         bottomNavBar.setOnItemSelectedListener(this);
         bottomNavBar.setSelectedItemId(R.id.btnHome);
 
-        btnAdminComplaints = (Button) findViewById(R.id.btnAdminComplaints);
+        layoutAdmin = (LinearLayout) findViewById(R.id.layoutAdmin);
         layoutClient = (ConstraintLayout) findViewById(R.id.layoutClient);
+        layoutCook = (ConstraintLayout) findViewById(R.id.layoutCook);
 
+        btnAdminComplaints = (Button) findViewById(R.id.btnAdminComplaints);
         btnAddMeal = (Button) findViewById(R.id.btnAddMeal);
 
         textViewWelcomeMessage = findViewById(R.id.textViewWelcome);
@@ -88,13 +92,33 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
         });
 
         if (currentUser.getRole().equals("Administrator")) {
-            btnAdminComplaints.setVisibility(View.VISIBLE);
+            layoutAdmin.setVisibility(View.VISIBLE);
             layoutClient.setVisibility(View.GONE);
+            layoutCook.setVisibility(View.GONE);
+
+            btnAdminComplaints.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(UserWelcome.this, AdminComplaints.class);
+                    startActivity(intent);
+                }
+            });
         }
 
 
         if (currentUser.getRole().equals("Cook")) {
+            layoutAdmin.setVisibility(View.GONE);
             layoutClient.setVisibility(View.GONE);
+            layoutCook.setVisibility(View.VISIBLE);
+
+            btnAddMeal.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(UserWelcome.this, MealActivity.class);
+                    startActivity(intent);
+                }
+            } );
+
             if (!MainActivity.loggedInCook.getAccountStatus()) {
                 AlertDialog.Builder suspensionDialog = new AlertDialog.Builder(this);
                 suspensionDialog.setCancelable(false); //cannot close the dialog by clicking outside of the box
@@ -132,12 +156,13 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                     e.printStackTrace();
                 }
             }
-
-            btnAddMeal.setVisibility(View.VISIBLE);
         }
 
         if (currentUser.getRole().equals("Client")) {
+            layoutAdmin.setVisibility(View.GONE);
             layoutClient.setVisibility(View.VISIBLE);
+            layoutCook.setVisibility(View.GONE);
+
             meals = new ArrayList<Meal>(); //for meal page
             mealModels = new ArrayList<MealListModel>(); //for recyclerview
 
@@ -190,37 +215,22 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
             });
         }
 
-        btnAdminComplaints.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserWelcome.this, AdminComplaints.class);
-                startActivity(intent);
-            }
-        });
-
-        btnAddMeal.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(UserWelcome.this, MealActivity.class);
-                startActivity(intent);
-            }
-        } );
-
     }
 
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.clientLogOffID:
-                clientLogOff(v);
-                break;
-        }
-    }
-
-    public void clientLogOff(View v) {
-        //CRASHES ONLY WHEN ASKED TO GO TO MAIN ACTIVITY
-        Intent i = new Intent(this, MainActivity.class);
-        startActivity(i);
-    }
+    //log off moved to PersonalProfile
+//    public void onClick(View v) {
+//        switch (v.getId()) {
+//            case R.id.clientLogOffID:
+//                clientLogOff(v);
+//                break;
+//        }
+//    }
+//
+//    public void clientLogOff(View v) {
+//        //CRASHES ONLY WHEN ASKED TO GO TO MAIN ACTIVITY
+//        Intent i = new Intent(this, MainActivity.class);
+//        startActivity(i);
+//    }
 
     public void openSearchResults(View v) {
         Intent i = new Intent(this, Search.class);
