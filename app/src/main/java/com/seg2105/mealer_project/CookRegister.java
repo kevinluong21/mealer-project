@@ -241,7 +241,20 @@ public class CookRegister extends Fragment implements View.OnClickListener {
                     public void onCallback(Administrator admin, Cook cook, Client client) {
                         if (admin == null && cook == null && client == null) { //no account exists yet with this email
                             Address address = new Address(addressNumber, addressStreet); //create a new address object
-                            uploadImage(emailAddress, new ImageCallback<String>() { //retrieving an image URL is an async process so a method must be implemented to return the URL
+
+
+                            Cook newCook = new Cook(firstName, lastName, emailAddress, password, description, address, null);
+                            users.child(emailAddress).setValue(newCook);
+                            MainActivity.currentUser = newCook;
+                            MainActivity.loggedInCook = newCook;
+                            Toast.makeText(getActivity(), "Registered as " + firstName + " " + lastName, Toast.LENGTH_LONG).show();
+                            //button navigation
+                            Intent intent = new Intent(getActivity(), UserWelcome.class);
+                            startActivity(intent);
+
+
+
+                            /*uploadImage(emailAddress, new ImageCallback<String>() { //retrieving an image URL is an async process so a method must be implemented to return the URL
                                 //on success
                                 @Override
                                 public void onCallback(String imageURL) { //imageURL contains a String of the url pointing to the void cheque in the firebase cloud storage
@@ -254,8 +267,11 @@ public class CookRegister extends Fragment implements View.OnClickListener {
                                     Intent intent = new Intent(getActivity(), UserWelcome.class);
                                     startActivity(intent);
                                 }
-                            }); //upload image and set voidChequeURL to the image URL in the firebase cloud storage
-                        } else { //account already exists with this email
+                            });  //upload image and set voidChequeURL to the image URL in the firebase cloud storage
+                        } */
+                        }
+                        else { //account already exists with this email
+
                             textCookErrorMessage.setText("An account already exists with this email");
                         }
                     }
