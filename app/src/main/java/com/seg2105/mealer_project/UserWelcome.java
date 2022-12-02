@@ -95,6 +95,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
             layoutAdmin.setVisibility(View.VISIBLE);
             layoutClient.setVisibility(View.GONE);
             layoutCook.setVisibility(View.GONE);
+            btnAddMeal.setVisibility(View.GONE);
 
             btnAdminComplaints.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -110,6 +111,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
             layoutAdmin.setVisibility(View.GONE);
             layoutClient.setVisibility(View.GONE);
             layoutCook.setVisibility(View.VISIBLE);
+            btnAddMeal.setVisibility(View.VISIBLE);
 
             btnAddMeal.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -162,6 +164,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
             layoutAdmin.setVisibility(View.GONE);
             layoutClient.setVisibility(View.VISIBLE);
             layoutCook.setVisibility(View.GONE);
+            btnAddMeal.setVisibility(View.GONE);
 
             meals = new ArrayList<Meal>(); //for meal page
             mealModels = new ArrayList<MealListModel>(); //for recyclerview
