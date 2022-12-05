@@ -10,7 +10,8 @@ public class Client extends Person implements Serializable {
     private Address address;
     private CreditCard creditCardInfo;
     private HashMap<String, Meal> likedMeals;
-    private ArrayList<MealRequest> requestedMeals;
+    private HashMap<String, MealRequest> requestedMeals;
+    private int keyCounter = 0; //string key for adding requestedMeals
 
     public Client() { //empty constructor is needed for database!
 
@@ -25,7 +26,7 @@ public class Client extends Person implements Serializable {
         this.address = address;
         this.creditCardInfo = creditCardInfo;
         this.likedMeals = new HashMap<String, Meal>();
-        this.requestedMeals = new ArrayList<MealRequest>();
+        this.requestedMeals = new HashMap<String, MealRequest>();
     }
 
     public Address getAddress() { //getter methods required for database serialization
@@ -38,6 +39,10 @@ public class Client extends Person implements Serializable {
 
     public HashMap<String, Meal> getLikedMeals() {
         return this.likedMeals;
+    }
+
+    public HashMap<String, MealRequest> getRequestedMeals() {
+        return requestedMeals;
     }
 
     /*
@@ -68,7 +73,8 @@ public class Client extends Person implements Serializable {
      * search meal
      * */
     public void requestMeal(MealRequest mealReq){
-        requestedMeals.add(mealReq);
+        requestedMeals.put(Integer.toString(keyCounter) + "_key", mealReq);
+        keyCounter++;
         //selects a meal
     }
 

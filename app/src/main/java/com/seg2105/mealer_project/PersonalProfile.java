@@ -47,9 +47,6 @@ public class PersonalProfile extends AppCompatActivity {
 
     MenuItem ratingCook;
 
-
-
-
     int longClickCounter;
 
     public PersonalProfile() {
@@ -110,17 +107,8 @@ public class PersonalProfile extends AppCompatActivity {
         listOfferedMeals.setVisibility(View.GONE);
         listMeals.setVisibility(View.GONE);
 
-
-
-
-
-
-
-
-
-
         //only display meals if the signed in user is a cook
-        if (user.getRole().equals("Cook")) {
+        if (user.getRole().equals("Cook")) { //this needs to be changed to only allow cooks to make changes to the menu
             textOfferedMenu.setVisibility(View.VISIBLE);
             textMenu.setVisibility(View.VISIBLE);
             listOfferedMeals.setVisibility(View.VISIBLE);
@@ -169,98 +157,101 @@ public class PersonalProfile extends AppCompatActivity {
                     listMeals.setLayoutManager(mealsLayoutManager);
                     listMeals.setAdapter(mealsAdapter);
 
+                    //onclicklisteners should NOT allow users to alter the menu
                     //allows for recyclerview items to be clicked (code from https://stackoverflow.com/questions/24471109/recyclerview-onclick)
                     //handles clicks and long clicks on the offeredMeals recyclerview
-                    listOfferedMeals.addOnItemTouchListener(
-                            new RecyclerItemClickListener(getApplicationContext(), listOfferedMeals ,new RecyclerItemClickListener.OnItemClickListener() {
-                                //onclick of an item, pass the meal into the meal page to display all its information to the user
-                                @Override public void onItemClick(View view, int position) {
-                                    Intent intent = new Intent(PersonalProfile.this, MealPage.class);
-                                    intent.putExtra("meal", offeredMeals.get(position));
-                                    startActivity(intent);
-                                }
-
-                                //onlongclick of an item, open a dialog with the option to remove the meal from the offered menu
-                                //but keep it in the menu
-                                @Override public void onLongItemClick(View view, int position) {
-                                    if (longClickCounter == 0) {
-                                        AlertDialog.Builder removeMeal = new AlertDialog.Builder(PersonalProfile.this);
-                                        removeMeal.setCancelable(false);
-                                        removeMeal.setTitle("Remove " + offeredMeals.get(position).getName() + " from Offered Menu?");
-                                        removeMeal.setMessage("Click 'Remove' to stop offering this meal. The meal will still be on the Menu.");
-                                        removeMeal.setPositiveButton("Remove", (DialogInterface.OnClickListener) (dialog, which) -> {
-                                            Meal toRemove = offeredMeals.get(position);
-                                            toRemove.setOffering(false);
-                                            cookMeals.child(toRemove.getName()).setValue(toRemove);
-                                            Toast.makeText(getApplicationContext(), "Meal Removed", Toast.LENGTH_LONG).show();
-                                            longClickCounter = 0;
-                                            //AP dialogue dismiss
-                                            dialog.dismiss();
-                                        });
-                                        removeMeal.setNegativeButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
-                                            longClickCounter = 0;
-                                            dialog.dismiss();
-                                        });
-                                        removeMeal.create();
-                                        removeMeal.show();
-                                        longClickCounter++;
+                    if (user.getEmailAddress().equals(MainActivity.currentUser)) { //if logged in user and user of profile match
+                        listOfferedMeals.addOnItemTouchListener(
+                                new RecyclerItemClickListener(getApplicationContext(), listOfferedMeals ,new RecyclerItemClickListener.OnItemClickListener() {
+                                    //onclick of an item, pass the meal into the meal page to display all its information to the user
+                                    @Override public void onItemClick(View view, int position) {
+                                        Intent intent = new Intent(PersonalProfile.this, MealPage.class);
+                                        intent.putExtra("meal", offeredMeals.get(position));
+                                        startActivity(intent);
                                     }
-                                }
-                            })
-                    );
 
-                    //handles clicks and long clicks on the meals (the standard menu) recyclerview
-                    listMeals.addOnItemTouchListener(
-                            new RecyclerItemClickListener(getApplicationContext(), listMeals ,new RecyclerItemClickListener.OnItemClickListener() {
-                                //onclick of an item, pass the meal into the meal page to display all its information to the user
-                                @Override public void onItemClick(View view, int position) {
-                                    Intent intent = new Intent(PersonalProfile.this, MealPage.class);
-                                    intent.putExtra("meal", meals.get(position));
-                                    startActivity(intent);
-                                }
-
-                                //onlongclick of an item, open a dialog with the option to remove the meal from the offered menu
-                                //but keep it in the menu
-                                @Override public void onLongItemClick(View view, int position) {
-                                    if (longClickCounter == 0) {
-                                        AlertDialog.Builder offerDeleteMeal = new AlertDialog.Builder(PersonalProfile.this);
-                                        offerDeleteMeal.setCancelable(false);
-                                        offerDeleteMeal.setTitle("Offer or Delete " + meals.get(position).getName() + " from Menu?");
-                                        offerDeleteMeal.setMessage("Choose the appropriate button below to offer or permanently delete the meal " +
-                                                "from the menu.");
-                                        offerDeleteMeal.setPositiveButton("Delete", (DialogInterface.OnClickListener) (dialog, which) -> {
-                                            Meal toDelete = meals.get(position);
-                                            if (!toDelete.isOffering()) { //meal can ONLY be deleted if it is not being offered
-                                                cookMeals.child(meals.get(position).getName()).removeValue();
-                                                Toast.makeText(getApplicationContext(), "Meal Deleted", Toast.LENGTH_LONG).show();
-                                            }
-                                            else {
-                                                Toast.makeText(getApplicationContext(), "Meal cannot be deleted if still being offered", Toast.LENGTH_LONG).show();
-                                            }
-                                            longClickCounter = 0;
-                                            //AP
-                                            dialog.dismiss();
-                                        });
-                                        offerDeleteMeal.setNegativeButton("Offer", (DialogInterface.OnClickListener) (dialog, which) -> {
-                                            Meal toOffer = meals.get(position);
-                                            toOffer.setOffering(true);
-                                            cookMeals.child(toOffer.getName()).setValue(toOffer);
-                                            Toast.makeText(getApplicationContext(), "Meal Now Offering", Toast.LENGTH_LONG).show();
-                                            longClickCounter = 0;
-                                            //AP
-                                            dialog.dismiss();
-                                        });
-                                        offerDeleteMeal.setNeutralButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
-                                            longClickCounter = 0;
-                                            dialog.dismiss();
-                                        });
-                                        offerDeleteMeal.create();
-                                        offerDeleteMeal.show();
-                                        longClickCounter++;
+                                    //onlongclick of an item, open a dialog with the option to remove the meal from the offered menu
+                                    //but keep it in the menu
+                                    @Override public void onLongItemClick(View view, int position) {
+                                        if (longClickCounter == 0) {
+                                            AlertDialog.Builder removeMeal = new AlertDialog.Builder(PersonalProfile.this);
+                                            removeMeal.setCancelable(false);
+                                            removeMeal.setTitle("Remove " + offeredMeals.get(position).getName() + " from Offered Menu?");
+                                            removeMeal.setMessage("Click 'Remove' to stop offering this meal. The meal will still be on the Menu.");
+                                            removeMeal.setPositiveButton("Remove", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                                Meal toRemove = offeredMeals.get(position);
+                                                toRemove.setOffering(false);
+                                                cookMeals.child(toRemove.getName()).setValue(toRemove);
+                                                Toast.makeText(getApplicationContext(), "Meal Removed", Toast.LENGTH_LONG).show();
+                                                longClickCounter = 0;
+                                                //AP dialogue dismiss
+                                                dialog.dismiss();
+                                            });
+                                            removeMeal.setNegativeButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                                longClickCounter = 0;
+                                                dialog.dismiss();
+                                            });
+                                            removeMeal.create();
+                                            removeMeal.show();
+                                            longClickCounter++;
+                                        }
                                     }
-                                }
-                            })
-                    );
+                                })
+                        );
+
+                        //handles clicks and long clicks on the meals (the standard menu) recyclerview
+                        listMeals.addOnItemTouchListener(
+                                new RecyclerItemClickListener(getApplicationContext(), listMeals ,new RecyclerItemClickListener.OnItemClickListener() {
+                                    //onclick of an item, pass the meal into the meal page to display all its information to the user
+                                    @Override public void onItemClick(View view, int position) {
+                                        Intent intent = new Intent(PersonalProfile.this, MealPage.class);
+                                        intent.putExtra("meal", meals.get(position));
+                                        startActivity(intent);
+                                    }
+
+                                    //onlongclick of an item, open a dialog with the option to remove the meal from the offered menu
+                                    //but keep it in the menu
+                                    @Override public void onLongItemClick(View view, int position) {
+                                        if (longClickCounter == 0) {
+                                            AlertDialog.Builder offerDeleteMeal = new AlertDialog.Builder(PersonalProfile.this);
+                                            offerDeleteMeal.setCancelable(false);
+                                            offerDeleteMeal.setTitle("Offer or Delete " + meals.get(position).getName() + " from Menu?");
+                                            offerDeleteMeal.setMessage("Choose the appropriate button below to offer or permanently delete the meal " +
+                                                    "from the menu.");
+                                            offerDeleteMeal.setPositiveButton("Delete", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                                Meal toDelete = meals.get(position);
+                                                if (!toDelete.isOffering()) { //meal can ONLY be deleted if it is not being offered
+                                                    cookMeals.child(meals.get(position).getName()).removeValue();
+                                                    Toast.makeText(getApplicationContext(), "Meal Deleted", Toast.LENGTH_LONG).show();
+                                                }
+                                                else {
+                                                    Toast.makeText(getApplicationContext(), "Meal cannot be deleted if still being offered", Toast.LENGTH_LONG).show();
+                                                }
+                                                longClickCounter = 0;
+                                                //AP
+                                                dialog.dismiss();
+                                            });
+                                            offerDeleteMeal.setNegativeButton("Offer", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                                Meal toOffer = meals.get(position);
+                                                toOffer.setOffering(true);
+                                                cookMeals.child(toOffer.getName()).setValue(toOffer);
+                                                Toast.makeText(getApplicationContext(), "Meal Now Offering", Toast.LENGTH_LONG).show();
+                                                longClickCounter = 0;
+                                                //AP
+                                                dialog.dismiss();
+                                            });
+                                            offerDeleteMeal.setNeutralButton("Cancel", (DialogInterface.OnClickListener) (dialog, which) -> {
+                                                longClickCounter = 0;
+                                                dialog.dismiss();
+                                            });
+                                            offerDeleteMeal.create();
+                                            offerDeleteMeal.show();
+                                            longClickCounter++;
+                                        }
+                                    }
+                                })
+                        );
+                    }
                 }
 
                 @Override

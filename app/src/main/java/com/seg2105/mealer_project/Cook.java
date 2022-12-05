@@ -16,6 +16,7 @@ public class Cook extends Person implements Serializable {
     private boolean accountActive;
     private String suspensionEndDate;
     private boolean permSuspension;
+    private int keyCounter = 0; //purchaseRequest key
 
 
     private int soldMeals;
@@ -25,7 +26,7 @@ public class Cook extends Person implements Serializable {
 //    private LinkedList <Meal> offeredMeals;
     private HashMap<String, Meal> meals;
     private HashMap<String, Meal> offeredMeals;
-    private Queue <MealRequest> purchaseRequest;
+    private HashMap<String, MealRequest> purchaseRequest;
 
     public Cook() { //empty constructor is needed for database!
 
@@ -52,6 +53,7 @@ public class Cook extends Person implements Serializable {
 
         this.meals = new HashMap<String, Meal>();
         this.offeredMeals = new HashMap<String, Meal>();
+        this.purchaseRequest = new HashMap<String, MealRequest>();
 
     }
 
@@ -103,6 +105,10 @@ public class Cook extends Person implements Serializable {
         return offeredMeals;
     }
 
+    public HashMap<String, MealRequest> getPurchaseRequest() {
+        return purchaseRequest;
+    }
+
     public static void rejectRequest(){
 
     }
@@ -119,6 +125,7 @@ public class Cook extends Person implements Serializable {
 
     }
     public void receiveRequest(MealRequest mealReq){
-        purchaseRequest.add(mealReq);
+        purchaseRequest.put(Integer.toString(keyCounter), mealReq);
+        keyCounter++;
     }
 }

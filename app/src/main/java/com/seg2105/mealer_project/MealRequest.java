@@ -22,7 +22,7 @@ public class MealRequest {
 
     public Meal getMeal(){return this.meal;}
 
-    public void acceptRequest(){
+    public void acceptRequest() {
         this.accepted = true;
         this.requestFinished = true;
     }

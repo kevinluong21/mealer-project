@@ -165,19 +165,28 @@ public class MealPage extends AppCompatActivity {
                 break;
         }
     }
-    public void requestMeal(){
+    public void requestMeal() {
         MainActivity.checkUser(currentUser.getEmailAddress(), new UserCallback<Administrator, Cook, Client>() {
             @Override
-            public void onCallback(Administrator user1a, Cook user2a, Client user3a) {
-                MainActivity.checkUser(meal.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
-                    @Override
-                    public void onCallback(Administrator user1b, Cook user2b, Client user3b) {
-                        MealRequest req = new MealRequest(meal, user3a, user2b);
-                        user3a.requestMeal(req);
-                        user2b.receiveRequest(req);
-                        Toast.makeText(getApplicationContext(),"Purchase Request Complete", Toast.LENGTH_LONG).show();
-                    }
-                });
+            public void onCallback(Administrator admin, Cook cook, Client client) {
+                if (cook != null) { //cook with that email was found
+                    MealRequest req = new MealRequest(meal, MainActivity.loggedInClient, cook);
+                    cook.receiveRequest(req); //updates the Cook object
+                    MainActivity.loggedInClient.requestMeal(req); //updates the Client object
+
+                    MainActivity.users.child(cook.getEmailAddress()).setValue(cook); //upload the updated Cook to firebase
+                    MainActivity.users.child(MainActivity.currentUser.getEmailAddress()).setValue(MainActivity.loggedInClient); //upload the updated
+                    //client to firebase
+                }
+//                MainActivity.checkUser(meal.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
+//                    @Override
+//                    public void onCallback(Administrator user1b, Cook user2b, Client user3b) {
+//                        MealRequest req = new MealRequest(meal, user3a, user2b);
+//                        user3a.requestMeal(req);
+//                        user2b.receiveRequest(req);
+//                        Toast.makeText(getApplicationContext(),"Purchase Request Complete", Toast.LENGTH_LONG).show();
+//                    }
+//                });
             }
         });
     }
