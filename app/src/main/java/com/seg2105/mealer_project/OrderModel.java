@@ -10,14 +10,20 @@ public class OrderModel {
     private Meal meal;
 
     public OrderModel(MealRequest mealReq){
-        this.client = mealReq.getClient();
-        this.meal = mealReq.getMeal();
-
-        this.mealName = meal.getName();
-        this.mealPrice = meal.displayPrice();
-        this.customerEmail = client.getEmailAddress();
-        this.customerName = (client.getFirstName()+" "+client.getLastName());
-        this.imgSrc = R.drawable.maindish_icon;
+        MainActivity.checkUser(mealReq.getClientEmail(), new UserCallback<Administrator, Cook, Client>() {
+            @Override
+            public void onCallback(Administrator user1, Cook user2, Client user3) {
+                if (user3 != null) {
+                    client = user3;
+                    meal = mealReq.getMeal();
+                    mealName = meal.getName();
+                    mealPrice = meal.displayPrice();
+                    customerEmail = client.getEmailAddress();
+                    customerName = (client.getFirstName()+" "+ client.getLastName());
+                    imgSrc = R.drawable.maindish_icon;
+                }
+            }
+        });
     }
 
     public String getMealName(){return this.mealName;}

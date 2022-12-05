@@ -1,24 +1,30 @@
 package com.seg2105.mealer_project;
 
-public class MealRequest {
+import java.io.Serializable;
 
-    public Meal meal;
-    public Cook cook;
-    public Client client;
-    public boolean requestFinished;
-    public boolean accepted;
+public class MealRequest implements Serializable {
 
-    public MealRequest(Meal meal, Client client, Cook cook){
+    private Meal meal;
+    private String cookEmail;
+    private String clientEmail;
+    private boolean requestFinished;
+    private boolean accepted;
+
+    public MealRequest(Meal meal, String clientEmail, String cookEmail){
         this.meal = meal;
-        this.client = client;
-        this.cook = cook;
+        this.clientEmail = clientEmail;
+        this.cookEmail = cookEmail;
         this.requestFinished = false;
         this.accepted = false;
     }
 
-    public Client getClient(){return this.client;}
+    public String getClientEmail() {
+        return clientEmail;
+    }
 
-    public Cook getCook(){return this.cook;}
+    public String getCookEmail() {
+        return cookEmail;
+    }
 
     public Meal getMeal(){return this.meal;}
 

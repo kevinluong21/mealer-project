@@ -2,6 +2,7 @@ package com.seg2105.mealer_project;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import java.io.Serializable;
 import java.util.HashMap;
