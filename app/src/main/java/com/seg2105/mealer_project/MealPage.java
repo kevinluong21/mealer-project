@@ -7,10 +7,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.flexbox.FlexDirection;
@@ -26,6 +30,8 @@ public class MealPage extends AppCompatActivity {
     private RecyclerView listAllergens;
     private Meal meal;
 
+    Person currentUser = MainActivity.currentUser;
+
     BottomNavigationView bottomNavBar;
 
     TextView textMealName;
@@ -36,6 +42,7 @@ public class MealPage extends AppCompatActivity {
     TextView textPrice;
     TextView textAboutMeal;
     TextView textDescription;
+    Button requestMealBtn;
 
     public MealPage() {
         super(R.layout.activity_meal_page);
@@ -45,6 +52,7 @@ public class MealPage extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_page);
+        requestMealBtn = (Button) findViewById(R.id.requestMealBtn);
 
         //when this activity is opened, a meal object is passed to display its information on this page
         this.meal = (Meal) getIntent().getSerializableExtra("meal");
@@ -56,6 +64,13 @@ public class MealPage extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if(currentUser.getRole().equals("Cook")){
+            requestMealBtn.setVisibility(View.GONE);
+        }
+        if(currentUser.getRole().equals("Client")){
+            requestMealBtn.setVisibility(View.VISIBLE);
+        }
 
         //bottom nav bar no longer needed now that there is a toolbar
 //        //bottom nav bar
@@ -112,7 +127,6 @@ public class MealPage extends AppCompatActivity {
             }
         });
 
-
         //this will input the ingredients and allergens into recyclerviews on the meal page
         ArrayList<IngredientModel> ingredients = new ArrayList<IngredientModel>();
         ArrayList<IngredientModel> allergens = new ArrayList<IngredientModel>();
@@ -142,6 +156,30 @@ public class MealPage extends AppCompatActivity {
 
         listAllergens.setLayoutManager(allergensLayoutManager);
         listAllergens.setAdapter(allergenAdapter);
+    }
+
+    public void onClick(View v){
+        switch(v.getId()){
+            case R.id.requestMealBtn:
+                requestMeal();
+                break;
+        }
+    }
+    public void requestMeal(){
+        MainActivity.checkUser(currentUser.getEmailAddress(), new UserCallback<Administrator, Cook, Client>() {
+            @Override
+            public void onCallback(Administrator user1a, Cook user2a, Client user3a) {
+                MainActivity.checkUser(meal.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
+                    @Override
+                    public void onCallback(Administrator user1b, Cook user2b, Client user3b) {
+                        MealRequest req = new MealRequest(meal, user3a, user2b);
+                        user3a.requestMeal(req);
+                        user2b.receiveRequest(req);
+                        Toast.makeText(getApplicationContext(),"Purchase Request Complete", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
     }
 
     //create toolbar menu

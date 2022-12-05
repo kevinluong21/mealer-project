@@ -118,4 +118,7 @@ public class Cook extends Person implements Serializable {
     public static void offerMeal(){
 
     }
+    public void receiveRequest(MealRequest mealReq){
+        purchaseRequest.add(mealReq);
+    }
 }

@@ -40,7 +40,6 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
     //Cook cookUser;
 
     Button btnAddMeal;
-    Button btnReviewOfferedMeals;
 
     TextView textViewWelcomeMessage;
     TextView textViewActionPrompt;
@@ -52,6 +51,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
     DatabaseReference users;
     protected static ArrayList<Meal> meals;
     RecyclerView listClientMeals;
+    RecyclerView orderRequests;
     ArrayList<MealListModel> mealModels;
 
     LinearLayout searchBar;
@@ -65,6 +65,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
 
         users = FirebaseDatabase.getInstance().getReference("users");
         listClientMeals = (RecyclerView) findViewById(R.id.listClientMeals);
+        orderRequests = (RecyclerView) findViewById(R.id.orderRequests);
 
         bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
         bottomNavBar.setOnItemSelectedListener(this);

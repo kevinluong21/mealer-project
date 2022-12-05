@@ -1,6 +1,7 @@
 package com.seg2105.mealer_project;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Client extends Person implements Serializable {
@@ -9,6 +10,7 @@ public class Client extends Person implements Serializable {
     private Address address;
     private CreditCard creditCardInfo;
     private HashMap<String, Meal> likedMeals;
+    private ArrayList<MealRequest> requestedMeals;
 
     public Client() { //empty constructor is needed for database!
 
@@ -23,6 +25,7 @@ public class Client extends Person implements Serializable {
         this.address = address;
         this.creditCardInfo = creditCardInfo;
         this.likedMeals = new HashMap<String, Meal>();
+        this.requestedMeals = new ArrayList<MealRequest>();
     }
 
     public Address getAddress() { //getter methods required for database serialization
@@ -64,7 +67,8 @@ public class Client extends Person implements Serializable {
     /*
      * search meal
      * */
-    public void selectMeal(){
+    public void requestMeal(MealRequest mealReq){
+        requestedMeals.add(mealReq);
         //selects a meal
     }
 
