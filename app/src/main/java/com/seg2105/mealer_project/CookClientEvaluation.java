@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,7 +30,11 @@ public class CookClientEvaluation extends AppCompatActivity {
     List<Cook> cookslist;
     List<Cook> users;
     DatabaseReference database;
+    DatabaseReference complaints;
     Button backButton;
+
+//    Button submitComplain;
+//    EditText complaintText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,8 @@ public class CookClientEvaluation extends AppCompatActivity {
 
 
         database = FirebaseDatabase.getInstance().getReference("users");
+        complaints = FirebaseDatabase.getInstance().getReference("complaints"); //creates a list named "complaints" in the database
+
         setContentView(R.layout.activity_cook_client_evaluation);
         listViewCooks = (ListView) findViewById(R.id.listViewCooks); //using same layout
         cookslist = new ArrayList<>();
@@ -66,7 +73,7 @@ public class CookClientEvaluation extends AppCompatActivity {
                 //HERE
                 cookslist.clear();
 
-
+                //FIX limit the cooks that actually got orders
                 //List<Cook> users;
                 for(DataSnapshot postSnapshot:dataSnapshot.getChildren()){
                     Cook cook = postSnapshot.getValue(Cook.class);
@@ -112,8 +119,6 @@ public class CookClientEvaluation extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Cook cook = cookslist.get(i);
-
-
                 showActionDialog(cook);
                 //showActionDialog(complaint.getID(), complaint.getDescription());
                 return true;
@@ -123,32 +128,61 @@ public class CookClientEvaluation extends AppCompatActivity {
 
     private void showActionDialog(Cook cook) {
 
+
+
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.action_dialog_rate_cook, null);
         dialogBuilder.setView(dialogView);
-//FIX HERE
 
         dialogBuilder.setTitle(cook.getFirstName());
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
+        final Button submitComplain = (Button) dialogView.findViewById((R.id.btnComplain));
+        final EditText complaintText=(EditText) dialogView.findViewById(R.id.editTextComplain);
+        final TextView errorMessage = (TextView) dialogView.findViewById(R.id.textViewErrorMessage);
+       // String com = "Test";
+//        Log.d("MyTag1",complaintDescription);
+//        Log.d("MyTag2",String.valueOf(complaintDescription.getClass()));
 
-       /* btnDismiss.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteComplaint(cook.getFirstName());
-                b.dismiss();
-            }
-
-
-
-        });
-
-        */
+//        submitComplain = (Button) findViewById((R.id.btnComplain));
+//        complaintText=(EditText) findViewById(R.id.editTextComplain);
 
 
-}
+            submitComplain.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    String complaintDescription = complaintText.getText().toString().trim();
+                    if(!TextUtils.isEmpty(complaintDescription)){
+                    Log.d("MyTag3",complaintDescription);
+                    makeComplaint(complaintDescription, cook);
+                    b.dismiss();
+                }
+                    else {
+                        errorMessage.setText("All fields must be filled");
+                    }
+            }});
+
+        }
+
+
+//    Complaint complaintFirst = new Complaint(description,clientEmail,cookEmail, "ComplaintNumber1");
+//        complaints.child(complaintFirst.getId()).setValue(complaintFirst);
+
+    private boolean makeComplaint(String text, Cook cook) {
+
+        //DatabaseReference dR = FirebaseDatabase.getInstance().getReference("complaints").child(id);
+        String complaintID= ("Complaint received: " + System.currentTimeMillis()/1000);
+        Complaint newComplaint = new Complaint(text,PersonalProfile.user.getEmailAddress(),cook.getEmailAddress(),complaintID );
+        complaints.child(newComplaint.getId()).setValue(newComplaint);
+
+        Toast.makeText(getApplicationContext(), "Complaint submittes", Toast.LENGTH_LONG).show();
+        return true;
+    }
+
+
+
+
 
    /*private boolean deleteComplaint(String id) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("complaints").child(id);

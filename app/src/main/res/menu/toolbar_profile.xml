@@ -13,5 +13,5 @@
         app:showAsAction="never"></item>
     <item
         android:id="@+id/rateACook"
-        android:title="Rate a cook" />
+        android:title="Leave a complaint" />
 </menu>

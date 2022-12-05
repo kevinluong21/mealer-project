@@ -42,7 +42,7 @@ public class PersonalProfile extends AppCompatActivity {
     RecyclerView listMeals;
     TextView textOfferedMenu;
     TextView textMenu;
-    Person user;
+    static Person user;
     DatabaseReference cookMeals;
 
     MenuItem ratingCook;
