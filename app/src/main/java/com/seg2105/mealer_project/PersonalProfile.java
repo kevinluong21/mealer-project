@@ -5,9 +5,11 @@ package com.seg2105.mealer_project;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class PersonalProfile extends AppCompatActivity {
@@ -40,6 +44,9 @@ public class PersonalProfile extends AppCompatActivity {
     BottomNavigationView bottomNavBar;
     RecyclerView listOfferedMeals;
     RecyclerView listMeals;
+    LinearLayout layoutCookInfo;
+    TextView textRating;
+    TextView textMealsSold;
     TextView textOfferedMenu;
     TextView textMenu;
     static Person user;
@@ -60,18 +67,21 @@ public class PersonalProfile extends AppCompatActivity {
 
         this.user = (Person) getIntent().getSerializableExtra("user");
 
-        if (this.user == null) {
-            user = MainActivity.currentUser;
-        }
-
         //sets the toolbar for this activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
-        toolbar.setNavigationIcon(R.drawable.icons8_chevron_left_24);
 
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (this.user == null) { //activity called from nav bar
+            user = MainActivity.currentUser;
+            setSupportActionBar(toolbar);
+        }
+        else { //activity called from meal page so it needs a back button (if it is called
+            //from the nav bar, a back button is not needed)
+            Log.d("TAG", "call from meal page");
+            toolbar.setNavigationIcon(R.drawable.icons8_chevron_left_24);
+            setSupportActionBar(toolbar);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         listOfferedMeals = (RecyclerView) findViewById(R.id.listOfferedMeals);
         listMeals = (RecyclerView) findViewById(R.id.listMeals);
@@ -96,6 +106,9 @@ public class PersonalProfile extends AppCompatActivity {
 
         textName = (TextView) findViewById(R.id.textName);
         textRole = (TextView) findViewById(R.id.textRole);
+        layoutCookInfo = (LinearLayout) findViewById(R.id.layoutCookInfo);
+        textRating = (TextView) findViewById(R.id.textRating);
+        textMealsSold = (TextView) findViewById(R.id.textMealsSold);
         textOfferedMenu = (TextView) findViewById(R.id.textOfferedMenu);
         textMenu = (TextView) findViewById(R.id.textMenu);
 
@@ -104,15 +117,21 @@ public class PersonalProfile extends AppCompatActivity {
 
         textOfferedMenu.setVisibility(View.GONE);
         textMenu.setVisibility(View.GONE);
+        layoutCookInfo.setVisibility(View.GONE);
         listOfferedMeals.setVisibility(View.GONE);
         listMeals.setVisibility(View.GONE);
 
-        //only display meals if the signed in user is a cook
-        if (user.getRole().equals("Cook")) { //this needs to be changed to only allow cooks to make changes to the menu
+        //only display meals if the profile user is a cook
+        if (user.getRole().equals("Cook")) {
             textOfferedMenu.setVisibility(View.VISIBLE);
             textMenu.setVisibility(View.VISIBLE);
+            layoutCookInfo.setVisibility(View.VISIBLE);
             listOfferedMeals.setVisibility(View.VISIBLE);
             listMeals.setVisibility(View.VISIBLE);
+
+            Cook cook = (Cook) user; //can be casted since user is of type Cook
+            textRating.setText(Double.toString(cook.getCustomerRating()));
+            textMealsSold.setText(Integer.toString(cook.getSoldMeals()));
 
             cookMeals = FirebaseDatabase.getInstance().getReference("users").child(MainActivity.emailAddressToKey(user.getEmailAddress()))
                     .child("meals");
@@ -160,7 +179,7 @@ public class PersonalProfile extends AppCompatActivity {
                     //onclicklisteners should NOT allow users to alter the menu
                     //allows for recyclerview items to be clicked (code from https://stackoverflow.com/questions/24471109/recyclerview-onclick)
                     //handles clicks and long clicks on the offeredMeals recyclerview
-                    if (user.getEmailAddress().equals(MainActivity.currentUser)) { //if logged in user and user of profile match
+                    if (user.getEmailAddress().equals(MainActivity.currentUser.getEmailAddress())) { //if logged in user and user of profile match
                         listOfferedMeals.addOnItemTouchListener(
                                 new RecyclerItemClickListener(getApplicationContext(), listOfferedMeals ,new RecyclerItemClickListener.OnItemClickListener() {
                                     //onclick of an item, pass the meal into the meal page to display all its information to the user

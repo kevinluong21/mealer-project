@@ -59,6 +59,16 @@
                 android:text="Address"
                 android:textColor="@color/black" />
 
+            <TextView
+                android:id="@+id/textRating"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/icons8_star_24"
+                android:gravity="center_vertical"
+                android:text="0.0"
+                android:textColor="@color/black" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

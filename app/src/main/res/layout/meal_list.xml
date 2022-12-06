@@ -87,7 +87,7 @@
                     android:id="@+id/textMealRating"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@android:drawable/btn_star_big_on"
+                    android:drawableLeft="@drawable/icons8_star_24"
                     android:drawablePadding="5dp"
                     android:gravity="center_vertical"
                     android:text="5.0"

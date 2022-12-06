@@ -48,6 +48,9 @@ public class SearchResultAdapter extends ArrayAdapter<Meal> implements Filterabl
         TextView textCookAddress = currentItemView.findViewById(R.id.textCookAddress);
         textCookAddress.setText(currentNumberPosition.getCookAddress().formatAddress());
 
+        TextView textRating = currentItemView.findViewById(R.id.textRating);
+        textRating.setText(currentNumberPosition.displayRating());
+
         TextView textPrice = currentItemView.findViewById(R.id.textPriceResult);
         textPrice.setText(currentNumberPosition.displayPrice());
 
