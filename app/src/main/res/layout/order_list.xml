@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="-20dp"
+        android:layout_marginBottom="10dp"
         app:cardBackgroundColor="#EFEFEF"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,30 +61,12 @@
                     android:textAlignment="textStart"
                     android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:translationY="15dp" />
-
-                <Button
-                    android:id="@+id/acceptBtn"
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content"
-                    android:text="Accept Order"
-                    android:translationX="-5dp"
-                    android:translationY="90dp" />
-
-                <Button
-                    android:id="@+id/declineBtn"
-                    android:layout_width="97dp"
-                    android:layout_height="wrap_content"
-                    android:text="Decline Order"
-                    android:translationX="95dp"
-                    android:translationY="35dp" />
+                    android:textStyle="bold" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:translationY="-95dp">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/textDollarSign"
@@ -114,14 +96,12 @@
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:translationY="-95dp"
                     app:autoSizeTextType="none" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:translationY="-95dp">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/orderCustomerEmail"

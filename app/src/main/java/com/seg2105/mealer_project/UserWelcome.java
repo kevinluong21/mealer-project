@@ -205,6 +205,44 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
 
                     orderRequests.setLayoutManager(orderManager);
                     orderRequests.setAdapter(orderAdapter);
+
+                    orderRequests.addOnItemTouchListener(
+                            new RecyclerItemClickListener(getApplicationContext(), orderRequests ,new RecyclerItemClickListener.OnItemClickListener() {
+                                @Override public void onItemClick(View view, int position) {
+                                    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(UserWelcome.this);
+                                    dialogBuilder.setTitle(requests.get(position).getClientName()+" Purchase Request");
+                                    dialogBuilder.setMessage("Would you like to accept ot decline this meal request");
+
+                                    dialogBuilder.setPositiveButton("Accept",new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            requests.get(position).acceptRequest();
+                                            requests.remove(position);
+                                        }
+                                    });
+                                    dialogBuilder.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                                        }
+                                    });
+                                    dialogBuilder.setNegativeButton("Decline", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                            requests.get(position).declineRequest();
+                                            requests.remove(position);
+                                        }
+                                    });
+
+                                    final AlertDialog dialog = dialogBuilder.create();
+                                    dialog.show();
+                                }
+
+                                @Override public void onLongItemClick(View view, int position) {
+
+                                }
+                            })
+                    );
                 }
 
                 @Override
