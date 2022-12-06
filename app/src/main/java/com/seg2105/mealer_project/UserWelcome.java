@@ -31,6 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 
 public class UserWelcome extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
@@ -158,6 +159,32 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
+                Log.d("test","start");
+                ArrayList<MealRequest> requests = new ArrayList<MealRequest>();
+                ArrayList<OrderModel> orderModels = new ArrayList<OrderModel>();
+
+                MainActivity.checkUser(currentUser.getEmailAddress(), new UserCallback<Administrator, Cook, Client>() {
+                    @Override
+                    public void onCallback(Administrator user1, Cook user2, Client user3) {
+                        Cook activeCook = user2;
+
+                        HashMap<String,MealRequest> activeCookOrders = activeCook.getPurchaseRequests();
+                        for(int i = 0;i < activeCookOrders.size(); i++){
+                            MealRequest req = activeCookOrders.get(String.valueOf(i));
+                            if(req.isActive()) {
+                                requests.add(req);
+                                orderModels.add(new OrderModel(req));
+                            }
+                        }
+                        Log.d("test","mid");
+                        OrderAdapter orderAdapter = new OrderAdapter(UserWelcome.this, orderModels);
+                        LinearLayoutManager orderManager = new LinearLayoutManager(UserWelcome.this, LinearLayoutManager.VERTICAL, false);
+
+                        orderRequests.setAdapter(orderAdapter);
+                        orderRequests.setLayoutManager(orderManager);
+                        Log.d("test","end");
+                    }
+                });
             }
         }
 
