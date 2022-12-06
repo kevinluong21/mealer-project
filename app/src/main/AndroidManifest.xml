@@ -32,24 +32,9 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".ReviewMealsActivity"
-            android:exported="false"
-            android:parentActivityName=".UserWelcome">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".MealActivity"
             android:exported="false"
             android:parentActivityName=".UserWelcome">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".IndefiniteSuspensionActivity"
-            android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
