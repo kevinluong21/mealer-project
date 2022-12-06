@@ -180,12 +180,9 @@ public class MealPage extends AppCompatActivity {
             public void onCallback(Administrator admin, Cook cook, Client client) {
                 if (cook != null) { //cook with that email was found
                     MealRequest req = new MealRequest(meal, MainActivity.loggedInClient.getEmailAddress(), cook.getEmailAddress());
-                    cook.receiveRequest(req); //updates the Cook object
-                    MainActivity.loggedInClient.requestMeal(req); //updates the Client object
 
-                    MainActivity.users.child(cook.getEmailAddress()).setValue(cook); //upload the updated Cook to firebase
-                    MainActivity.users.child(MainActivity.currentUser.getEmailAddress()).setValue(MainActivity.loggedInClient); //upload the updated
-                    //client to firebase
+                    MainActivity.users.child(cook.getEmailAddress()).child("purchaseRequests").child(meal.getName()).setValue(req);
+                    MainActivity.users.child(MainActivity.currentUser.getEmailAddress()).child("requestedMeals").child(meal.getName()).setValue(req);
                     Toast.makeText(getApplicationContext(),"Purchase Request Complete", Toast.LENGTH_LONG).show();
                 }
 //                MainActivity.checkUser(meal.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {

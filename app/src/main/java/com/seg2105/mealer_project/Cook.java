@@ -17,17 +17,11 @@ public class Cook extends Person implements Serializable {
     private boolean accountActive;
     private String suspensionEndDate;
     private boolean permSuspension;
-    private int keyCounter = 0; //purchaseRequest key
-
-
     private int soldMeals;
     private int customerRating;
-
-//    private LinkedList <Meal> meals;
-//    private LinkedList <Meal> offeredMeals;
     private HashMap<String, Meal> meals;
     private HashMap<String, Meal> offeredMeals;
-    private HashMap<String, MealRequest> purchaseRequest;
+    private HashMap<String, MealRequest> purchaseRequests;
 
     public Cook() { //empty constructor is needed for database!
 
@@ -49,12 +43,9 @@ public class Cook extends Person implements Serializable {
         this.soldMeals = 0;
         this.customerRating = 0;
 
-//        offeredMeals = new LinkedList<Meal>();
-//        meals = new LinkedList<Meal>();
-
         this.meals = new HashMap<String, Meal>();
         this.offeredMeals = new HashMap<String, Meal>();
-        this.purchaseRequest = new HashMap<String, MealRequest>();
+        this.purchaseRequests = new HashMap<String, MealRequest>();
 
     }
 
@@ -98,6 +89,10 @@ public class Cook extends Person implements Serializable {
 
     public int getSoldMeals(){return this.soldMeals;}
 
+    public int getCustomerRating() {
+        return customerRating;
+    }
+
     public HashMap<String, Meal> getMeals() {
         return meals;
     }
@@ -106,8 +101,8 @@ public class Cook extends Person implements Serializable {
         return offeredMeals;
     }
 
-    public HashMap<String, MealRequest> getPurchaseRequest() {
-        return purchaseRequest;
+    public HashMap<String, MealRequest> getPurchaseRequests() {
+        return purchaseRequests;
     }
 
     public static void rejectRequest(){
@@ -124,9 +119,5 @@ public class Cook extends Person implements Serializable {
 
     public static void offerMeal(){
 
-    }
-    public void receiveRequest(MealRequest mealReq){
-        purchaseRequest.put(Integer.toString(keyCounter), mealReq);
-        keyCounter++;
     }
 }

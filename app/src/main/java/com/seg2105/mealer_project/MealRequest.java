@@ -10,6 +10,10 @@ public class MealRequest implements Serializable {
     private boolean requestFinished;
     private boolean accepted;
 
+    public MealRequest() { //empty constructor for firebase
+
+    }
+
     public MealRequest(Meal meal, String clientEmail, String cookEmail){
         this.meal = meal;
         this.clientEmail = clientEmail;

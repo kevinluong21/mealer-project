@@ -11,7 +11,6 @@ public class Client extends Person implements Serializable {
     private CreditCard creditCardInfo;
     private HashMap<String, Meal> likedMeals;
     private HashMap<String, MealRequest> requestedMeals;
-    private int keyCounter = 0; //string key for adding requestedMeals
 
     public Client() { //empty constructor is needed for database!
 
@@ -69,14 +68,14 @@ public class Client extends Person implements Serializable {
         return null;
     }
 
-    /*
-     * search meal
-     * */
-    public void requestMeal(MealRequest mealReq){
-        requestedMeals.put(Integer.toString(keyCounter) + "_key", mealReq);
-        keyCounter++;
-        //selects a meal
-    }
+//    /*
+//     * search meal
+//     * */
+//    public void requestMeal(MealRequest mealReq){
+//        requestedMeals.put(Integer.toString(keyCounter) + "_key", mealReq);
+//        keyCounter++;
+//        //selects a meal
+//    }
 
     /*
      * display meal state
