@@ -25,6 +25,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
@@ -32,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 
 
 public class UserWelcome extends AppCompatActivity implements NavigationBarView.OnItemSelectedListener {
@@ -123,7 +125,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                 }
             } );
 
-            if (!MainActivity.loggedInCook.getAccountStatus()) {
+            if (!MainActivity.loggedInCook.getAccountStatus()) { //if a cook account IS SUSPENDED
                 AlertDialog.Builder suspensionDialog = new AlertDialog.Builder(this);
                 suspensionDialog.setCancelable(false); //cannot close the dialog by clicking outside of the box
 
@@ -159,33 +161,57 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                Log.d("test","start");
-                ArrayList<MealRequest> requests = new ArrayList<MealRequest>();
-                ArrayList<OrderModel> orderModels = new ArrayList<OrderModel>();
 
-                MainActivity.checkUser(currentUser.getEmailAddress(), new UserCallback<Administrator, Cook, Client>() {
-                    @Override
-                    public void onCallback(Administrator user1, Cook user2, Client user3) {
-                        Cook activeCook = user2;
-
-                        HashMap<String,MealRequest> activeCookOrders = activeCook.getPurchaseRequests();
-                        for(int i = 0;i < activeCookOrders.size(); i++){
-                            MealRequest req = activeCookOrders.get(String.valueOf(i));
-                            if(req.isActive()) {
-                                requests.add(req);
-                                orderModels.add(new OrderModel(req));
-                            }
-                        }
-                        Log.d("test","mid");
-                        OrderAdapter orderAdapter = new OrderAdapter(UserWelcome.this, orderModels);
-                        LinearLayoutManager orderManager = new LinearLayoutManager(UserWelcome.this, LinearLayoutManager.VERTICAL, false);
-
-                        orderRequests.setAdapter(orderAdapter);
-                        orderRequests.setLayoutManager(orderManager);
-                        Log.d("test","end");
-                    }
-                });
+//                MainActivity.checkUser(currentUser.getEmailAddress(), new UserCallback<Administrator, Cook, Client>() {
+//                    @Override
+//                    public void onCallback(Administrator user1, Cook user2, Client user3) {
+//                        Cook activeCook = user2;
+//
+//                        HashMap<String,MealRequest> activeCookOrders = activeCook.getPurchaseRequests();
+//                        for(int i = 0;i < activeCookOrders.size(); i++){
+//                            MealRequest req = activeCookOrders.get(String.valueOf(i));
+//                            if(req.isActive()) {
+//                                requests.add(req);
+//                                orderModels.add(new OrderModel(req));
+//                            }
+//                        }
+//                        Log.d("test","mid");
+//                        OrderAdapter orderAdapter = new OrderAdapter(UserWelcome.this, orderModels);
+//                        LinearLayoutManager orderManager = new LinearLayoutManager(UserWelcome.this, LinearLayoutManager.VERTICAL, false);
+//
+//                        orderRequests.setAdapter(orderAdapter);
+//                        orderRequests.setLayoutManager(orderManager);
+//                        Log.d("test","end");
+//                    }
+//                });
             }
+
+            ArrayList<MealRequest> requests = new ArrayList<MealRequest>();
+            ArrayList<OrderModel> orderModels = new ArrayList<OrderModel>();
+
+            users.child(currentUser.getEmailAddress()).child("purchaseRequests").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    requests.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        MealRequest req = dataSnapshot.getValue(MealRequest.class);
+                        if (req.isActive()) {
+                            requests.add(req);
+                            orderModels.add(new OrderModel(req));
+                        }
+                    }
+                    OrderAdapter orderAdapter = new OrderAdapter(UserWelcome.this, orderModels);
+                    LinearLayoutManager orderManager = new LinearLayoutManager(UserWelcome.this, LinearLayoutManager.VERTICAL, false);
+
+                    orderRequests.setLayoutManager(orderManager);
+                    orderRequests.setAdapter(orderAdapter);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
 
         if (currentUser.getRole().equals("Client")) {

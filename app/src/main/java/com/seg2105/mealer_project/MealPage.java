@@ -178,7 +178,7 @@ public class MealPage extends AppCompatActivity {
             @Override
             public void onCallback(Administrator admin, Cook cook, Client client) {
                 if (cook != null) { //cook with that email was found
-                    MealRequest req = new MealRequest(meal, MainActivity.loggedInClient.getEmailAddress(), cook.getEmailAddress());
+                    MealRequest req = new MealRequest(meal, MainActivity.loggedInClient, cook);
 
                     MainActivity.users.child(cook.getEmailAddress()).child("purchaseRequests").child(meal.getName()).setValue(req);
                     MainActivity.users.child(MainActivity.currentUser.getEmailAddress()).child("requestedMeals").child(meal.getName()).setValue(req);

@@ -1,5 +1,7 @@
 package com.seg2105.mealer_project;
 
+import android.util.Log;
+
 public class OrderModel {
     private String customerName;
     private String customerEmail;
@@ -10,20 +12,12 @@ public class OrderModel {
     private Meal meal;
 
     public OrderModel(MealRequest mealReq){
-        MainActivity.checkUser(mealReq.getClientEmail(), new UserCallback<Administrator, Cook, Client>() {
-            @Override
-            public void onCallback(Administrator user1, Cook user2, Client user3) {
-                if (user3 != null) {
-                    client = user3;
-                    meal = mealReq.getMeal();
-                    mealName = meal.getName();
-                    mealPrice = meal.displayPrice();
-                    customerEmail = client.getEmailAddress();
-                    customerName = (client.getFirstName()+" "+ client.getLastName());
-                    imgSrc = R.drawable.maindish_icon;
-                }
-            }
-        });
+        meal = mealReq.getMeal();
+        mealName = meal.getName();
+        mealPrice = meal.displayPrice();
+        customerEmail = MainActivity.keyToEmailAddress(mealReq.getClientEmail());
+        customerName = mealReq.getClientName();
+        imgSrc = R.drawable.maindish_icon;
     }
 
     public String getMealName(){return this.mealName;}

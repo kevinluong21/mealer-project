@@ -7,6 +7,7 @@ public class MealRequest implements Serializable {
     private Meal meal;
     private String cookEmail;
     private String clientEmail;
+    private String clientName;
     private boolean active;
     private boolean accepted;
 
@@ -14,16 +15,21 @@ public class MealRequest implements Serializable {
 
     }
 
-    public MealRequest(Meal meal, String clientEmail, String cookEmail){
+    public MealRequest(Meal meal, Client client, Cook cook){
         this.meal = meal;
-        this.clientEmail = clientEmail;
-        this.cookEmail = cookEmail;
+        this.clientEmail = client.getEmailAddress();
+        this.clientName = client.getFirstName() + " " + client.getLastName();
+        this.cookEmail = cook.getEmailAddress();
         this.active = true;
         this.accepted = false;
     }
 
     public String getClientEmail() {
         return clientEmail;
+    }
+
+    public String getClientName() {
+        return clientName;
     }
 
     public String getCookEmail() {
