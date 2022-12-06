@@ -9,13 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +49,13 @@ public class MealPage extends AppCompatActivity {
     TextView textPrice;
     TextView textAboutMeal;
     TextView textDescription;
-    Button requestMealBtn;
+    Button btnAddToCart;
+    RadioGroup servingGroup;
+    RadioButton oneServing;
+    RadioButton twoServings;
+    RadioButton threeServings;
+    RadioButton fourServings;
+    TextView textTotalPrice;
 
     public MealPage() {
         super(R.layout.activity_meal_page);
@@ -58,7 +65,7 @@ public class MealPage extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_page);
-        requestMealBtn = (Button) findViewById(R.id.requestMealBtn);
+        btnAddToCart = (Button) findViewById(R.id.btnAddToCart);
 
         //when this activity is opened, a meal object is passed to display its information on this page
         this.meal = (Meal) getIntent().getSerializableExtra("meal");
@@ -72,31 +79,11 @@ public class MealPage extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if(currentUser.getRole().equals("Cook")){
-            requestMealBtn.setVisibility(View.GONE);
+            btnAddToCart.setVisibility(View.GONE);
         }
         if(currentUser.getRole().equals("Client")){
-            requestMealBtn.setVisibility(View.VISIBLE);
+            btnAddToCart.setVisibility(View.VISIBLE);
         }
-
-        //bottom nav bar no longer needed now that there is a toolbar
-//        //bottom nav bar
-//        bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
-//        bottomNavBar.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
-//            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//                switch (item.getItemId()) {
-//                    case R.id.btnHome:
-//                        startActivity(new Intent(getApplicationContext(),UserWelcome.class));
-//                        overridePendingTransition(0,0);
-//                        return true;
-//                    case R.id.btnProfile:
-//                        startActivity(new Intent(getApplicationContext(),PersonalProfile.class));
-//                        overridePendingTransition(0,0);
-//                        return true;
-//                }
-//                return false;
-//            }
-//        });
-//        bottomNavBar.getMenu().findItem(R.id.btnProfile).setChecked(true);
 
         listIngredients = (RecyclerView) findViewById(R.id.listIngredients);
         listAllergens = (RecyclerView) findViewById(R.id.listAllergens);
@@ -108,6 +95,12 @@ public class MealPage extends AppCompatActivity {
         textPrice = (TextView) findViewById(R.id.textPrice);
         textAboutMeal = (TextView) findViewById(R.id.textAboutMeal);
         textDescription = (TextView) findViewById(R.id.textDescription);
+        servingGroup = (RadioGroup) findViewById(R.id.servingGroup);
+        oneServing = (RadioButton) findViewById(R.id.radio1Serving);
+        twoServings = (RadioButton) findViewById(R.id.radio2Servings);
+        threeServings = (RadioButton) findViewById(R.id.radio3Servings);
+        fourServings = (RadioButton) findViewById(R.id.radio4Servings);
+        textTotalPrice = (TextView) findViewById(R.id.textTotalPrice);
 
         textMealName.setText(meal.getName());
         textMealCook.setText(meal.getCookFirstName() + " " + meal.getCookLastName());
@@ -163,7 +156,32 @@ public class MealPage extends AppCompatActivity {
         listAllergens.setLayoutManager(allergensLayoutManager);
         listAllergens.setAdapter(allergenAdapter);
 
-        requestMealBtn.setOnClickListener(new View.OnClickListener() {
+        textTotalPrice.setText(Double.toString(meal.getPrice())); //by default
+
+        servingGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (servingGroup.getCheckedRadioButtonId()) {
+                    case R.id.radio1Serving:
+                        textTotalPrice.setText(Double.toString(meal.getPrice()));
+                        break;
+
+                    case R.id.radio2Servings:
+                        textTotalPrice.setText(Double.toString(meal.getPrice() * 2));
+                        break;
+
+                    case R.id.radio3Servings:
+                        textTotalPrice.setText(Double.toString(meal.getPrice() * 3));
+                        break;
+
+                    case R.id.radio4Servings:
+                        textTotalPrice.setText(Double.toString(meal.getPrice() * 4));
+                        break;
+                }
+            }
+        });
+
+        btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requestMeal();
@@ -171,15 +189,27 @@ public class MealPage extends AppCompatActivity {
         });
     }
 
-//    public void onClick(View v){
-//        switch(v.getId()){
-//            case R.id.requestMealBtn:
-//                requestMeal();
-//                break;
-//        }
-//    }
-
     public void requestMeal() {
+        int numberOfRequests; //number of servings that the client wants of this meal
+
+        switch (servingGroup.getCheckedRadioButtonId()) {
+            case R.id.radio1Serving:
+                numberOfRequests = 1;
+                break;
+
+            case R.id.radio2Servings:
+                numberOfRequests = 2;
+                break;
+
+            case R.id.radio3Servings:
+                numberOfRequests = 3;
+                break;
+
+            case R.id.radio4Servings:
+                numberOfRequests = 4;
+                break;
+        }
+
         MainActivity.checkUser(meal.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
             @Override
             public void onCallback(Administrator admin, Cook cook, Client client) {

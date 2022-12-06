@@ -32,17 +32,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/requestMealBtn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="125dp"
-                android:text="Request Meal"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toTopOf="@+id/layoutMealImage"
-                app:layout_constraintStart_toStartOf="parent" />
-
             <View
                 android:id="@+id/view4"
                 android:layout_width="wrap_content"
@@ -247,15 +236,71 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/layoutOptions"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="25dp"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutDescription">
+
+                <RadioGroup
+                    android:id="@+id/servingGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <RadioButton
+                        android:id="@+id/radio1Serving"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/search_bar"
+                        android:checked="true"
+                        android:padding="10dp"
+                        android:text="1 Serving" />
+
+                    <RadioButton
+                        android:id="@+id/radio2Servings"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/search_bar"
+                        android:padding="10dp"
+                        android:text="2 Servings" />
+
+                    <RadioButton
+                        android:id="@+id/radio3Servings"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/search_bar"
+                        android:padding="10dp"
+                        android:text="3 Servings" />
+
+                    <RadioButton
+                        android:id="@+id/radio4Servings"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/search_bar"
+                        android:padding="10dp"
+                        android:text="4 Servings" />
+                </RadioGroup>
+            </LinearLayout>
+
             <View
                 android:id="@+id/view2"
                 android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_marginTop="30dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutDescription" />
+                app:layout_constraintTop_toBottomOf="@id/layoutOptions" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -269,7 +314,6 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/add_to_cart_box"
         android:orientation="vertical"
-        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -300,7 +344,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:text="Total:"
+                        android:text="Subtotal:"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
 
@@ -326,38 +370,6 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <Button
-                        android:id="@+id/button2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/quantity_button"
-                        android:text="-" />
-
-                    <TextView
-                        android:id="@+id/textQuantity"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="0"
-                        android:textColor="@color/black" />
-
-                    <Button
-                        android:id="@+id/button3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="+" />
-                </LinearLayout>
-
             </LinearLayout>
 
             <Button
@@ -369,20 +381,12 @@
                 android:background="@drawable/button"
                 android:text="Add To Cart"
                 android:textAllCaps="false"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavBar"
-            style="@style/nav_icon_colours"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/white"
-            android:visibility="gone"
-            app:itemIconTint="@drawable/selector"
-            app:itemTextColor="@color/selector"
-            app:menu="@menu/bottom_nav_bar" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
