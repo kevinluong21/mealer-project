@@ -379,7 +379,7 @@
                 android:layout_margin="10dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/button"
-                android:text="Add To Cart"
+                android:text="Place Order"
                 android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="20sp"
