@@ -71,13 +71,17 @@ public class PersonalProfile extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("");
 
-        if (this.user == null) { //activity called from nav bar
+        //bottom nav bar for this activity
+        bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
+
+        if (this.user == null) { //profile activity called from nav bar
             user = MainActivity.currentUser;
             setSupportActionBar(toolbar);
+            bottomNavBar.setVisibility(View.VISIBLE);
         }
         else { //activity called from meal page so it needs a back button (if it is called
             //from the nav bar, a back button is not needed)
-            Log.d("TAG", "call from meal page");
+            bottomNavBar.setVisibility(View.GONE);
             toolbar.setNavigationIcon(R.drawable.icons8_chevron_left_24);
             setSupportActionBar(toolbar);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -86,9 +90,6 @@ public class PersonalProfile extends AppCompatActivity {
         listOfferedMeals = (RecyclerView) findViewById(R.id.listOfferedMeals);
         listMeals = (RecyclerView) findViewById(R.id.listMeals);
 
-
-        //bottom nav bar for this activity
-        bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
         bottomNavBar.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
