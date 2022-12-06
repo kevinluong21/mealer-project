@@ -66,17 +66,18 @@
 
                 <Button
                     android:id="@+id/acceptBtn"
-                    android:layout_width="120dp"
+                    android:layout_width="95dp"
                     android:layout_height="wrap_content"
                     android:text="Accept Order"
+                    android:translationX="-5dp"
                     android:translationY="90dp" />
 
                 <Button
                     android:id="@+id/declineBtn"
-                    android:layout_width="120dp"
+                    android:layout_width="97dp"
                     android:layout_height="wrap_content"
                     android:text="Decline Order"
-                    android:translationX="125dp"
+                    android:translationX="95dp"
                     android:translationY="35dp" />
 
                 <LinearLayout
