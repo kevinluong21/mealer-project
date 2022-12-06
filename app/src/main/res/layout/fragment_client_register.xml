@@ -5,7 +5,7 @@
     android:id="@+id/clientConstraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B2E6D6"
+    android:background="@color/white"
     android:clickable="true"
 
 
@@ -15,117 +15,107 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteY="139dp">
-
-        <Button
-            android:id="@+id/btnBackToRegistration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textRegistrationForm"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Client Registration Form"
 
-            android:textColor="#2E4A31"
+            android:textColor="#FF6E6E6E"
             android:textSize="30sp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextFirstName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="First Name"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextLastName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Last Name"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextEmailAddress"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email Address"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextAddressNumber"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Your Street Number"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextAddressStreet"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Your Street Name"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextCreditCardNumber"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Credit Card Number"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextCreditCardCVV"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Credit Card CVV"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextCreditCardExpiryDate"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Card Expiry Date (xx/xx)"
+            android:hint="Card Expiry Date (mm/yy)"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextPassword"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <Space
             android:layout_width="match_parent"
@@ -140,10 +130,14 @@
 
         <Button
             android:id="@+id/buttonClientRegister"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#90E2A8"
             android:onClick="registerClient"
-            android:text="Register" />
+            android:text="Register"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

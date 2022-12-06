@@ -3,9 +3,12 @@ package com.seg2105.mealer_project;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,8 +29,6 @@ import com.google.firebase.database.DatabaseReference;
  */
 public class ClientRegister extends Fragment implements View.OnClickListener { //implements OnClickListener for fragment button
 
-
-    Button btnBackClientToRegistration;
     EditText editTextFirstName; //first name text field
     EditText editTextLastName; //last name text field
     EditText editTextEmailAddress; //email address text field
@@ -83,7 +84,6 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        //backButton=View.findViewById
     }
 
     @Override
@@ -92,17 +92,6 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.fragment_client_register, container, false);
-        btnBackClientToRegistration = (Button) rootView.findViewById(R.id.btnBackToRegistration);
-
-        btnBackClientToRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (getActivity(), RegisterUser.class);
-                startActivity(intent);
-            }
-        });
-
-
 
         editTextFirstName = (EditText) rootView.findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText) rootView.findViewById(R.id.editTextLastName);
@@ -257,11 +246,3 @@ public class ClientRegister extends Fragment implements View.OnClickListener { /
         }
     }
 }
-
-    /*@Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        //initialize your view here for use view.findViewById("your view id")
-        clientConsLayout = view.findViewById(R.id.clientConstraintLayout);
-    }*/

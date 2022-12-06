@@ -174,7 +174,6 @@ public class MealPage extends AppCompatActivity {
 //    }
 
     public void requestMeal() {
-        Log.d("TAG", "meal requesting...");
         MainActivity.checkUser(meal.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
             @Override
             public void onCallback(Administrator admin, Cook cook, Client client) {
@@ -185,15 +184,6 @@ public class MealPage extends AppCompatActivity {
                     MainActivity.users.child(MainActivity.currentUser.getEmailAddress()).child("requestedMeals").child(meal.getName()).setValue(req);
                     Toast.makeText(getApplicationContext(),"Purchase Request Complete", Toast.LENGTH_LONG).show();
                 }
-//                MainActivity.checkUser(meal.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
-//                    @Override
-//                    public void onCallback(Administrator user1b, Cook user2b, Client user3b) {
-//                        MealRequest req = new MealRequest(meal, user3a, user2b);
-//                        user3a.requestMeal(req);
-//                        user2b.receiveRequest(req);
-//                        Toast.makeText(getApplicationContext(),"Purchase Request Complete", Toast.LENGTH_LONG).show();
-//                    }
-//                });
             }
         });
     }

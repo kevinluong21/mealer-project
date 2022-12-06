@@ -64,7 +64,8 @@
         </activity>
         <activity
             android:name=".RegisterUser"
-            android:exported="false">
+            android:exported="false"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
