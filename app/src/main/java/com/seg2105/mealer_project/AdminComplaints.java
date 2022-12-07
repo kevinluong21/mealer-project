@@ -242,9 +242,10 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
                 if (TextUtils.isEmpty(date)) { //String for date cannot be empty
                     textSuspendError.setText("The date cannot be empty for a temporary suspension.");
                 }
-                else if (!date.matches("^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$")) { //invalid date input
+                else if (!date.matches("^([0-2][0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$") && !date.matches("^([0-9]||3[0-1])/(0[0-9]||1[0-2])/([0-9][0-9])?[0-9][0-9]$")) { //invalid date input
                     textSuspendError.setText("Invalid values for date. It must follow the format 'dd/mm/yyyy'.");
                 }
+
                 else {
                     MainActivity.checkUser(complaint.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
                         @Override

@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -296,14 +297,18 @@ public class PersonalProfile extends AppCompatActivity {
     }
 
     //create toolbar menu
+    //rate cook
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //different toolbars based on the logged in user
         getMenuInflater().inflate(R.menu.toolbar_profile, menu);
         MenuItem actionComplaint = menu.findItem(R.id.actionComplaint);
         MenuItem actionLogout = menu.findItem(R.id.actionLogout);
+        MenuItem rateCook = menu.findItem(R.id.rateCook);
+
         actionLogout.setVisible(true);
         actionComplaint.setVisible(false);
+        rateCook.setVisible(false);
 
         if (!MainActivity.currentUser.getEmailAddress().equals(user.getEmailAddress())) {
             //only allow users to logout if they are looking at their own profile
@@ -314,6 +319,11 @@ public class PersonalProfile extends AppCompatActivity {
             //if the logged in user is a client and they are looking at a cook's profile, allow them to file a complaint
             actionComplaint.setVisible(true);
         }
+
+        if (MainActivity.currentUser.getRole().equals("Client")){
+            actionComplaint.setVisible(true);
+            rateCook.setVisible(true);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -321,6 +331,22 @@ public class PersonalProfile extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
+            //RATE COOK
+            case R.id.rateCook:
+                AlertDialog.Builder dialogBuilderRateCook = new AlertDialog.Builder(this);
+                LayoutInflater inflaterRateCook = getLayoutInflater();
+                final View dialogViewRateCook = inflaterRateCook.inflate(R.layout.action_dialog_rate_cook_stars, null);
+                dialogBuilderRateCook.setView(dialogViewRateCook);
+
+                final AlertDialog rateCook = dialogBuilderRateCook.create();
+                rateCook.setCancelable(true);
+                rateCook.show();
+
+                //final RatingBar ratingBar = (RatingBar) dialogViewRateCook.findViewById(ratingBar);
+                //final Button submitRating = (Button) dialogViewRateCook.findViewById(submitRatingBtn);
+
+                break;
+
             case R.id.actionComplaint: //create a complaint
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 LayoutInflater inflater = getLayoutInflater();
@@ -367,8 +393,6 @@ public class PersonalProfile extends AppCompatActivity {
             case android.R.id.home:
                 onBackPressed();
                 break;
-
-            //case android.R.id.
         }
         return super.onOptionsItemSelected(item);
     }

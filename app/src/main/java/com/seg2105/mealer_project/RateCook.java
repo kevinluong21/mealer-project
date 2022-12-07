@@ -7,7 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class RateCook extends AppCompatActivity{
+public class    RateCook extends AppCompatActivity{
 
     RatingBar ratingBar;
     float rateValue;

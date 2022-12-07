@@ -18,7 +18,10 @@ public class Cook extends Person implements Serializable {
     private String suspensionEndDate;
     private boolean permSuspension;
     private int soldMeals;
-    private int customerRating;
+    //changed to a double
+    private double customerRating;
+    private int numberOfRating;
+
     private HashMap<String, Meal> meals;
     private HashMap<String, Meal> offeredMeals;
     private HashMap<String, MealRequest> purchaseRequests;
@@ -42,6 +45,7 @@ public class Cook extends Person implements Serializable {
 
         this.soldMeals = 0;
         this.customerRating = 0;
+        this.numberOfRating = 0;
 
         this.meals = new HashMap<String, Meal>();
         this.offeredMeals = new HashMap<String, Meal>();
@@ -89,9 +93,9 @@ public class Cook extends Person implements Serializable {
 
     public int getSoldMeals(){return this.soldMeals;}
 
-    public int getCustomerRating() {
-        return customerRating;
-    }
+    public double getCustomerRating() {return customerRating;}
+
+    public int getNumberOfRating(){return numberOfRating;}
 
     public HashMap<String, Meal> getMeals() {
         return meals;
