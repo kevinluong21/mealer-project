@@ -66,6 +66,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
     RecyclerView listOrders; //list that displays all of a client's orders
 
     RecyclerView orderRequests;
+    RecyclerView acceptedOrders;
 
     LinearLayout searchBar;
 
@@ -80,6 +81,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
         listClientMeals = (RecyclerView) findViewById(R.id.listClientMeals);
         listOrders = (RecyclerView) findViewById(R.id.listOrders);
         orderRequests = (RecyclerView) findViewById(R.id.orderRequests);
+        acceptedOrders = (RecyclerView) findViewById(R.id.acceptedOrders);
 
         bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
         bottomNavBar.setOnItemSelectedListener(this);
@@ -262,7 +264,74 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                     }
                 });
             }
+            if (MainActivity.loggedInCook.getPurchaseRequests() != null){
+                ArrayList<MealRequest> accepted = new ArrayList<MealRequest>();
+                ArrayList<AcceptedModel> acceptedModels = new ArrayList<AcceptedModel>();
 
+                users.child(currentUser.getEmailAddress()).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        Cook cook;
+
+                        accepted.clear();
+                        acceptedModels.clear();
+
+                        cook = snapshot.getValue(Cook.class);
+                        for (MealRequest req : cook.getPurchaseRequests().values()) {
+                            if (!req.isActive() && !req.isCompleted()) {
+                                accepted.add(req);
+                                acceptedModels.add(new AcceptedModel(req));
+                            }
+                        }
+                        AcceptedAdapter acceptedAdapter = new AcceptedAdapter(UserWelcome.this, acceptedModels);
+                        LinearLayoutManager acceptedManager = new LinearLayoutManager(UserWelcome.this, LinearLayoutManager.VERTICAL, false);
+
+                        acceptedOrders.setLayoutManager(acceptedManager);
+                        acceptedOrders.setAdapter(acceptedAdapter);
+
+                        acceptedOrders.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), acceptedOrders, new RecyclerItemClickListener.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                AlertDialog.Builder acceptedBuilder = new AlertDialog.Builder(UserWelcome.this);
+                                acceptedBuilder.setTitle(accepted.get(position).getClientName()+" Meal Order");
+                                acceptedBuilder.setMessage("Is this order completed?");
+
+                                acceptedBuilder.setPositiveButton("Complete", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        accepted.get(position).completeRequest();
+
+                                        users.child(currentUser.getEmailAddress()).child("purchaseRequests").
+                                                child(accepted.get(position).getMeal().getName()).setValue(accepted.get(position));
+
+                                        users.child(accepted.get(position).getClientEmail()).child("requestedMeals").
+                                                child(accepted.get(position).getMeal().getName()).setValue(accepted.get(position));
+                                        accepted.clear();
+                                    }
+                                });
+                                acceptedBuilder.setNeutralButton("Close", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    }
+                                });
+                                final AlertDialog dialog = acceptedBuilder.create();
+                                dialog.show();
+                            }
+
+                            @Override
+                            public void onLongItemClick(View view, int position) {
+
+                            }
+                        }));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
         }
 
         if (currentUser.getRole().equals("Client")) {

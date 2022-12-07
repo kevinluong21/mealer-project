@@ -1,8 +1,6 @@
 package com.seg2105.mealer_project;
 
-import android.util.Log;
-
-public class OrderModel {
+public class AcceptedModel {
     private String customerName;
     private String customerEmail;
     private String mealName;
@@ -10,7 +8,7 @@ public class OrderModel {
     private int imgSrc;
     private Meal meal;
 
-    public OrderModel(MealRequest mealReq){
+    public AcceptedModel(MealRequest mealReq){
         meal = mealReq.getMeal();
         mealName = meal.getName();
         mealPrice = meal.displayPrice();
@@ -25,3 +23,4 @@ public class OrderModel {
     public String getCustomerEmail(){return this.customerEmail;}
     public int getImgSrc(){return this.imgSrc;}
 }
+

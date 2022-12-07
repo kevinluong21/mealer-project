@@ -68,6 +68,7 @@ public class MealRequest implements Serializable {
 
     public void declineRequest(){
         this.active = false;
+        this.completed = true;
         progress = progressStates[3];
     }
 
