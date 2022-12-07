@@ -122,7 +122,13 @@ public class Cook extends Person implements Serializable {
 
     public void incrementTotalRating(double n){this.totalRating = totalRating+n;}//add total rating
 
-    public void calculateRating(){customerRating = Math.round(totalRating/(numberOfRatings),2);}
+    public void calculateRating(){customerRating = round(totalRating/(numberOfRatings), 1);}
+
+    //code from https://stackoverflow.com/questions/22186778/using-math-round-to-round-to-one-decimal-place
+    private double round (double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
+    }
 
     public static void rejectRequest(){
 
