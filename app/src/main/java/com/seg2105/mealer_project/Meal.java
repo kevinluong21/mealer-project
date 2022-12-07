@@ -144,4 +144,8 @@ public class Meal implements Serializable {
     public int getNumSold() {
         return this.numSold;
     }
+
+    public void incrementNumSold() {
+        numSold++;
+    }
 }

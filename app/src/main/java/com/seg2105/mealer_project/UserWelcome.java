@@ -1,7 +1,10 @@
 package com.seg2105.mealer_project;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,6 +19,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,9 +58,14 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
 
     DatabaseReference users;
     protected static ArrayList<Meal> meals;
-    RecyclerView listClientMeals;
-    RecyclerView orderRequests;
+    RecyclerView listClientMeals; //list that displays all the meals to the client
     ArrayList<MealListModel> mealModels;
+
+    ArrayList<MealRequest> clientOrders; //stores all of a client's orders
+    ArrayList<ClientOrderModel> clientOrderModels;
+    RecyclerView listOrders; //list that displays all of a client's orders
+
+    RecyclerView orderRequests;
 
     LinearLayout searchBar;
 
@@ -68,6 +78,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
 
         users = FirebaseDatabase.getInstance().getReference("users");
         listClientMeals = (RecyclerView) findViewById(R.id.listClientMeals);
+        listOrders = (RecyclerView) findViewById(R.id.listOrders);
         orderRequests = (RecyclerView) findViewById(R.id.orderRequests);
 
         bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
@@ -161,41 +172,22 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
-//                MainActivity.checkUser(currentUser.getEmailAddress(), new UserCallback<Administrator, Cook, Client>() {
-//                    @Override
-//                    public void onCallback(Administrator user1, Cook user2, Client user3) {
-//                        Cook activeCook = user2;
-//
-//                        HashMap<String,MealRequest> activeCookOrders = activeCook.getPurchaseRequests();
-//                        for(int i = 0;i < activeCookOrders.size(); i++){
-//                            MealRequest req = activeCookOrders.get(String.valueOf(i));
-//                            if(req.isActive()) {
-//                                requests.add(req);
-//                                orderModels.add(new OrderModel(req));
-//                            }
-//                        }
-//                        Log.d("test","mid");
-//                        OrderAdapter orderAdapter = new OrderAdapter(UserWelcome.this, orderModels);
-//                        LinearLayoutManager orderManager = new LinearLayoutManager(UserWelcome.this, LinearLayoutManager.VERTICAL, false);
-//
-//                        orderRequests.setAdapter(orderAdapter);
-//                        orderRequests.setLayoutManager(orderManager);
-//                        Log.d("test","end");
-//                    }
-//                });
             }
 
             ArrayList<MealRequest> requests = new ArrayList<MealRequest>();
             ArrayList<OrderModel> orderModels = new ArrayList<OrderModel>();
 
-            users.child(currentUser.getEmailAddress()).child("purchaseRequests").addValueEventListener(new ValueEventListener() {
+            users.child(currentUser.getEmailAddress()).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Cook cook; //cook of meal
+
                     requests.clear();
-                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                        MealRequest req = dataSnapshot.getValue(MealRequest.class);
-                        if (req.isActive()) {
+                    orderModels.clear();
+
+                    cook = snapshot.getValue(Cook.class);
+                    for (MealRequest req : cook.getPurchaseRequests().values()) {
+                        if (req.isActive()) { //might want to change this or add a new list for accepted but not completed meals
                             requests.add(req);
                             orderModels.add(new OrderModel(req));
                         }
@@ -211,13 +203,24 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                                 @Override public void onItemClick(View view, int position) {
                                     AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(UserWelcome.this);
                                     dialogBuilder.setTitle(requests.get(position).getClientName()+" Purchase Request");
-                                    dialogBuilder.setMessage("Would you like to accept ot decline this meal request");
+                                    dialogBuilder.setMessage("Would you like to accept or decline this meal request?");
 
                                     dialogBuilder.setPositiveButton("Accept",new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             requests.get(position).acceptRequest();
-                                            requests.remove(position);
+
+                                            cook.incrementSoldMeals(); //increment sold meals of meal cook
+                                            users.child(cook.getEmailAddress()).setValue(cook); //update cook in firebase
+
+                                            //replaces the request in firebase with the updated request
+                                            //updates request in cook
+                                            users.child(currentUser.getEmailAddress()).child("purchaseRequests").
+                                                    child(requests.get(position).getMeal().getName()).setValue(requests.get(position));
+                                            //updates request in client
+                                            users.child(requests.get(position).getClientEmail()).child("requestedMeals").
+                                                    child(requests.get(position).getMeal().getName()).setValue(requests.get(position));
+//                                            requests.remove(position);
                                         }
                                     });
                                     dialogBuilder.setNeutralButton("Close", new DialogInterface.OnClickListener() {
@@ -230,7 +233,14 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                                         @Override
                                         public void onClick(DialogInterface dialogInterface, int i) {
                                             requests.get(position).declineRequest();
-                                            requests.remove(position);
+                                            //completely removes request from firebase
+                                            users.child(currentUser.getEmailAddress()).child("purchaseRequests").
+                                                    child(requests.get(position).getMeal().getName()).removeValue();
+
+                                            //updates request in client
+                                            users.child(requests.get(position).getClientEmail()).child("requestedMeals").
+                                                    child(requests.get(position).getMeal().getName()).setValue(requests.get(position));
+                                            requests.clear(); //allows the list to refresh to avoid a crash
                                         }
                                     });
 
@@ -257,6 +267,80 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
             layoutClient.setVisibility(View.VISIBLE);
             layoutCook.setVisibility(View.GONE);
             btnAddMeal.setVisibility(View.GONE);
+
+            clientOrders = new ArrayList<MealRequest>();
+            clientOrderModels = new ArrayList<ClientOrderModel>();
+
+            users.child(MainActivity.currentUser.getEmailAddress()).child("requestedMeals").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    clientOrders.clear();
+                    clientOrderModels.clear();
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        MealRequest order = dataSnapshot.getValue(MealRequest.class);
+                        clientOrders.add(order);
+                        clientOrderModels.add(new ClientOrderModel(order));
+
+                        //building notification
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                            CharSequence name = "Mealer";
+                            String description = "group 5 :)";
+                            int importance = NotificationManager.IMPORTANCE_HIGH;
+                            NotificationChannel channel = new NotificationChannel("CHANNEL_ID", name, importance);
+                            channel.setDescription(description);
+                            // Register the channel with the system; you can't change the importance
+                            // or other notification behaviors after this
+                            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+                            notificationManager.createNotificationChannel(channel);
+                        }
+
+                        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
+                                .setSmallIcon(R.drawable.icons8_french_fries)
+                                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                                .setPriority(NotificationCompat.PRIORITY_HIGH);
+                        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+
+                        switch(order.getProgress()) {
+//                            case "Awaiting Response...":
+//                                builder.setContentTitle("Awaiting Response...");
+//                                builder.setContentText("It can take a few minutes for the cook to respond to your order.");
+//                                notificationManager.notify(1, builder.build());
+//                                break;
+
+                            case "Your Order Is Being Prepared...":
+                                builder.setContentTitle("Your Order Is Being Prepared...");
+                                builder.setContentText("Hang tight! The cook is currently preparing your order.");
+                                notificationManager.notify(2, builder.build());
+                                break;
+
+                            case "Your Order Is Ready For Pickup":
+                                builder.setContentTitle("Your Order Is Ready For Pickup");
+                                builder.setContentText("Your order is ready for pickup at " + order.getMeal().getCookAddress().formatAddress());
+                                notificationManager.notify(3, builder.build());
+                                break;
+
+                            case "Order Rejected":
+                                builder.setContentTitle("Order Rejected");
+                                builder.setContentText("Hey there! Unfortunately, the cook of this order cannot serve you at this time.");
+                                notificationManager.notify(4, builder.build());
+                                break;
+                        }
+                    }
+
+                    ClientOrderAdapter clientOrderAdapter = new ClientOrderAdapter(UserWelcome.this, clientOrderModels);
+
+                    //creates a vertical list
+                    LinearLayoutManager clientOrderLayoutManager = new LinearLayoutManager(UserWelcome.this, LinearLayoutManager.VERTICAL, false);
+
+                    listOrders.setLayoutManager(clientOrderLayoutManager);
+                    listOrders.setAdapter(clientOrderAdapter);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             meals = new ArrayList<Meal>(); //for meal page
             mealModels = new ArrayList<MealListModel>(); //for recyclerview
@@ -311,21 +395,6 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
         }
 
     }
-
-    //log off moved to PersonalProfile
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//            case R.id.clientLogOffID:
-//                clientLogOff(v);
-//                break;
-//        }
-//    }
-//
-//    public void clientLogOff(View v) {
-//        //CRASHES ONLY WHEN ASKED TO GO TO MAIN ACTIVITY
-//        Intent i = new Intent(this, MainActivity.class);
-//        startActivity(i);
-//    }
 
     public void openSearchResults(View v) {
         Intent i = new Intent(this, Search.class);

@@ -132,9 +132,20 @@ public class PersonalProfile extends AppCompatActivity {
             listOfferedMeals.setVisibility(View.VISIBLE);
             listMeals.setVisibility(View.VISIBLE);
 
-            Cook cook = (Cook) user; //can be casted since user is of type Cook
-            textRating.setText(Double.toString(cook.getCustomerRating()));
-            textMealsSold.setText(Integer.toString(cook.getSoldMeals()));
+            //immediately update cook stats
+            MainActivity.users.child(user.getEmailAddress()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Cook cook = snapshot.getValue(Cook.class);
+                    textRating.setText(Double.toString(cook.getCustomerRating()));
+                    textMealsSold.setText(Integer.toString(cook.getSoldMeals()));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             cookMeals = FirebaseDatabase.getInstance().getReference("users").child(MainActivity.emailAddressToKey(user.getEmailAddress()))
                     .child("meals");
@@ -179,7 +190,7 @@ public class PersonalProfile extends AppCompatActivity {
                     listMeals.setLayoutManager(mealsLayoutManager);
                     listMeals.setAdapter(mealsAdapter);
 
-                    //onclicklisteners should NOT allow users to alter the menu
+                    //onclicklisteners should NOT allow clients to alter the menu
                     //allows for recyclerview items to be clicked (code from https://stackoverflow.com/questions/24471109/recyclerview-onclick)
                     //handles clicks and long clicks on the offeredMeals recyclerview
                     if (user.getEmailAddress().equals(MainActivity.currentUser.getEmailAddress())) { //if logged in user and user of profile match

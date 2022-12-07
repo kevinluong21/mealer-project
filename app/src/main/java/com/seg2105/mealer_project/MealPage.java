@@ -1,11 +1,16 @@
 package com.seg2105.mealer_project;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
@@ -15,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -56,6 +62,8 @@ public class MealPage extends AppCompatActivity {
     RadioButton threeServings;
     RadioButton fourServings;
     TextView textTotalPrice;
+    LinearLayout layoutOptions; //serving options
+    LinearLayout layoutAddToCart; //add to cart button
 
     public MealPage() {
         super(R.layout.activity_meal_page);
@@ -101,6 +109,8 @@ public class MealPage extends AppCompatActivity {
         threeServings = (RadioButton) findViewById(R.id.radio3Servings);
         fourServings = (RadioButton) findViewById(R.id.radio4Servings);
         textTotalPrice = (TextView) findViewById(R.id.textTotalPrice);
+        layoutOptions = (LinearLayout) findViewById(R.id.layoutOptions);
+        layoutAddToCart = (LinearLayout) findViewById(R.id.layoutAddToCart);
 
         textMealName.setText(meal.getName());
         textMealCook.setText(meal.getCookFirstName() + " " + meal.getCookLastName());
@@ -110,6 +120,8 @@ public class MealPage extends AppCompatActivity {
         textPrice.setText(Double.toString(meal.getPrice()));
         textAboutMeal.setText("About "+ meal.getName());
         textDescription.setText(meal.getDescription());
+        layoutOptions.setVisibility(View.VISIBLE);
+        layoutAddToCart.setVisibility(View.VISIBLE);
 
         //take the user to the profile of the cook on click of their name
         textMealCook.setOnClickListener(new View.OnClickListener() {
@@ -125,6 +137,11 @@ public class MealPage extends AppCompatActivity {
                 });
             }
         });
+
+        if (!meal.isOffering()) { //clients cannot order a meal that is not being offered
+            layoutOptions.setVisibility(View.GONE);
+            layoutAddToCart.setVisibility(View.GONE);
+        }
 
         //this will input the ingredients and allergens into recyclerviews on the meal page
         ArrayList<IngredientModel> ingredients = new ArrayList<IngredientModel>();
@@ -210,6 +227,26 @@ public class MealPage extends AppCompatActivity {
                 break;
         }
 
+        //notification that order was sent
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Mealer";
+            String description = "group 5 :)";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("CHANNEL_ID", name, importance);
+            channel.setDescription(description);
+            // Register the channel with the system; you can't change the importance
+            // or other notification behaviors after this
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
+                .setSmallIcon(R.drawable.icons8_french_fries)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setPriority(NotificationCompat.PRIORITY_HIGH);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+
+
         MainActivity.checkUser(meal.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
             @Override
             public void onCallback(Administrator admin, Cook cook, Client client) {
@@ -219,6 +256,10 @@ public class MealPage extends AppCompatActivity {
                     MainActivity.users.child(cook.getEmailAddress()).child("purchaseRequests").child(meal.getName()).setValue(req);
                     MainActivity.users.child(MainActivity.currentUser.getEmailAddress()).child("requestedMeals").child(meal.getName()).setValue(req);
                     Toast.makeText(getApplicationContext(),"Purchase Request Complete", Toast.LENGTH_LONG).show();
+
+                    builder.setContentTitle("Awaiting Response...");
+                    builder.setContentText("It can take a few minutes for the cook to respond to your order.");
+                    notificationManager.notify(1, builder.build());
                 }
             }
         });

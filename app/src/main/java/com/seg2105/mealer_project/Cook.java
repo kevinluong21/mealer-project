@@ -105,6 +105,10 @@ public class Cook extends Person implements Serializable {
         return purchaseRequests;
     }
 
+    public void incrementSoldMeals() {
+        soldMeals++;
+    }
+
     public static void rejectRequest(){
 
     }

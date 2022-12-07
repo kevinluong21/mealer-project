@@ -10,6 +10,10 @@ public class MealRequest implements Serializable {
     private String clientName;
     private boolean active;
     private boolean accepted;
+    private boolean completed;
+    private String progress;
+
+    String[] progressStates = {"Awaiting Response...", "Your Order Is Being Prepared...", "Your Order Is Ready For Pickup", "Order Rejected"};
 
     public MealRequest() { //empty constructor for firebase
 
@@ -22,6 +26,8 @@ public class MealRequest implements Serializable {
         this.cookEmail = cook.getEmailAddress();
         this.active = true;
         this.accepted = false;
+        this.completed = false;
+        this.progress = progressStates[0];
     }
 
     public String getClientEmail() {
@@ -40,12 +46,29 @@ public class MealRequest implements Serializable {
 
     public boolean isActive(){return this.active;}
 
+    public boolean isCompleted() {
+        return this.completed;
+    }
+
+    public String getProgress() {
+        return progress;
+    }
+
     public void acceptRequest() {
+        this.meal.incrementNumSold();
         this.accepted = true;
         this.active = false;
+        progress = progressStates[1];
     }
+
+    public void completeRequest() {
+        this.completed = true;
+        progress = progressStates[2];
+    }
+
     public void declineRequest(){
         this.active = false;
+        progress = progressStates[3];
     }
 
 }
