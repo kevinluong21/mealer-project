@@ -225,7 +225,8 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
                     DatePickerDialog datePickerDialog = new DatePickerDialog(AdminComplaints.this, style, dateSetListener, year, month, day);
                     datePickerDialog.show();
 
-                    //datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis());//cannot set to the past
+
+                    datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis()-100000);//cannot set to the past
                     //datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             }
         });
