@@ -427,6 +427,11 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                                             averageRating = totalRating/(numberofRatings*5);
                                             rateCook.dismiss();
 
+                                            order.getMeal().incrementNumberOfRatings();
+                                            order.getMeal().incrementTotalRating(rateValue);
+                                            order.getMeal().calculateRating();
+                                            users.child(order.getCookEmail()).child("meals").child(order.getMeal().getName()).setValue(order.getMeal());
+
                                             users.child(order.getClientEmail()).child("requestedMeals").child(order.getMeal().getName()).removeValue();
 
                                             MainActivity.checkUser(order.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {

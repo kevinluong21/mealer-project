@@ -124,7 +124,6 @@ public class Cook extends Person implements Serializable {
 
     public void calculateRating(){customerRating = round(totalRating/(numberOfRatings), 1);}
 
-    //code from https://stackoverflow.com/questions/22186778/using-math-round-to-round-to-one-decimal-place
     private double round (double value, int precision) {
         int scale = (int) Math.pow(10, precision);
         return (double) Math.round(value * scale) / scale;

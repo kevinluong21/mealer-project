@@ -26,6 +26,9 @@ public class Meal implements Serializable {
     private int numSold; //how many the cook has sold of this meal
     //private boolean isInOfferedList;
 
+    private int numberOfRatings;
+    private double totalRating;
+
     //empty constructor is necessary for firebase
     public Meal() {
 
@@ -40,6 +43,9 @@ public class Meal implements Serializable {
         this.mealType = mealType;
         this.cuisineType = cuisineType;
         this.ingredients = new HashMap<String, String>();
+
+        this.numberOfRatings = 0;
+        this.totalRating = 0;
         String[] temp = listOfIngredients.split(","); //split string by comma and store in temp string array
 
         for (int i = 0; i < temp.length; i++) { //push each ingredient onto ingredients linked list
@@ -61,6 +67,19 @@ public class Meal implements Serializable {
         this.rating = 0; //0 by default
         this.numSold = 0; //0 by default
     }
+
+    public double getTotalRating() {
+        return totalRating;
+    }
+    public int getNumberOfRatings() {
+        return numberOfRatings;
+    }
+
+    public void incrementNumberOfRatings(){numberOfRatings++;}
+
+    public void incrementTotalRating(double n){this.totalRating = totalRating+n;}//add total rating
+
+    public void calculateRating(){rating = round(totalRating/(numberOfRatings), 1);}
 
     public String getCookEmail() {
         return cookEmail;
