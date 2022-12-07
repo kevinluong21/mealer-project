@@ -20,7 +20,8 @@ public class Cook extends Person implements Serializable {
     private int soldMeals;
     //changed to a double
     private double customerRating;
-    private int numberOfRating;
+    private int numberOfRatings;
+    private double totalRating;
 
     private HashMap<String, Meal> meals;
     private HashMap<String, Meal> offeredMeals;
@@ -45,7 +46,8 @@ public class Cook extends Person implements Serializable {
 
         this.soldMeals = 0;
         this.customerRating = 0;
-        this.numberOfRating = 0;
+        this.numberOfRatings = 0;
+        this.totalRating = 0;
 
         this.meals = new HashMap<String, Meal>();
         this.offeredMeals = new HashMap<String, Meal>();
@@ -95,7 +97,8 @@ public class Cook extends Person implements Serializable {
 
     public double getCustomerRating() {return customerRating;}
 
-    public int getNumberOfRating(){return numberOfRating;}
+    //get number of ratings
+    public int getNumberOfRatings(){return numberOfRatings;}
 
     public HashMap<String, Meal> getMeals() {
         return meals;
@@ -112,6 +115,14 @@ public class Cook extends Person implements Serializable {
     public void incrementSoldMeals() {
         soldMeals++;
     }
+
+    public void incrementNumberOfRatings(){numberOfRatings++;}
+
+    public double getTotalRating(){return totalRating;}
+
+    public void incrementTotalRating(double n){this.totalRating = totalRating+n;}//add total rating
+
+    public void calculateRating(){customerRating = Math.round(totalRating/(numberOfRatings),2);}
 
     public static void rejectRequest(){
 

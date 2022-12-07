@@ -304,11 +304,11 @@ public class PersonalProfile extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_profile, menu);
         MenuItem actionComplaint = menu.findItem(R.id.actionComplaint);
         MenuItem actionLogout = menu.findItem(R.id.actionLogout);
-        MenuItem rateCook = menu.findItem(R.id.rateCook);
+        //MenuItem rateCook = menu.findItem(R.id.rateCook);
 
         actionLogout.setVisible(true);
         actionComplaint.setVisible(false);
-        rateCook.setVisible(false);
+        //rateCook.setVisible(false);
 
         if (!MainActivity.currentUser.getEmailAddress().equals(user.getEmailAddress())) {
             //only allow users to logout if they are looking at their own profile
@@ -320,10 +320,10 @@ public class PersonalProfile extends AppCompatActivity {
             actionComplaint.setVisible(true);
         }
 
-        if (MainActivity.currentUser.getRole().equals("Client")){
+        /*if (MainActivity.currentUser.getRole().equals("Client")){
             actionComplaint.setVisible(true);
             rateCook.setVisible(true);
-        }
+        }*/
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -332,7 +332,7 @@ public class PersonalProfile extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             //RATE COOK
-            case R.id.rateCook:
+            /*case R.id.rateCook:
                 AlertDialog.Builder dialogBuilderRateCook = new AlertDialog.Builder(this);
                 LayoutInflater inflaterRateCook = getLayoutInflater();
                 final View dialogViewRateCook = inflaterRateCook.inflate(R.layout.action_dialog_rate_cook_stars, null);
@@ -345,7 +345,7 @@ public class PersonalProfile extends AppCompatActivity {
                 //final RatingBar ratingBar = (RatingBar) dialogViewRateCook.findViewById(ratingBar);
                 //final Button submitRating = (Button) dialogViewRateCook.findViewById(submitRatingBtn);
 
-                break;
+                break;*/
 
             case R.id.actionComplaint: //create a complaint
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);

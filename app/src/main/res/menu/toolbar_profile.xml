@@ -12,8 +12,4 @@
         android:title="Log Out"
         app:showAsAction="never"></item>
 
-    <item
-        android:id="@+id/rateCook"
-        android:title="Rate Cook"
-        app:showAsAction="never"></item>
 </menu>

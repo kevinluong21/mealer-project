@@ -22,4 +22,8 @@
         <item name="android:background">@color/black_overlay</item>
         <item name="android:buttonBarStyle">?android:attr/buttonBarStyle</item>
     </style>
+
+    <style name="dialogTheme" parent="@style/Theme.AppCompat">
+        <!-- Any customizations for your app running on devices with Theme.Holo here -->
+    </style>
 </resources>

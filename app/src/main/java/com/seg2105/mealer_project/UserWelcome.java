@@ -7,10 +7,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,6 +73,11 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
     LinearLayout searchBar;
 
     BottomNavigationView bottomNavBar;
+
+    double rateValue;
+    double totalRating;
+    int numberofRatings = 0;
+    double averageRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -390,7 +397,52 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                                     builder.setContentTitle("Your Order Is Ready For Pickup");
                                     builder.setContentText("Your order is ready for pickup at " + order.getMeal().getCookAddress().formatAddress());
                                     notificationManager.notify(3, builder.build());
+
+                                    AlertDialog.Builder dialogBuilderRateCook = new AlertDialog.Builder(UserWelcome.this);
+                                    LayoutInflater inflaterRateCook = getLayoutInflater();
+                                    final View dialogViewRateCook = inflaterRateCook.inflate(R.layout.action_dialog_rate_cook_stars, null);
+                                    dialogBuilderRateCook.setView(dialogViewRateCook);
+
+                                    final RatingBar ratingBar = (RatingBar) dialogViewRateCook.findViewById(R.id.ratingBar);
+                                    final Button submitRating = (Button) dialogViewRateCook.findViewById(R.id.submitRatingBtn);
+
+                                    final AlertDialog rateCook = dialogBuilderRateCook.create();
+                                    rateCook.setCancelable(true);
+
+                                    rateCook.show();
+
+                                    ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+                                        @Override
+                                        public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                                            //rating passed
+                                            rateValue = ratingBar.getRating();
+                                        }
+                                    });
+                                    submitRating.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            totalRating = totalRating+rateValue;
+                                            numberofRatings +=1;
+                                            //gets average rating to be displayed
+                                            averageRating = totalRating/(numberofRatings*5);
+                                            rateCook.dismiss();
+
+                                            users.child(order.getClientEmail()).child("requestedMeals").child(order.getMeal().getName()).removeValue();
+
+                                            MainActivity.checkUser(order.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
+                                                @Override
+                                                public void onCallback(Administrator user1, Cook user2, Client user3) {
+                                                    user2.incrementTotalRating(rateValue);
+                                                    user2.incrementNumberOfRatings();
+                                                    user2.calculateRating();
+                                                    MainActivity.users.child(user2.getEmailAddress()).setValue(user2);//update the cook again
+                                                }
+                                            });
+                                        }
+                                    });
+
                                     break;
+
 
                                 case "Order Rejected":
                                     builder.setContentTitle("Order Rejected");
