@@ -50,6 +50,8 @@ public class PersonalProfile extends AppCompatActivity {
     RecyclerView listOfferedMeals;
     RecyclerView listMeals;
     LinearLayout layoutCookInfo;
+    LinearLayout layoutAbout;
+    TextView textCookDescription;
     TextView textRating;
     TextView textMealsSold;
     TextView textOfferedMenu;
@@ -111,6 +113,8 @@ public class PersonalProfile extends AppCompatActivity {
         textName = (TextView) findViewById(R.id.textName);
         textRole = (TextView) findViewById(R.id.textRole);
         layoutCookInfo = (LinearLayout) findViewById(R.id.layoutCookInfo);
+        layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
+        textCookDescription = (TextView) findViewById(R.id.textCookDescription);
         textRating = (TextView) findViewById(R.id.textRating);
         textMealsSold = (TextView) findViewById(R.id.textMealsSold);
         textOfferedMenu = (TextView) findViewById(R.id.textOfferedMenu);
@@ -122,6 +126,7 @@ public class PersonalProfile extends AppCompatActivity {
         textOfferedMenu.setVisibility(View.GONE);
         textMenu.setVisibility(View.GONE);
         layoutCookInfo.setVisibility(View.GONE);
+        layoutAbout.setVisibility(View.GONE);
         listOfferedMeals.setVisibility(View.GONE);
         listMeals.setVisibility(View.GONE);
 
@@ -130,6 +135,7 @@ public class PersonalProfile extends AppCompatActivity {
             textOfferedMenu.setVisibility(View.VISIBLE);
             textMenu.setVisibility(View.VISIBLE);
             layoutCookInfo.setVisibility(View.VISIBLE);
+            layoutAbout.setVisibility(View.VISIBLE);
             listOfferedMeals.setVisibility(View.VISIBLE);
             listMeals.setVisibility(View.VISIBLE);
 
@@ -138,6 +144,7 @@ public class PersonalProfile extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     Cook cook = snapshot.getValue(Cook.class);
+                    textCookDescription.setText(cook.getDescription());
                     textRating.setText(Double.toString(cook.getCustomerRating()));
                     textMealsSold.setText(Integer.toString(cook.getSoldMeals()));
                 }
