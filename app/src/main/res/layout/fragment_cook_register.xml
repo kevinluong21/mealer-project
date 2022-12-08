@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B2E6D6"
+    android:background="@color/white"
     android:clickable="true"
     android:focusable="true"
 
@@ -13,107 +13,99 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteY="232dp">
-
-        <Button
-            android:id="@+id/btnBackToRegistration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="pressBack"
-            android:text="Back" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/textRegistrationForm"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Cook Registration Form"
 
-            android:textColor="#2E4A31"
+            android:textColor="#FF6E6E6E"
             android:textSize="30sp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/editTextFirstName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="First Name"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextLastName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Last Name"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextEmailAddress"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Email Address"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextAddressNumber"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Pick-Up Street Number"
             android:inputType="textPersonName"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextAddressStreet"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Pick-Up Street Name"
             android:inputType="textPersonName"
             android:textColor="#668C96"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/editTextDescription"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Description (Meals/Info)"
             android:inputType="textPersonName"
             android:textColor="#668C96"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/btnSelectVoidCheque"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
+            android:backgroundTint="#90E2A8"
             android:gravity="center"
-            android:text="Upload void cheque" />
+            android:text="Upload Void Cheque"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/imgViewCheque"
             android:layout_width="100dp"
-            android:layout_height="50dp"
+            android:layout_height="100dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:gravity="center"
@@ -123,12 +115,12 @@
 
         <EditText
             android:id="@+id/editTextPassword"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Enter your password"
             android:inputType="textPassword"
-            android:textSize="24sp" />
+            android:textSize="16sp" />
 
 
         <Space
@@ -137,9 +129,13 @@
 
         <Button
             android:id="@+id/buttonCookRegister"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Register" />
+            android:backgroundTint="#90E2A8"
+            android:text="Register"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/textCookErrorMessage"

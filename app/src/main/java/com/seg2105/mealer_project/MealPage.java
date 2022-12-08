@@ -62,7 +62,6 @@ public class MealPage extends AppCompatActivity {
     RadioButton threeServings;
     RadioButton fourServings;
     TextView textTotalPrice;
-    LinearLayout layoutOptions; //serving options
     LinearLayout layoutAddToCart; //add to cart button
 
     public MealPage() {
@@ -103,13 +102,7 @@ public class MealPage extends AppCompatActivity {
         textPrice = (TextView) findViewById(R.id.textPrice);
         textAboutMeal = (TextView) findViewById(R.id.textAboutMeal);
         textDescription = (TextView) findViewById(R.id.textDescription);
-        servingGroup = (RadioGroup) findViewById(R.id.servingGroup);
-        oneServing = (RadioButton) findViewById(R.id.radio1Serving);
-        twoServings = (RadioButton) findViewById(R.id.radio2Servings);
-        threeServings = (RadioButton) findViewById(R.id.radio3Servings);
-        fourServings = (RadioButton) findViewById(R.id.radio4Servings);
         textTotalPrice = (TextView) findViewById(R.id.textTotalPrice);
-        layoutOptions = (LinearLayout) findViewById(R.id.layoutOptions);
         layoutAddToCart = (LinearLayout) findViewById(R.id.layoutAddToCart);
 
         textMealName.setText(meal.getName());
@@ -120,7 +113,6 @@ public class MealPage extends AppCompatActivity {
         textPrice.setText(Double.toString(meal.getPrice()));
         textAboutMeal.setText("About "+ meal.getName());
         textDescription.setText(meal.getDescription());
-        layoutOptions.setVisibility(View.VISIBLE);
         layoutAddToCart.setVisibility(View.VISIBLE);
 
         //take the user to the profile of the cook on click of their name
@@ -139,7 +131,6 @@ public class MealPage extends AppCompatActivity {
         });
 
         if (!meal.isOffering()) { //clients cannot order a meal that is not being offered
-            layoutOptions.setVisibility(View.GONE);
             layoutAddToCart.setVisibility(View.GONE);
         }
 
@@ -175,29 +166,6 @@ public class MealPage extends AppCompatActivity {
 
         textTotalPrice.setText(Double.toString(meal.getPrice())); //by default
 
-        servingGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch (servingGroup.getCheckedRadioButtonId()) {
-                    case R.id.radio1Serving:
-                        textTotalPrice.setText(Double.toString(meal.getPrice()));
-                        break;
-
-                    case R.id.radio2Servings:
-                        textTotalPrice.setText(Double.toString(meal.getPrice() * 2));
-                        break;
-
-                    case R.id.radio3Servings:
-                        textTotalPrice.setText(Double.toString(meal.getPrice() * 3));
-                        break;
-
-                    case R.id.radio4Servings:
-                        textTotalPrice.setText(Double.toString(meal.getPrice() * 4));
-                        break;
-                }
-            }
-        });
-
         btnAddToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -207,26 +175,6 @@ public class MealPage extends AppCompatActivity {
     }
 
     public void requestMeal() {
-        int numberOfRequests; //number of servings that the client wants of this meal
-
-        switch (servingGroup.getCheckedRadioButtonId()) {
-            case R.id.radio1Serving:
-                numberOfRequests = 1;
-                break;
-
-            case R.id.radio2Servings:
-                numberOfRequests = 2;
-                break;
-
-            case R.id.radio3Servings:
-                numberOfRequests = 3;
-                break;
-
-            case R.id.radio4Servings:
-                numberOfRequests = 4;
-                break;
-        }
-
         //notification that order was sent
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Mealer";

@@ -236,71 +236,15 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layoutOptions"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="25dp"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutDescription">
-
-                <RadioGroup
-                    android:id="@+id/servingGroup"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <RadioButton
-                        android:id="@+id/radio1Serving"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/search_bar"
-                        android:checked="true"
-                        android:padding="10dp"
-                        android:text="1 Serving" />
-
-                    <RadioButton
-                        android:id="@+id/radio2Servings"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/search_bar"
-                        android:padding="10dp"
-                        android:text="2 Servings" />
-
-                    <RadioButton
-                        android:id="@+id/radio3Servings"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/search_bar"
-                        android:padding="10dp"
-                        android:text="3 Servings" />
-
-                    <RadioButton
-                        android:id="@+id/radio4Servings"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/search_bar"
-                        android:padding="10dp"
-                        android:text="4 Servings" />
-                </RadioGroup>
-            </LinearLayout>
-
             <View
                 android:id="@+id/view2"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="25dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutOptions" />
+                app:layout_constraintTop_toBottomOf="@id/layoutDescription" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
