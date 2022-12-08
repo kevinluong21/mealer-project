@@ -135,6 +135,7 @@
             android:onClick="registerClient"
             android:text="Register"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 

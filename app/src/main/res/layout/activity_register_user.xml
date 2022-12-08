@@ -31,6 +31,7 @@
         android:id="@+id/layoutSelectRole"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical">
 
 
@@ -80,7 +81,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#2E4A31"
             android:onClick="RoleOnClick"
-            android:text="Cook" />
+            android:text="Cook"
+            android:textColor="@color/white" />
 
         <Space
             android:layout_width="0dp"
@@ -95,7 +97,7 @@
             android:onClick="RoleOnClick"
             android:text="Client"
 
-            />
+            android:textColor="@color/white" />
 
         <Space
             android:layout_width="0dp"
