@@ -47,8 +47,6 @@ import java.io.IOException;
  */
 public class CookRegister extends Fragment implements View.OnClickListener {
 
-
-    Button btnBackCookToRegistration;
     EditText editTextFirstName; //first name text field
     EditText editTextLastName; //last name text field
     EditText editTextEmailAddress; //email address text field
@@ -118,15 +116,6 @@ public class CookRegister extends Fragment implements View.OnClickListener {
         // Inflate the layout for this fragment
 
         View rootView = inflater.inflate(R.layout.fragment_cook_register, container, false);
-        btnBackCookToRegistration = (Button) rootView.findViewById(R.id.btnBackToRegistration);
-
-        btnBackCookToRegistration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent (getActivity(), RegisterUser.class);
-                startActivity(intent);
-            }
-        });
 
         editTextFirstName = (EditText) rootView.findViewById(R.id.editTextFirstName);
         editTextLastName = (EditText) rootView.findViewById(R.id.editTextLastName);
