@@ -37,20 +37,11 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class PersonalProfile extends AppCompatActivity {
-
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    private String mParam1;
-    private String mParam2;
-
     TextView textName;
     TextView textRole;
     BottomNavigationView bottomNavBar;
     RecyclerView listOfferedMeals;
     RecyclerView listMeals;
-    LinearLayout layoutCookInfo;
-    LinearLayout layoutAbout;
     TextView textCookDescription;
     TextView textRating;
     TextView textMealsSold;
@@ -58,6 +49,8 @@ public class PersonalProfile extends AppCompatActivity {
     TextView textMenu;
     static Person user;
     DatabaseReference cookMeals;
+    LinearLayout layoutAbout, layoutCookInfo, layoutSavedMeals;
+    RecyclerView listSavedMeals;
 
     int longClickCounter;
 
@@ -94,6 +87,7 @@ public class PersonalProfile extends AppCompatActivity {
 
         listOfferedMeals = (RecyclerView) findViewById(R.id.listOfferedMeals);
         listMeals = (RecyclerView) findViewById(R.id.listMeals);
+        listSavedMeals = (RecyclerView) findViewById(R.id.listSavedMeals);
 
         bottomNavBar.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -114,6 +108,7 @@ public class PersonalProfile extends AppCompatActivity {
         textRole = (TextView) findViewById(R.id.textRole);
         layoutCookInfo = (LinearLayout) findViewById(R.id.layoutCookInfo);
         layoutAbout = (LinearLayout) findViewById(R.id.layoutAbout);
+        layoutSavedMeals = (LinearLayout) findViewById(R.id.layoutSavedMeals);
         textCookDescription = (TextView) findViewById(R.id.textCookDescription);
         textRating = (TextView) findViewById(R.id.textRating);
         textMealsSold = (TextView) findViewById(R.id.textMealsSold);
@@ -130,6 +125,56 @@ public class PersonalProfile extends AppCompatActivity {
         listOfferedMeals.setVisibility(View.GONE);
         listMeals.setVisibility(View.GONE);
 
+        if (user.getRole().equals("Client")) {
+            layoutSavedMeals.setVisibility(View.VISIBLE); //show saved meals for client
+
+            ArrayList<Meal> savedMeals = new ArrayList<Meal>();
+            ArrayList<MealListModel> savedMealModels = new ArrayList<MealListModel>();
+
+            MainActivity.users.child(user.getEmailAddress()).child("likedMeals").addValueEventListener(new ValueEventListener() { //add liked meals to list to display
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    savedMeals.clear();
+                    savedMealModels.clear();
+
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        Meal meal = dataSnapshot.getValue(Meal.class);
+                        if (meal.isOffering()) { //only display saved meals that are being offered
+                            savedMeals.add(meal);
+                            savedMealModels.add(new MealListModel(meal.getName(), meal.displayPrice(), meal.displayRating(), meal.getNumSold()));
+                        }
+                    }
+
+                    MealListAdapter savedMealsAdapter = new MealListAdapter(PersonalProfile.this, savedMealModels);
+
+                    //creates a vertical list
+                    LinearLayoutManager savedMealsLayoutManager = new LinearLayoutManager(PersonalProfile.this, LinearLayoutManager.VERTICAL, false);
+
+                    listSavedMeals.setLayoutManager(savedMealsLayoutManager);
+                    listSavedMeals.setAdapter(savedMealsAdapter);
+
+                    listSavedMeals.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), listSavedMeals, new RecyclerItemClickListener.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(View view, int position) {
+                            Intent intent = new Intent(PersonalProfile.this, MealPage.class);
+                            intent.putExtra("meal", savedMeals.get(position));
+                            startActivity(intent);
+                        }
+
+                        @Override
+                        public void onLongItemClick(View view, int position) {
+
+                        }
+                    }));
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+
         //only display meals if the profile user is a cook
         if (user.getRole().equals("Cook")) {
             textOfferedMenu.setVisibility(View.VISIBLE);
@@ -138,6 +183,7 @@ public class PersonalProfile extends AppCompatActivity {
             layoutAbout.setVisibility(View.VISIBLE);
             listOfferedMeals.setVisibility(View.VISIBLE);
             listMeals.setVisibility(View.VISIBLE);
+            layoutSavedMeals.setVisibility(View.GONE);
 
             //immediately update cook stats
             MainActivity.users.child(user.getEmailAddress()).addValueEventListener(new ValueEventListener() {
