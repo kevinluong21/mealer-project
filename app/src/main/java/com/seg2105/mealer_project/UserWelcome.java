@@ -20,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -38,6 +39,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -66,6 +69,12 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
     ArrayList<MealRequest> clientOrders; //stores all of a client's orders
     ArrayList<ClientOrderModel> clientOrderModels;
     RecyclerView listOrders; //list that displays all of a client's orders
+
+    //cards for categories
+    CardView cardMainDish;
+    CardView cardSoup;
+    CardView cardDessert;
+    CardView cardItalian;
 
     RecyclerView orderRequests;
     RecyclerView acceptedOrders;
@@ -106,6 +115,48 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
 
         textViewActionPrompt = findViewById(R.id.textViewActionPrompt);
         textViewActionPrompt.setText("You are logged in as a " + currentUser.getRole());
+
+        //cardview categories
+        cardMainDish = (CardView) findViewById(R.id.cardMainDish);
+        cardSoup = (CardView) findViewById(R.id.cardSoup);
+        cardDessert = (CardView) findViewById(R.id.cardDessert);
+        cardItalian = (CardView) findViewById(R.id.cardItalian);
+
+        cardMainDish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserWelcome.this, Search.class);
+                intent.putExtra("query", "Main Dish");
+                startActivity(intent);
+            }
+        });
+
+        cardSoup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserWelcome.this, Search.class);
+                intent.putExtra("query", "Soup");
+                startActivity(intent);
+            }
+        });
+
+        cardDessert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserWelcome.this, Search.class);
+                intent.putExtra("query", "Dessert");
+                startActivity(intent);
+            }
+        });
+
+        cardItalian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UserWelcome.this, Search.class);
+                intent.putExtra("query", "Italian");
+                startActivity(intent);
+            }
+        });
 
         searchBar = (LinearLayout) findViewById(R.id.searchBar);
         searchBar.setOnClickListener(new View.OnClickListener() { //opens fragment with search and search results
@@ -342,6 +393,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
         }
 
         if (currentUser.getRole().equals("Client")) {
+            Log.d("TAG", currentUser.getRole());
             layoutAdmin.setVisibility(View.GONE);
             layoutClient.setVisibility(View.VISIBLE);
             layoutCook.setVisibility(View.GONE);
@@ -381,12 +433,6 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                             NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
 
                             switch(order.getProgress()) {
-//                            case "Awaiting Response...":
-//                                builder.setContentTitle("Awaiting Response...");
-//                                builder.setContentText("It can take a few minutes for the cook to respond to your order.");
-//                                notificationManager.notify(1, builder.build());
-//                                break;
-
                                 case "Your Order Is Being Prepared...":
                                     builder.setContentTitle("Your Order Is Being Prepared...");
                                     builder.setContentText("Hang tight! The cook is currently preparing your order.");
@@ -448,7 +494,6 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
 
                                     break;
 
-
                                 case "Order Rejected":
                                     builder.setContentTitle("Order Rejected");
                                     builder.setContentText("Hey there! Unfortunately, the cook of this order cannot serve you at this time.");
@@ -480,6 +525,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     meals.clear();
+                    mealModels.clear();
                     for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                         if (dataSnapshot.getValue(Administrator.class).getRole().equals("Cook")) {
                             Cook cook = dataSnapshot.getValue(Cook.class);
@@ -487,11 +533,31 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                                 for (Meal meal : cook.getMeals().values()) {
                                     if (meal.isOffering()) { //meal must be currently offered by the cook
                                         meals.add(meal);
-                                        mealModels.add(new MealListModel(meal.getName(), meal.displayPrice(), meal.displayRating(), meal.getNumSold()));
                                     }
                                 }
                             }
                         }
+                    }
+
+                    //sort the meals by numSold and rating (meals with a higher numSold or rating appear first)
+                    Collections.sort(meals, new Comparator<Meal>() {
+                        @Override
+                        public int compare(Meal meal1, Meal meal2) { //sort by numSold
+                            if (meal1.getNumSold() != meal2.getNumSold()) {
+                                Integer meal1Sold = meal1.getNumSold();
+                                Integer meal2Sold = meal2.getNumSold();
+                                return meal1Sold.compareTo(meal2Sold);
+                            }
+                            //if numSold is equal, sort by rating
+                            Double meal1Rating = meal1.getRating();
+                            Double meal2Rating = meal2.getRating();
+                            return meal1Rating.compareTo(meal2Rating);
+                        }
+                    });
+                    Collections.reverse(meals); //sort sorts lists by least to greatest so reverse it
+
+                    for (Meal meal : meals) {
+                        mealModels.add(new MealListModel(meal.getName(), meal.displayPrice(), meal.displayRating(), meal.getNumSold()));
                     }
 
                     MealListAdapter mealListAdapter = new MealListAdapter(UserWelcome.this, mealModels);

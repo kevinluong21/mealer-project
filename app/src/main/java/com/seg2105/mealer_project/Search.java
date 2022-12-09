@@ -24,11 +24,15 @@ public class Search extends AppCompatActivity {
     ArrayList<Meal> meals;
     ListView listSearchResults;
     SearchResultAdapter adapter;
+    String query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        //pass the category name to filter the search results
+        this.query = (String) getIntent().getSerializableExtra("query");
 
         //sets the toolbar for this activity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -53,6 +57,7 @@ public class Search extends AppCompatActivity {
         });
 
         SearchView searchBar = (SearchView) findViewById(R.id.searchBar);
+
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -66,6 +71,10 @@ public class Search extends AppCompatActivity {
                 return false;
             }
         });
+
+        if (query != null) { //if a category was passed, filter the results using the category by default
+            searchBar.setQuery(query, true);
+        }
     }
 
     //create toolbar menu

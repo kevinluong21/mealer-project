@@ -72,17 +72,20 @@ public class SearchResultAdapter extends ArrayAdapter<Meal> implements Filterabl
         protected FilterResults performFiltering(CharSequence constraint) {
             FilterResults results = new FilterResults();
             ArrayList<Meal> filteredList = new ArrayList<>();
+            String temp; //holds the lowercase and trimmed constraint
+
+            temp = constraint.toString().toLowerCase().trim();
 
             for (Meal meal : originalMealList) {
                 //these conditions are all in else if statements because, though they are not mutually exclusive, it only needs
                 //to show the result once
-                if (meal.getName().contains(constraint)) { //filter by name
+                if (meal.getName().contains(temp)) { //filter by name
                     filteredList.add(meal);
                 }
-                else if (meal.getMealType().contains(constraint)) { //filter by cuisine type
+                else if (meal.getMealType().contains(temp)) { //filter by cuisine type
                     filteredList.add(meal);
                 }
-                else if (meal.getCuisineType().contains(constraint)) { //filter by cuisine type
+                else if (meal.getCuisineType().contains(temp)) { //filter by cuisine type
                     filteredList.add(meal);
                 }
             }

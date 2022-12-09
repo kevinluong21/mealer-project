@@ -14,6 +14,7 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,8 +33,11 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -45,8 +49,6 @@ public class MealPage extends AppCompatActivity {
 
     Person currentUser = MainActivity.currentUser;
 
-    BottomNavigationView bottomNavBar;
-
     TextView textMealName;
     TextView textMealCook;
     TextView textMealRating;
@@ -56,13 +58,8 @@ public class MealPage extends AppCompatActivity {
     TextView textAboutMeal;
     TextView textDescription;
     Button btnAddToCart;
-    RadioGroup servingGroup;
-    RadioButton oneServing;
-    RadioButton twoServings;
-    RadioButton threeServings;
-    RadioButton fourServings;
+    LinearLayout layoutAddToCart;
     TextView textTotalPrice;
-    LinearLayout layoutAddToCart; //add to cart button
 
     public MealPage() {
         super(R.layout.activity_meal_page);
@@ -72,7 +69,6 @@ public class MealPage extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal_page);
-        btnAddToCart = (Button) findViewById(R.id.btnAddToCart);
 
         //when this activity is opened, a meal object is passed to display its information on this page
         this.meal = (Meal) getIntent().getSerializableExtra("meal");
@@ -84,13 +80,6 @@ public class MealPage extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        if(currentUser.getRole().equals("Cook")){
-            btnAddToCart.setVisibility(View.GONE);
-        }
-        if(currentUser.getRole().equals("Client")){
-            btnAddToCart.setVisibility(View.VISIBLE);
-        }
 
         listIngredients = (RecyclerView) findViewById(R.id.listIngredients);
         listAllergens = (RecyclerView) findViewById(R.id.listAllergens);
@@ -104,6 +93,7 @@ public class MealPage extends AppCompatActivity {
         textDescription = (TextView) findViewById(R.id.textDescription);
         textTotalPrice = (TextView) findViewById(R.id.textTotalPrice);
         layoutAddToCart = (LinearLayout) findViewById(R.id.layoutAddToCart);
+        btnAddToCart = (Button) findViewById(R.id.btnAddToCart);
 
         textMealName.setText(meal.getName());
         textMealCook.setText(meal.getCookFirstName() + " " + meal.getCookLastName());
@@ -113,7 +103,13 @@ public class MealPage extends AppCompatActivity {
         textPrice.setText(Double.toString(meal.getPrice()));
         textAboutMeal.setText("About "+ meal.getName());
         textDescription.setText(meal.getDescription());
-        layoutAddToCart.setVisibility(View.VISIBLE);
+
+        if(currentUser.getRole().equals("Cook")){
+            layoutAddToCart.setVisibility(View.GONE);
+        }
+        if(currentUser.getRole().equals("Client")){
+            layoutAddToCart.setVisibility(View.VISIBLE);
+        }
 
         //take the user to the profile of the cook on click of their name
         textMealCook.setOnClickListener(new View.OnClickListener() {
@@ -219,11 +215,29 @@ public class MealPage extends AppCompatActivity {
         //different toolbars based on the logged in user
         getMenuInflater().inflate(R.menu.toolbar_meal, menu);
         MenuItem actionComplaint = menu.findItem(R.id.actionComplaint);
+        MenuItem actionSave = menu.findItem(R.id.actionSave);
+
         actionComplaint.setVisible(false);
+        actionSave.setVisible(false);
 
         if (MainActivity.currentUser.getRole().equals("Client")) {
             //if the logged in user is a client and they are looking at a cook's profile, allow them to file a complaint
             actionComplaint.setVisible(true);
+            actionSave.setVisible(true);
+
+            MainActivity.users.child(MainActivity.loggedInClient.getEmailAddress()).child("likedMeals").child(meal.getName()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        actionSave.setIcon(R.drawable.icons8_bookmark_24_filled);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
         return super.onCreateOptionsMenu(menu);
     }
@@ -232,10 +246,20 @@ public class MealPage extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.actionLike:
+            case R.id.actionSave:
                 //if already on the liked list of client, set icon to filled by default
                 //if not, reset to default
-                item.setIcon(R.drawable.icons8_favorite_24_filled);
+                if (item.getIcon().getConstantState().equals(getDrawable(R.drawable.icons8_bookmark_24_filled).getConstantState())) {
+                    //already in likedMeals
+                    item.setIcon(R.drawable.icons8_bookmark_24);
+                    //remove meal from likedMeals
+                    MainActivity.users.child(MainActivity.loggedInClient.getEmailAddress()).child("likedMeals").child(meal.getName()).removeValue();
+                }
+                else {
+                    item.setIcon(R.drawable.icons8_bookmark_24_filled);
+                    //put liked meal into likedMeals of the client
+                    MainActivity.users.child(MainActivity.loggedInClient.getEmailAddress()).child("likedMeals").child(meal.getName()).setValue(meal);
+                }
                 break;
 
             case R.id.actionComplaint: //create a complaint

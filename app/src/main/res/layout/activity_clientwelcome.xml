@@ -10,7 +10,11 @@
         android:id="@+id/scrollView4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -84,8 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 app:layout_constraintTop_toBottomOf="@id/layoutWelcomeMessage"
-                tools:layout_editor_absoluteX="25dp"
-                tools:visibility="gone">
+                tools:layout_editor_absoluteX="25dp">
 
                 <LinearLayout
                     android:id="@+id/layoutPurchases"
@@ -155,6 +158,7 @@
                                 android:paddingRight="10dp">
 
                                 <androidx.cardview.widget.CardView
+                                    android:id="@+id/cardMainDish"
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     app:cardCornerRadius="10dp">
@@ -187,6 +191,7 @@
                                 android:paddingRight="10dp">
 
                                 <androidx.cardview.widget.CardView
+                                    android:id="@+id/cardSoup"
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     app:cardCornerRadius="10dp">
@@ -219,12 +224,13 @@
                                 android:paddingRight="10dp">
 
                                 <androidx.cardview.widget.CardView
+                                    android:id="@+id/cardDessert"
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     app:cardCornerRadius="10dp">
 
                                     <ImageView
-                                        android:id="@+id/imageViewDesert"
+                                        android:id="@+id/imageViewDessert"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:src="@drawable/donut_icon"
@@ -237,7 +243,7 @@
                                     android:id="@+id/textViewDesert"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Desert"
+                                    android:text="Dessert"
                                     android:textAlignment="center"
                                     android:textColor="#000000" />
 
@@ -251,6 +257,7 @@
                                 android:paddingRight="10dp">
 
                                 <androidx.cardview.widget.CardView
+                                    android:id="@+id/cardItalian"
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     app:cardCornerRadius="10dp">
@@ -269,7 +276,7 @@
                                     android:id="@+id/textViewItalian"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:text="Desert"
+                                    android:text="Italian"
                                     android:textAlignment="center"
                                     android:textColor="#000000" />
 
@@ -317,10 +324,21 @@
 
                     </LinearLayout>
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:drawableLeft="@drawable/icons8_gas_24"
+                        android:text="Popular Meals Right Now"
+                        android:textColor="#7E7E7E"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/listClientMeals"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false" />
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -330,8 +348,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:visibility="visible"
-                app:layout_constraintTop_toBottomOf="@id/layoutWelcomeMessage">
+                app:layout_constraintTop_toBottomOf="@id/layoutWelcomeMessage"
+                tools:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/layoutAccepted"
@@ -349,13 +367,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Accepted Orders"
+                        android:textColor="#7E7E7E"
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/acceptedOrders"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="wrap_content" />
 
                 </LinearLayout>
 

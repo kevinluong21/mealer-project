@@ -327,10 +327,6 @@ public class PersonalProfile extends AppCompatActivity {
             actionComplaint.setVisible(true);
         }
 
-        /*if (MainActivity.currentUser.getRole().equals("Client")){
-            actionComplaint.setVisible(true);
-            rateCook.setVisible(true);
-        }*/
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -338,22 +334,6 @@ public class PersonalProfile extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            //RATE COOK
-            /*case R.id.rateCook:
-                AlertDialog.Builder dialogBuilderRateCook = new AlertDialog.Builder(this);
-                LayoutInflater inflaterRateCook = getLayoutInflater();
-                final View dialogViewRateCook = inflaterRateCook.inflate(R.layout.action_dialog_rate_cook_stars, null);
-                dialogBuilderRateCook.setView(dialogViewRateCook);
-
-                final AlertDialog rateCook = dialogBuilderRateCook.create();
-                rateCook.setCancelable(true);
-                rateCook.show();
-
-                //final RatingBar ratingBar = (RatingBar) dialogViewRateCook.findViewById(ratingBar);
-                //final Button submitRating = (Button) dialogViewRateCook.findViewById(submitRatingBtn);
-
-                break;*/
-
             case R.id.actionComplaint: //create a complaint
                 AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
                 LayoutInflater inflater = getLayoutInflater();
@@ -393,6 +373,10 @@ public class PersonalProfile extends AppCompatActivity {
 
             case R.id.actionLogout:
                 MainActivity.currentUser = null;
+                MainActivity.loggedInCook = null;
+                MainActivity.loggedInClient = null;
+                MainActivity.loggedInAdmin = null;
+
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
                 break;

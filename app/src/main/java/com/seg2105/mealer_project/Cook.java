@@ -2,9 +2,12 @@ package com.seg2105.mealer_project;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -55,7 +58,6 @@ public class Cook extends Person implements Serializable {
 
     }
 
-    //gets account status
     public boolean getAccountStatus(){
         return this.accountActive;
     }
@@ -97,7 +99,6 @@ public class Cook extends Person implements Serializable {
 
     public double getCustomerRating() {return customerRating;}
 
-    //get number of ratings
     public int getNumberOfRatings(){return numberOfRatings;}
 
     public HashMap<String, Meal> getMeals() {
@@ -127,21 +128,5 @@ public class Cook extends Person implements Serializable {
     private double round (double value, int precision) {
         int scale = (int) Math.pow(10, precision);
         return (double) Math.round(value * scale) / scale;
-    }
-
-    public static void rejectRequest(){
-
-    }
-
-    public static void acceptRequest(){
-
-    }
-
-    public static void deleteMeal(){
-
-    }
-
-    public static void offerMeal(){
-
     }
 }
