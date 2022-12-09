@@ -124,6 +124,7 @@ public class PersonalProfile extends AppCompatActivity {
         layoutAbout.setVisibility(View.GONE);
         listOfferedMeals.setVisibility(View.GONE);
         listMeals.setVisibility(View.GONE);
+        layoutSavedMeals.setVisibility(View.GONE);
 
         if (user.getRole().equals("Client")) {
             layoutSavedMeals.setVisibility(View.VISIBLE); //show saved meals for client

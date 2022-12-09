@@ -2,10 +2,12 @@ package com.seg2105.mealer_project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -14,7 +16,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 
 import java.io.Serializable;
@@ -31,11 +32,8 @@ public class MealActivity extends AppCompatActivity implements Serializable {
     EditText editTextDescription;
     TextView mealErrorMessage;
     CheckBox checkBoxAddToMenu;
-    Button btnBack;
 
     DatabaseReference users = MainActivity.getUsers(); //get user database from MainActivity
-
-    BottomNavigationView bottomNavBar;
 
     Button btnAddMealCompleted;
 
@@ -44,6 +42,13 @@ public class MealActivity extends AppCompatActivity implements Serializable {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal);
 
+        //sets the toolbar for this activity
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        toolbar.setNavigationIcon(R.drawable.icons8_chevron_left_24);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         editTextMealName = (EditText) findViewById(R.id.editTextMealName);
         editTextMealType = (EditText) findViewById(R.id.editTextMealType);
@@ -55,17 +60,6 @@ public class MealActivity extends AppCompatActivity implements Serializable {
         mealErrorMessage = (TextView) findViewById(R.id.mealErrorMessage);
 
         btnAddMealCompleted = (Button) findViewById(R.id.btnAddMealCompleted);
-
-
-
-        btnBack = (Button) findViewById(R.id.btnBackHomeToCook);
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         checkBoxAddToMenu = (CheckBox) findViewById(R.id.checkBoxAddedToMenu);
 
@@ -85,26 +79,6 @@ public class MealActivity extends AppCompatActivity implements Serializable {
                 }
             }
         });
-
-        bottomNavBar = (BottomNavigationView) findViewById(R.id.bottomNavBar);
-        bottomNavBar.setOnItemSelectedListener(new BottomNavigationView.OnItemSelectedListener() {
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.btnHome:
-                        startActivity(new Intent(getApplicationContext(),UserWelcome.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                    case R.id.btnProfile:
-                        startActivity(new Intent(getApplicationContext(),PersonalProfile.class));
-                        overridePendingTransition(0,0);
-                        return true;
-                }
-                return false;
-            }
-        });
-        bottomNavBar.getMenu().findItem(R.id.btnHome).setChecked(true);
-
-
     }
 
 
@@ -191,6 +165,21 @@ public class MealActivity extends AppCompatActivity implements Serializable {
         return false;
     }
 
+    //create toolbar menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-
+    //toolbar menu select action
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

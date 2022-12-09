@@ -41,6 +41,7 @@
                     android:text="+ New Meal"
                     android:textAlignment="center"
                     android:textAllCaps="false"
+                    android:textColor="@color/white"
                     android:visibility="visible"
                     app:cornerRadius="50dp" />
             </LinearLayout>
@@ -427,7 +428,11 @@
                     android:id="@+id/btnAdminComplaints"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Proceed to complaints" />
+                    android:backgroundTint="#90E2A8"
+                    android:text="Proceed To Complaints"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 

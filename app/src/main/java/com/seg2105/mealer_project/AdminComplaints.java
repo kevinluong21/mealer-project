@@ -4,8 +4,10 @@ import static android.content.ContentValues.TAG;
 
 import static com.seg2105.mealer_project.MainActivity.users;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -13,6 +15,8 @@ import android.service.controls.templates.TemperatureControlTemplate;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -43,29 +47,24 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
     ListView listViewComplaints;
     List<Complaint> complaints;
     DatabaseReference database;
-    Button backToWelcomePage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_admin_complaints);
 
+        //sets the toolbar for this activity
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("");
+        toolbar.setNavigationIcon(R.drawable.icons8_chevron_left_24);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         database = FirebaseDatabase.getInstance().getReference("complaints");
-        setContentView(R.layout.activity_admin_complaints);
         listViewComplaints = (ListView) findViewById(R.id.listViewComplaints);
         complaints = new ArrayList<>();
         onItemLongClick();
-
-
-        backToWelcomePage = (Button) findViewById(R.id.btnBackToAdminWelcome);
-
-        backToWelcomePage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
     }
 
 
@@ -291,5 +290,22 @@ public class AdminComplaints extends AppCompatActivity implements Serializable {
         return true;
     }
 
+    //create toolbar menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //toolbar menu select action
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

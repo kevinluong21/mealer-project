@@ -247,12 +247,15 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                         orderModels.clear();
 
                         cook = snapshot.getValue(Cook.class);
-                        for (MealRequest req : cook.getPurchaseRequests().values()) {
-                            if (req.isActive()) { //might want to change this or add a new list for accepted but not completed meals
-                                requests.add(req);
-                                orderModels.add(new OrderModel(req));
+                        if (cook.getPurchaseRequests() != null) {
+                            for (MealRequest req : cook.getPurchaseRequests().values()) {
+                                if (req.isActive()) { //might want to change this or add a new list for accepted but not completed meals
+                                    requests.add(req);
+                                    orderModels.add(new OrderModel(req));
+                                }
                             }
                         }
+
                         OrderAdapter orderAdapter = new OrderAdapter(UserWelcome.this, orderModels);
                         LinearLayoutManager orderManager = new LinearLayoutManager(UserWelcome.this, LinearLayoutManager.VERTICAL, false);
 
@@ -393,7 +396,6 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
         }
 
         else if (currentUser.getRole().equals("Client")) {
-            Log.d("TAG", currentUser.getRole());
             layoutAdmin.setVisibility(View.GONE);
             layoutClient.setVisibility(View.VISIBLE);
             layoutCook.setVisibility(View.GONE);

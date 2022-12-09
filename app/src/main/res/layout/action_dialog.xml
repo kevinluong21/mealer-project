@@ -14,7 +14,8 @@
         android:id="@+id/textViewComplaintName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/black" />
 
     <Space
         android:layout_width="10dp"
@@ -24,7 +25,8 @@
         android:id="@+id/txtViewComplaintDescription"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/black" />
 
     <Space
         android:layout_width="10dp"
@@ -34,7 +36,8 @@
         android:id="@+id/textViewClient"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/black" />
 
     <Space
         android:layout_width="10dp"
@@ -44,7 +47,8 @@
         android:id="@+id/textViewCook"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/black" />
 
     <Space
         android:layout_width="10dp"
@@ -54,8 +58,13 @@
         android:id="@+id/btnDismiss"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#90E2A8"
         android:gravity="center"
-        android:text="Dismiss" />
+        android:text="Dismiss"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <Space
         android:layout_width="10dp"
@@ -75,8 +84,13 @@
         android:id="@+id/btnSuspendTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="#90E2A8"
         android:gravity="center"
-        android:text="Suspend Temporarily" />
+        android:text="Suspend Temporarily"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textSuspendError"
@@ -93,8 +107,14 @@
         android:id="@+id/btnSuspendPerm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="#90E2A8"
         android:gravity="center"
-        android:text="Suspend permanently" />
+        android:text="Suspend Permanently"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
 
 </LinearLayout>

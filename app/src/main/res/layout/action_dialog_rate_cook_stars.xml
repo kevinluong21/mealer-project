@@ -28,6 +28,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Support this cook and meal by rating a meal will push this meal closer to the top of search results."
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
         <Button
             android:id="@+id/submitRatingBtn"
             android:layout_width="match_parent"

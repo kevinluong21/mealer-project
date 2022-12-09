@@ -27,7 +27,8 @@
         <activity
             android:name=".MealActivity"
             android:exported="false"
-            android:parentActivityName=".UserWelcome">
+            android:parentActivityName=".UserWelcome"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -35,7 +36,8 @@
         <activity
             android:name=".AdminComplaints"
             android:exported="false"
-            android:parentActivityName=".UserWelcome">
+            android:parentActivityName=".UserWelcome"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
