@@ -392,7 +392,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
             }
         }
 
-        if (currentUser.getRole().equals("Client")) {
+        else if (currentUser.getRole().equals("Client")) {
             Log.d("TAG", currentUser.getRole());
             layoutAdmin.setVisibility(View.GONE);
             layoutClient.setVisibility(View.VISIBLE);
@@ -476,7 +476,7 @@ public class UserWelcome extends AppCompatActivity implements NavigationBarView.
                                             order.getMeal().incrementNumberOfRatings();
                                             order.getMeal().incrementTotalRating(rateValue);
                                             order.getMeal().calculateRating();
-                                            users.child(order.getCookEmail()).child("meals").child(order.getMeal().getName()).setValue(order.getMeal());
+                                            users.child(order.getCookEmail()).child("purchaseRequests").child(order.getMeal().getName()).setValue(order.getMeal());
 
                                             users.child(order.getClientEmail()).child("requestedMeals").child(order.getMeal().getName()).removeValue();
 

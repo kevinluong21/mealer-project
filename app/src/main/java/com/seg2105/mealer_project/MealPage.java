@@ -184,29 +184,31 @@ public class MealPage extends AppCompatActivity {
             notificationManager.createNotificationChannel(channel);
         }
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
-                .setSmallIcon(R.drawable.icons8_french_fries)
-                .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setPriority(NotificationCompat.PRIORITY_HIGH);
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
+        if (MainActivity.currentUser.getRole().equals("Client")) {
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), "CHANNEL_ID")
+                    .setSmallIcon(R.drawable.icons8_french_fries)
+                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH);
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
 
 
-        MainActivity.checkUser(meal.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
-            @Override
-            public void onCallback(Administrator admin, Cook cook, Client client) {
-                if (cook != null) { //cook with that email was found
-                    MealRequest req = new MealRequest(meal, MainActivity.loggedInClient, cook);
+            MainActivity.checkUser(meal.getCookEmail(), new UserCallback<Administrator, Cook, Client>() {
+                @Override
+                public void onCallback(Administrator admin, Cook cook, Client client) {
+                    if (cook != null) { //cook with that email was found
+                        MealRequest req = new MealRequest(meal, MainActivity.loggedInClient, cook);
 
-                    MainActivity.users.child(cook.getEmailAddress()).child("purchaseRequests").child(meal.getName()).setValue(req);
-                    MainActivity.users.child(MainActivity.currentUser.getEmailAddress()).child("requestedMeals").child(meal.getName()).setValue(req);
-                    Toast.makeText(getApplicationContext(),"Purchase Request Complete", Toast.LENGTH_LONG).show();
+                        MainActivity.users.child(cook.getEmailAddress()).child("purchaseRequests").child(meal.getName()).setValue(req);
+                        MainActivity.users.child(MainActivity.currentUser.getEmailAddress()).child("requestedMeals").child(meal.getName()).setValue(req);
+                        Toast.makeText(getApplicationContext(),"Purchase Request Complete", Toast.LENGTH_LONG).show();
 
-                    builder.setContentTitle("Awaiting Response...");
-                    builder.setContentText("It can take a few minutes for the cook to respond to your order.");
-                    notificationManager.notify(1, builder.build());
+                        builder.setContentTitle("Awaiting Response...");
+                        builder.setContentText("It can take a few minutes for the cook to respond to your order.");
+                        notificationManager.notify(1, builder.build());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     //create toolbar menu
