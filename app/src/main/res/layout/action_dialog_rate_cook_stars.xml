@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/layoutDialog"
-    android:layout_width="300dp"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="horizontal">
@@ -12,7 +12,7 @@
     <LinearLayout
         android:id="@+id/layoutTitle"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="25dp"
@@ -31,8 +31,8 @@
         <TextView
             android:id="@+id/textView4"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Support this cook and meal by rating a meal will push this meal closer to the top of search results."
+            android:layout_height="75dp"
+            android:text="Support this cook by rating it. Rating this meal will push it closer to the top of search results."
             android:textColor="@color/black"
             android:textSize="14sp" />
 
